@@ -1,7 +1,7 @@
 streamlit
 pandas
 numpy
-request
+requests==2.27.1
 re
 matplotlib
 matplotlib.pyplot
