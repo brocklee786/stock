@@ -249,6 +249,7 @@ def plot_polar(labels, values, imgname):
  
 if option:
     ticker_dict = get_basic_info(option)
+    company_info = get_company_info(option)
     df = pd.DataFrame.from_dict([ticker_dict])
     df2 = pd.DataFrame(get_kessan(option))
     df3 = pd.DataFrame(get_zaimu(option))
