@@ -5,3 +5,4 @@ request
 re
 matplotlib
 matplotlib.pyplot
+PIL==9.0.1
