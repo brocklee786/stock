@@ -7,7 +7,7 @@ from bs4 import BeautifulSoup
 import re
 import matplotlib
 import matplotlib.pyplot as plt
-import collections
+
 st.title('株価評価')
 # st.image('./sample.jpg')
 
