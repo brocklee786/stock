@@ -2,6 +2,5 @@ streamlit
 pandas
 numpy
 requests==2.27.1
-matplotlib
-matplotlib.pyplot
+matplotlib==3.5.1
 PIL==9.0.1
