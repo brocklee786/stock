@@ -36,7 +36,29 @@ def get_basic_info(option):
         basic_info[key] = value
     print(basic_info)
     return(basic_info)
- 
+   
+ def get_company_info(option):
+
+    ticker = str(option)
+    url = "https://minkabu.jp/stock/" + ticker + "/fundamental"
+    html = requests.get(url)
+    soup = BeautifulSoup(html.content,"html.parser")
+
+    basic_info2 = {}
+    dl_all = soup.find_all("dl",{"class":"md_dataList"})
+
+    for i in range(len(dl_all)):
+        dt = dl_all[i].find_all("dt")  
+        dd = dl_all[i].find_all("dd")
+        for i,j in zip(dt,dd):
+            soup1 = BeautifulSoup(str(i),"lxml")
+            soup2 = BeautifulSoup(str(j),"lxml")
+            text1 = soup1.get_text()
+            text2 = soup2.get_text()
+            basic_info2[text1] = text2
+
+    return(basic_info2)
+   
  # 単位を削除する関数
 def trim_unit(x):
    
@@ -344,7 +366,13 @@ if option:
     int_max_stock_price = int(max_stock_price)
     
     stock_value = new_df['時価総額'][0] / new_df['発行済株数'][0]
-
+    
+    st.sidebar.write('<span style="color:red">社名</span>',
+              unsafe_allow_html=True)
+    st.sidebar.write(company_info["社名"])
+    st.sidebar.write('<span style="color:red">業種</span>',
+              unsafe_allow_html=True)
+    st.sidebar.write(company_info["業種"])
     st.sidebar.write('<span style="color:red">現在株価</span>',
               unsafe_allow_html=True)
     st.sidebar.write(str(stock_value) + '円')
