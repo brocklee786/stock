@@ -3,4 +3,4 @@ pandas
 numpy
 requests==2.27.1
 matplotlib==3.5.1
-PIL==9.0.1
+pillow==9.0.1
