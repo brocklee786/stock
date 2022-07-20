@@ -23,7 +23,7 @@ def get_basic_info(option):
     basic_info = {}
     tr_all = soup.find_all('tr')
     for tr in tr_all:
-        th = li.find('th')
+        th = tr.find('th')
         if th is None:
             continue
        
