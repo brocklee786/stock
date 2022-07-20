@@ -27,7 +27,7 @@ def get_basic_info(option):
         if th is None:
             continue
        
-        td = li.find('td')
+        td = td.find('td')
    
         key = th.text
         value = td.text
