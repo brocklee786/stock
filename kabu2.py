@@ -401,7 +401,7 @@ if option:
     ave_profit = 0
     if target_per:
         num_target_profit = float(target_per)
-        past_profit = new_df2["営業利益"]
+        past_profit = new_df2["営業利益"][0]
         if past_profit:
             num_past_profit = int(past_profit)
             now_profit = st.text_input('今期の営業利益を入力してください')
