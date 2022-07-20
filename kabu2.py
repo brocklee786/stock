@@ -21,16 +21,16 @@ def get_basic_info(option):
     soup = BeautifulSoup(html.content, "html.parser")
  
     basic_info = {}
-    li_all = soup.find_all('li')
-    for li in li_all:
-        dt = li.find('dt')
-        if dt is None:
+    tr_all = soup.find_all('tr')
+    for tr in tr_all:
+        th = li.find('th')
+        if th is None:
             continue
        
-        dd = li.find('dd')
+        td = li.find('td')
    
-        key = dt.text
-        value = dd.text
+        key = th.text
+        value = td.text
    
         basic_info[key] = value
     print(basic_info)
