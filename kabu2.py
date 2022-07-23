@@ -456,7 +456,7 @@ if option:
 
 
                         #st.sidebar.write('<span style="color:red">目標PER1</span>',
-                                            unsafe_allow_html=True)
+                                            #unsafe_allow_html=True)
                         #st.sidebar.write(str(target_per))
 
 
