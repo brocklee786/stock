@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 st.title('株価評価')
 # st.image('./sample.jpg')
 
-option = st.text_input('株価番号を入力してください')
+option = st.text_input('銘柄コードを入力してください')
  
 def get_basic_info(option):
     ticker = str(option)
