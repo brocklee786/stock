@@ -460,9 +460,9 @@ if option:
                         #st.sidebar.write(str(target_per))
 
 
-                        st.sidebar.write('<span style="color:red">目標PER2</span>',
-                                            unsafe_allow_html=True)
-                        st.sidebar.write(str(target_per2))
+                        #st.sidebar.write('<span style="color:red">目標PER2</span>',
+                                            #unsafe_allow_html=True)
+                        #st.sidebar.write(str(target_per2))
 
 
                         st.sidebar.write('<span style="color:red">1年後の目標株価</span>',
