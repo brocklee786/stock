@@ -241,7 +241,7 @@ def plot_polar(labels, values, imgname):
     ax.plot(angles, values, 'o-')  # 外枠
     ax.fill(angles, values, alpha=0.25)  # 塗りつぶし
     ax.set_thetagrids(angles[:-1] * 180 / np.pi, labels)  # 軸ラベル
-    ax.set_rlim(0 ,5)
+    ax.set_rlim(0 ,10)
     fig.savefig(imgname)
     plt.close(fig)
 
@@ -476,7 +476,7 @@ if option:
                             sales_amount = st.text_input('今期の売上高予想を入力してください')
                             if sales_amount:
                                 profit_increase_rate = float(sales_amount) / float(new_df2['売上高'][0])
-                                rule = profit_increase_rate + ave_growth_percent
+                                rule = (profit_increase_rate * 100) + ave_growth_percent
                                 sales_growth = ((int(sales_amount) - int(new_df2['売上高'][0])) / int(new_df2['売上高'][0])) * 100
                                 stock_profit_growth = ((float(profit_stock_future) + float(profit_stock_now)) / float(profit_stock_now)) * 100
                                    
@@ -485,55 +485,95 @@ if option:
                                 profit_point = 0
                                 growth_point = 0
  
-                                if  ave_growth_percent <= -20:
+                                if  ave_growth_percent <= -30:
                                     share_point = 1
-                                elif  -20 < ave_growth_percent <= -5:
-                                        share_point = 2
-                                elif  -5 < ave_growth_percent <= 5:
-                                        share_point = 3
-                                elif 5 < ave_growth_percent <= 20:
-                                        share_point = 4
+                                elif  -30 < ave_growth_percent <= -20:
+                                    share_point = 2
+                                elif  -20 < ave_growth_percent <= -10:
+                                    share_point = 3
+                                elif -10 < ave_growth_percent <= -5:
+                                    share_point = 4
+                                elif  -5 < ave_growth_percent <= 0:
+                                    share_point = 5
+                                elif  0 < ave_growth_percent <= 5:
+                                    share_point = 6
+                                elif  5 < ave_growth_percent <= 10:
+                                    share_point = 7
+                                elif 10 < ave_growth_percent <= 20:
+                                    share_point = 8
+                                elif 20 < ave_growth_percent <= 30:
+                                    share_point = 9
                                 else:
-                                        share_point = 5
+                                    share_point = 10
  
-                                if   sales_growth <= -20:
+                                if   sales_growth <= -30:
                                     sales_point = 1
-                                elif  -20 < sales_growth <= -5:
-                                        sales_point = 2
-                                elif  -5 < sales_growth <= 5:
-                                        sales_point = 3
-                                elif 5 < sales_growth <= 20:
-                                        sales_point = 4
+                                elif  -30 < sales_growth <= -20:
+                                    sales_point = 2
+                                elif  -20 < sales_growth <= -10:
+                                    sales_point = 3
+                                elif -10 < sales_growth <= -5:
+                                    sales_point = 4
+                                elif -5 < sales_growth <= 0:
+                                    sales_point = 5
+                                elif   0 < sales_growth <= 5:
+                                    sales_point = 6
+                                elif  5 < sales_growth <= 10:
+                                    sales_point = 7
+                                elif  10 < sales_growth <= 20:
+                                    sales_point = 8
+                                elif 20 < sales_growth <= 30:
+                                    sales_point = 9
                                 else:
-                                        sales_point = 5
+                                    sales_point = 10
  
  
-                                if   stock_profit_growth <= -20:
+                                if   stock_profit_growth <= -30:
                                     profit_point = 1
-                                elif  -20 < stock_profit_growth <= -5:
-                                        profit_point = 2
-                                elif  -5 < stock_profit_growth <= 5:
-                                        profit_point = 3
-                                elif 5 < stock_profit_growth <= 20:
-                                        profit_point = 4
+                                elif  -30 < stock_profit_growth <= -20:
+                                    profit_point = 2
+                                elif  -20 < stock_profit_growth <= -10:
+                                    profit_point = 3
+                                elif -10 < stock_profit_growth <= -5:
+                                    profit_point = 4
+                                elif -5 < stock_profit_growth <= 0:
+                                    profit_point = 5
+                                elif   0 < stock_profit_growth <= 5:
+                                    profit_point = 6
+                                elif  5 < stock_profit_growth <= 10:
+                                    profit_point = 7
+                                elif  10 < stock_profit_growth <= 20:
+                                    profit_point = 8
+                                elif 20 < stock_profit_growth <= 30:
+                                    profit_point = 9
                                 else:
-                                        profit_point = 5
+                                    profit_point = 10
  
                                    
                                 growth_point = (share_point + sales_point + profit_point) / 3
  
                                 profit_rate = float(new_df2['営業利益'][0]) / float(new_df2['売上高'][0]) * 100
 
-                                if   profit_rate <= 1.5:
+                                if   profit_rate <= 0:
                                     profit_rate_point = 1
-                                elif  1.5 < profit_rate <= 5:
-                                        profit_rate_point = 2
-                                elif  5 < profit_rate <= 10:
-                                        profit_rate_point = 3
-                                elif 10 < profit_rate <= 20:
-                                        profit_rate_point = 4
+                                elif  0 < profit_rate <= 1.5:
+                                    profit_rate_point = 2
+                                elif  1.5 < profit_rate <= 3:
+                                    profit_rate_point = 3
+                                elif 3 < profit_rate <= 5:
+                                    profit_rate_point = 4
+                                elif 5 < profit_rate <= 7.5:
+                                    profit_rate_point = 5
+                                elif 7.5 < profit_rate <= 10:
+                                    profit_rate_point = 6
+                                elif 10 < profit_rate <= 15:
+                                    profit_rate_point = 7
+                                elif 15 < profit_rate <= 20:
+                                    profit_rate_point = 8
+                                elif 20 < profit_rate <= 30:
+                                    profit_rate_point = 9
                                 else:
-                                        profit_rate_point = 5
+                                    profit_rate_point = 10
 
                                 num_jyunrieki= float(new_df2['純利益'][0])
                                 num_soushisan = float(new_df3['総資産'][0])
@@ -541,55 +581,95 @@ if option:
 
                                 ROE = num_jyunrieki / (num_soushisan * num_zikoshihon * 0.01) * 100
                                 ROE_point = 0
-                                if   ROE <= 1.5:
+                                if   ROE <= 0:
                                     ROE_point = 1
-                                elif  1.5 < ROE <= 5:
-                                        ROE_point = 2
-                                elif  5 < ROE <= 10:
-                                        ROE_point = 3
-                                elif 10 < ROE <= 20:
-                                        ROE_point = 4
+                                elif  0 < ROE <= 1.5:
+                                    ROE_point = 2
+                                elif  1.5 < ROE <= 3:
+                                    ROE_point = 3
+                                elif 3 < ROE <= 5:
+                                    ROE_point = 4
+                                elif 5 < ROE <= 7.5:
+                                    ROE_point = 5
+                                elif 7.5 < ROE <= 10:
+                                    ROE_point = 6
+                                elif  10 < ROE <= 15:
+                                    ROE_point = 7
+                                elif  15 < ROE <= 20:
+                                    ROE_point = 8
+                                elif 20 < ROE <= 30:
+                                    ROE_point = 9
                                 else:
-                                        ROE_point = 5
+                                    ROE_point = 10
 
 
                                 profitness_point = (profit_rate_point + ROE_point) / 2
 
                                 PER_point = 0
-                                if   40 < PER :
+                                if   50 < PER :
                                     PER_point = 1
-                                elif  25 < PER <= 40:
-                                        PER_point = 2
-                                elif  15 < PER <= 25:
-                                        PER_point = 3
-                                elif 10 < PER <= 15:
-                                        PER_point = 4
+                                elif  40 < PER <= 50:
+                                    PER_point = 2
+                                elif  35 < PER <= 40:
+                                    PER_point = 3
+                                elif 25 < PER <= 35:
+                                    PER_point = 4
+                                elif 20 < PER <= 25:
+                                    PER_point = 5
+                                elif   15 < PER <= 20:
+                                    PER_point = 6
+                                elif   PER == 15:
+                                    PER_point = 7
+                                elif  10 < PER < 15:
+                                    PER_point = 8
+                                elif 7.5 < PER <= 10:
+                                    PER_point = 9
                                 else:
-                                        PER_point = 5
+                                    PER_point = 10
 
                                 PSR_point = 0
-                                if   8 < PSR :
+                                if   10 < PSR :
                                     PSR_point = 1
-                                elif  5 < PSR <= 8:
-                                        PSR_point = 2
-                                elif  3 < PSR <= 5:
-                                        PSR_point = 3
-                                elif 1 < PSR <= 3:
-                                        PSR_point = 4
+                                elif  8 < PSR <= 10:
+                                    PSR_point = 2
+                                elif  6 < PSR <= 8:
+                                    PSR_point = 3
+                                elif 5 < PSR <= 6:
+                                    PSR_point = 4
+                                elif 4 < PSR <= 5:
+                                    PSR_point = 5
+                                elif   3 < PSR <= 4 :
+                                    PSR_point = 6
+                                elif  2 < PSR <= 3:
+                                    PSR_point = 7
+                                elif  1 < PSR <= 2:
+                                    PSR_point = 8
+                                elif 0.5 < PSR <= 1:
+                                    PSR_point = 9
                                 else:
-                                        PSR_point = 5
+                                    PSR_point = 10
 
                                 PBR_point = 0
-                                if   10 < PBR :
+                                if   20 < PBR :
                                     PBR_point = 1
-                                elif  5 < PBR <= 10:
-                                        PBR_point = 2
-                                elif  2.5 < PBR <= 5:
-                                        PBR_point = 3
-                                elif 1 < PBR <= 2.5:
-                                        PBR_point = 4
+                                elif  10 < PBR <= 20:
+                                    PBR_point = 2
+                                elif  7.5 < PBR <= 10:
+                                    PBR_point = 3
+                                elif 5 < PBR <= 7.5:
+                                    PBR_point = 4
+                                elif 3 < PBR < 5:
+                                    PBR_point = 5
+                                elif   2.5 < PBR < 3 :
+                                    PBR_point = 6
+                                elif  2 < PBR <= 2.5:
+                                    PBR_point = 7
+                                elif  1 < PBR <= 2:
+                                    PBR_point = 8
+                                elif 0.5 < PBR <= 1:
+                                    PBR_point = 9
                                 else:
-                                        PBR_point = 5
+                                    PBR_point = 10
 
                                 cheap_point = (PER_point + PSR_point + PBR_point) / 3
 
@@ -597,41 +677,71 @@ if option:
                                 safety_point = 0
                                 if    self_asset_rate <= 10 :
                                     safety_point = 1
-                                elif  20 < self_asset_rate <= 30:
-                                        safety_point = 2
-                                elif  30 < self_asset_rate <= 50:
-                                        safety_point = 3
-                                elif 50 < self_asset_rate <= 70:
-                                        safety_point = 4
+                                elif  10 < self_asset_rate <= 20:
+                                    safety_point = 2
+                                elif  20 < self_asset_rate <= 25:
+                                    safety_point = 3
+                                elif 25 < self_asset_rate <= 30:
+                                    safety_point = 4
+                                elif 30 < self_asset_rate <= 40:
+                                    safety_point = 5
+                                elif 40 < self_asset_rate <= 50 :
+                                    safety_point = 6
+                                elif  50 < self_asset_rate <= 60:
+                                    safety_point = 7
+                                elif  60 < self_asset_rate <= 70:
+                                    safety_point = 8
+                                elif 70 < self_asset_rate <= 80:
+                                    safety_point = 9
                                 else:
-                                        safety_point = 5
+                                    safety_point = 10
 
                                 value_difference_rate = (target_per2 * ave_profit) / stock_value
                                 value_difference_point = 0
 
-                                if    value_difference_rate <= 10 :
+                                if    value_difference_rate <= 1 :
                                     value_difference_point = 1
-                                elif  20 < value_difference_rate <= 30:
-                                        value_difference_point = 2
-                                elif  30 < value_difference_rate <= 50:
-                                        value_difference_point = 3
-                                elif 50 < value_difference_rate <= 70:
-                                        value_difference_point = 4
+                                elif  1 < value_difference_rate <= 1.05:
+                                    value_difference_point = 2
+                                elif  1.05 < value_difference_rate <= 1.1:
+                                    value_difference_point = 3
+                                elif 1.1 < value_difference_rate <= 1.3:
+                                    value_difference_point = 4
+                                elif 1.3 < value_difference_rate <= 1.4:
+                                    value_difference_point = 5
+                                elif    1.4 < value_difference_rate <= 1.5 :
+                                    value_difference_point = 6
+                                elif  1.5 < value_difference_rate <= 1.6:
+                                    value_difference_point = 7
+                                elif  1.6 < value_difference_rate <= 2:
+                                    value_difference_point = 8
+                                elif 2 < value_difference_rate <= 3:
+                                    value_difference_point = 9
                                 else:
-                                        value_difference_point = 5
+                                    value_difference_point = 10
 
                                 rule_point = 0
 
-                                if    rule <= 10 :
+                                if    rule <= 5 :
                                     rule_point = 1
-                                elif  10 < rule <= 20:
-                                        rule_point = 2
-                                elif  20 < rule <= 30:
-                                        rule_point = 3
-                                elif 30 < rule <= 40:
-                                        rule_point = 4
+                                elif  5 < rule <= 10:
+                                    rule_point = 2
+                                elif  10 < rule <= 15:
+                                    rule_point = 3
+                                elif 15 < rule <= 20:
+                                    rule_point = 4
+                                elif 20 < rule <= 25:
+                                    rule_point = 5
+                                elif 25 < rule <= 30:
+                                    rule_point = 6
+                                elif  30 < rule <= 35:
+                                    rule_point = 7
+                                elif  35 < rule <= 40:
+                                    rule_point = 8
+                                elif 40 < rule <= 50:
+                                    rule_point = 9
                                 else:
-                                        rule_point = 5
+                                    rule_point = 10
 
                                 surprise_point = (rule_point + value_difference_point) / 2
 
