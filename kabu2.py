@@ -274,7 +274,7 @@ def get_cashflow(option):
  
     # 先頭の列(決算期)をインデックスに指定する
     df4 = df4.set_index(headers[0])
-    st.table(df4)
+    
    
     return(df4)
 
@@ -322,7 +322,7 @@ if option:
     st.write('<span style="color:red">財務情報</span>',
               unsafe_allow_html=True)
     st.table(df3)
-    
+    st.table(df4)
  
     # 各列に対して、trim_unitを適用する
     new_df = df.copy()
