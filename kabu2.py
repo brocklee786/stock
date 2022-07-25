@@ -356,7 +356,7 @@ if option:
     for col in df4.columns:
         new_df4[col] = df4[col].map(lambda v : trim_camma_kessan(v))
 
-    st.write(new_df4['営業CF'][0])
+    
  
  
     #stock_value = st.text_input('現在の株価を入力してください')
