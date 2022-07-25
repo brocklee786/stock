@@ -277,7 +277,7 @@ def get_cashflow(option):
     st.table(df4)
    
     return(df4)
-    
+
 # 数値のカンマを削除する関数
 def trim_camma_kessan(x):
     # 2,946,639.3のようなカンマ区切り、小数点有りの数値か否か確認する
@@ -309,6 +309,7 @@ if option:
     df = pd.DataFrame.from_dict([ticker_dict])
     df2 = pd.DataFrame(get_kessan(option))
     df3 = pd.DataFrame(get_zaimu(option))
+    df4 = pd.DataFrame(get_cashflow(option))
    
  
  
@@ -321,6 +322,7 @@ if option:
     st.write('<span style="color:red">財務情報</span>',
               unsafe_allow_html=True)
     st.table(df3)
+    st.table(df4)
  
     # 各列に対して、trim_unitを適用する
     new_df = df.copy()
