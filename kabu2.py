@@ -351,6 +351,12 @@ if option:
         new_df3[col] = df3[col].map(lambda v : trim_camma_kessan(v))
  
     #st.table(new_df3)
+    # 各列に対して、trim_cammaを適用する(キャッシュフロー)
+    new_df4 = df4.copy()
+    for col in df4.columns:
+        new_df4[col] = df4[col].map(lambda v : trim_camma_kessan(v))
+
+    st.write(new_df4['営業CF'])
  
  
     #stock_value = st.text_input('現在の株価を入力してください')
