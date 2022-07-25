@@ -322,8 +322,10 @@ if option:
     st.write('<span style="color:red">財務情報</span>',
               unsafe_allow_html=True)
     st.table(df3)
+    st.write('<span style="color:red">キャッシュフロー</span>',
+              unsafe_allow_html=True)
     st.table(df4)
-    st.write(df4['営業CF'])
+    
  
     # 各列に対して、trim_unitを適用する
     new_df = df.copy()
