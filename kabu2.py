@@ -222,6 +222,62 @@ def get_zaimu(option):
     # 先頭の列(決算期)をインデックスに指定する
     df3 = df3.set_index(headers[0])
     return(df3)
+
+def get_cashflow(option):
+    # 指定URLのHTMLデータを取得
+    code = int(option)
+    url = "https://minkabu.jp/stock/{0:d}/settlement".format(code)
+    html = requests.get(url)
+    # BeautifulSoupのHTMLパーサーを生成
+    soup = BeautifulSoup(html.content, "html.parser")
+ 
+    # 全<table>要素を抽出
+    table_all = soup.find_all('table')
+ 
+    # キャッシュフロー情報の<table>要素を検索する。
+    fin_table1 = table_all[4]
+ 
+    # <table>要素内のヘッダ情報を取得する。
+    headers = []
+    thead_th = fin_table1.find('thead').find_all('th')
+    for th in thead_th:
+        headers.append(th.text)
+ 
+    # <table>要素内のデータを取得する。
+    rows = []
+    tbody_tr = fin_table1.find('tbody').find_all('tr')
+ 
+    for tr in tbody_tr:
+ 
+ 
+        # <tr>要素内の<th>要素を取得する。
+        th = tr.find('th')
+ 
+        # 1行内のデータを格納するためのリスト
+        row = []
+ 
+        row.append(th.text)
+ 
+        # <tr>要素内の<td>要素を取得する。
+        td_all = tr.find_all('td')
+        for td in td_all:
+            row.append(td.text)
+ 
+        # 1行のデータを格納したリストを、リストに格納
+        rows.append(row)
+ 
+    rows.pop(0)
+ 
+ 
+    # DataFrameを生成する
+    df4 = pd.DataFrame(rows, columns=headers)
+ 
+    # 先頭の列(決算期)をインデックスに指定する
+    df4 = df4.set_index(headers[0])
+    st.table(df4)
+   
+    return(df4)
+    
 # 数値のカンマを削除する関数
 def trim_camma_kessan(x):
     # 2,946,639.3のようなカンマ区切り、小数点有りの数値か否か確認する
