@@ -323,6 +323,7 @@ if option:
               unsafe_allow_html=True)
     st.table(df3)
     st.table(df4)
+    st.write(df4['営業CF'])
  
     # 各列に対して、trim_unitを適用する
     new_df = df.copy()
