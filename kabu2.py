@@ -300,6 +300,10 @@ def plot_polar(labels, values, imgname):
     ax.set_rlim(0 ,10)
     fig.savefig(imgname)
     plt.close(fig)
+    
+def trim_camma_cashflow(x):
+    y = x.replace(',','')
+    return y
 
  
  
@@ -354,7 +358,7 @@ if option:
     # 各列に対して、trim_cammaを適用する(キャッシュフロー)
     new_df4 = df4.copy()
     for col in df4.columns:
-        new_df4[col] = df4[col].map(lambda v : trim_camma_kessan(v))
+        new_df4[col] = df4[col].map(lambda v : trim_camma_cashflow(v))
 
     
  
@@ -455,6 +459,64 @@ if option:
     st.sidebar.write('<span style="color:red">上限株価</span>',
               unsafe_allow_html=True)
     st.sidebar.write(str(int_max_stock_price) + '円')
+        sales = int(new_df4['営業CF'][0])
+    investment = int(new_df4['投資CF'][0])
+    finance = int(new_df4['財務CF'][0])
+    company = 0
+    
+    #営業CFがプラスかマイナスかを判断する。
+    if sales >= 0:
+        if investment >= 0:
+            if finance >= 0:
+                company = 1
+ 
+            else:
+                company = 2
+        else:
+            if finance >= 0:
+                company = 3
+            else:
+                company = 7
+    else:
+        if investment >= 0:
+            if finance >= 0:
+                company = 4
+            else:
+                company = 4
+        else:
+            if finance >= 0:
+                company = 5
+            else:
+                company = 6
+ 
+    if company == 1:
+        st.sidebar.write('<span style="color:red">キャッシュフローによる健全性評価</span>',
+              unsafe_allow_html=True)
+        st.sidebar.write('事業転換中の企業？')  
+    if company == 2:
+        st.sidebar.write('<span style="color:red">キャッシュフローによる健全性評価</span>',
+              unsafe_allow_html=True)
+        st.sidebar.write('事業縮小中の企業？')   
+    if company == 3:
+        st.sidebar.write('<span style="color:red">キャッシュフローによる健全性評価</span>',
+              unsafe_allow_html=True)
+        st.sidebar.write('成長企業？')   
+    if company == 4:
+        st.sidebar.write('<span style="color:red">キャッシュフローによる健全性評価</span>',
+              unsafe_allow_html=True)
+        st.sidebar.write('やや要注意な企業？')   
+    if company == 5:
+        st.sidebar.write('<span style="color:red">キャッシュフローによる健全性評価</span>',
+              unsafe_allow_html=True)
+        st.sidebar.write('再建中の企業？')   
+    if company == 6:
+        st.sidebar.write('<span style="color:red">キャッシュフローによる健全性評価</span>',
+              unsafe_allow_html=True)
+        st.sidebar.write('事業見直しの企業？')   
+    if company == 7:
+        st.sidebar.write('<span style="color:red">キャッシュフローによる健全性評価</span>',
+              unsafe_allow_html=True)
+        st.sidebar.write('優良企業？') 
 
     
    
