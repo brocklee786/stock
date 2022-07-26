@@ -459,7 +459,7 @@ if option:
     st.sidebar.write('<span style="color:red">上限株価</span>',
               unsafe_allow_html=True)
     st.sidebar.write(str(int_max_stock_price) + '円')
-        sales = int(new_df4['営業CF'][0])
+    sales = int(new_df4['営業CF'][0])
     investment = int(new_df4['投資CF'][0])
     finance = int(new_df4['財務CF'][0])
     company = 0
