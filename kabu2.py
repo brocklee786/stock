@@ -9,7 +9,7 @@ import matplotlib
 import matplotlib.pyplot as plt
 
 st.title('株価評価')
-# st.image('./sample.jpg')
+
 
 option = st.text_input('銘柄コードを入力してください')
  
