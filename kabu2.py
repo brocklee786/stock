@@ -7,6 +7,10 @@ from bs4 import BeautifulSoup
 import re
 import matplotlib
 import matplotlib.pyplot as plt
+import yfinance as yf
+import altair as alt
+import talib as ta
+
 st.set_page_config(layout="wide")
 
 st.title('株価評価')
@@ -519,6 +523,104 @@ if option:
         st.sidebar.write('<span style="color:red">キャッシュフローによる健全性評価</span>',
               unsafe_allow_html=True)
         st.sidebar.write('優良企業？') 
+       
+    st.sidebar.write('表示日数を指定して下さい')
+    days = st.sidebar.slider('日数', 1, 400, 20)
+    
+    tkr = yf.Ticker(str(option) + '.T')
+    hist = tkr.history(period=f'{days}d')
+    hist = hist.reset_index()
+    hist = hist.set_index(['Date'])
+    hist = hist.rename_axis('Date').reset_index()
+    hist = hist.T
+    a = hist.to_dict()
+    # a
+    # pd.DataFrame(a)
+
+
+    for items in a.values():
+        time = items['Date']
+        items['Date'] = time.strftime("%Y/%m/%d")
+
+    b = [x for x in a.values()]
+
+    source = pd.DataFrame(b)
+
+    price = source['Close']
+
+
+    #移動平均
+    #移動平均
+    span01=5
+    span02=25
+    span03=50
+
+    source['sma01'] = price.rolling(window=span01).mean()
+    source['sma02'] = price.rolling(window=span02).mean()
+    source['sma03'] = price.rolling(window=span03).mean()
+
+    #ボリンジャーバンド
+    source['upper'],source['middle'],source['lower'] = ta.BBANDS(source['Close'], timeperiod=25, nbdevup=2, nbdevdn=2, matype=0)
+
+    open_close_color = alt.condition("datum.Open <= datum.Close",
+                                     alt.value("#06982d"),
+                                     alt.value("#ae1325"))
+
+    ave1_color = alt.value("#1f77b4")
+    ave2_color = alt.value("#d62728")
+    ave3_color = alt.value("#7f7f7f")
+
+    base = alt.Chart(source).encode(
+         alt.X('Date:T',
+              axis=alt.Axis(
+                  format='%m/%d',
+                  labelAngle=-45,
+                  title='Date'
+              )
+        ),
+        color=open_close_color
+    ).properties(height=600)
+
+    rule = base.mark_rule().encode(
+        alt.Y(
+            'Low:Q',
+            title='Price',
+            scale=alt.Scale(zero=False),
+        ),
+        alt.Y2('High:Q')
+    ).interactive().properties(height=600)
+
+    bar = base.mark_bar().encode(
+        alt.Y('Open:Q'),
+        alt.Y2('Close:Q')
+    ).interactive().properties(height=600)
+
+    average1 = base.mark_line(opacity=0.8, clip=True).encode(
+            alt.Y("sma01:Q", stack=None, scale=alt.Scale(zero=False)),
+            color=ave1_color
+    ).interactive().properties(height=600)
+
+    average2 = base.mark_line(opacity=0.8, clip=True).encode(
+            alt.Y("sma02:Q", stack=None, scale=alt.Scale(zero=False)),
+            color=ave2_color
+    ).interactive().properties(height=600)
+
+    average3 = base.mark_line(opacity=0.8, clip=True).encode(
+            alt.Y("sma03:Q", stack=None, scale=alt.Scale(zero=False)),
+            color=ave3_color
+    ).interactive().properties(height=600)
+
+    bollinger1 = base.mark_line(opacity=0.8, clip=True).encode(
+            alt.Y("upper:Q", stack=None, scale=alt.Scale(zero=False)),
+            color=ave1_color
+    ).interactive().properties(height=600)
+
+    bollinger2 = base.mark_line(opacity=0.8, clip=True).encode(
+            alt.Y("lower:Q", stack=None, scale=alt.Scale(zero=False)),
+            color=ave1_color
+    ).interactive().properties(height=600)
+
+    st.altair_chart(rule + bar + average1 + average2 + average3 + bollinger1 + bollinger2, use_container_width=True)
 
     
    
