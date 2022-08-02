@@ -9,7 +9,7 @@ import matplotlib
 import matplotlib.pyplot as plt
 import yfinance as yf
 import altair as alt
-import talib as ta
+import ta-lib as ta
 
 st.set_page_config(layout="wide")
 
