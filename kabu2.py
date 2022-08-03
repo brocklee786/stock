@@ -9,7 +9,6 @@ import matplotlib
 import matplotlib.pyplot as plt
 import yfinance as yf
 import altair as alt
-import talib as ta
 import os
 import sys
 
