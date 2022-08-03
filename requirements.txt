@@ -8,4 +8,4 @@ beautifulsoup4==4.11.1
 lxml
 altair==4.2.0
 yfinance==0.1.72
-talib==0.4.19
+talib
