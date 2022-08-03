@@ -613,7 +613,7 @@ if option:
     base = alt.Chart(source).encode(
          alt.X('Date:T',
               axis=alt.Axis(
-                  format='%y%m/%d',
+                  format='%y/%m/%d',
                   labelAngle=-45,
                   title='Date'
               )
