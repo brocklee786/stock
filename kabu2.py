@@ -671,7 +671,7 @@ if option:
     ).encode(
         x='Date:T',
         y='macdhist:Q',
-    ).interactive().properties(height=600)
+    ).interactive()
 
     brush = alt.selection_interval(encodings=['x'],empty='all')
     background = base2.add_selection(brush)
