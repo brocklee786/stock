@@ -699,11 +699,11 @@ if option:
               )
         ),
         alt.Y('RSI:Q',
-        axis=alt.Axis(
+             axis=alt.Axis(
                   title='RSI'
               ))
         
-    ).interactive()
+    )
     
     st.altair_chart(base3, use_container_width=True)
    
