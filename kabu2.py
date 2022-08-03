@@ -674,8 +674,8 @@ if option:
     ).interactive().properties(height=600)
 
     brush = alt.selection_interval(encodings=['x'],empty='all')
-    background = base2.add_selection(brush).interactive().properties(height=600)
-    selected = base2.transform_filter(brush).mark_area(color='goldenrod').interactive().properties(height=600)
+    background = base2.add_selection(brush)
+    selected = base2.transform_filter(brush).mark_area(color='goldenrod')
 
     st.altair_chart(background + selected, use_container_width=True)
    
