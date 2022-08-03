@@ -669,7 +669,7 @@ if option:
         color='goldenrod',
         opacity=0.3
     ).encode(
-        alt.X('Date:T,
+        alt.X('Date:T',
         axis=alt.Axis(
                   format='%y/%m/%d',
                   labelAngle=-45,
