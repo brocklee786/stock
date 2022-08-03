@@ -669,13 +669,18 @@ if option:
         color='goldenrod',
         opacity=0.3
     ).encode(
-        x='Date:T',
+        alt.X('Date:T,
         axis=alt.Axis(
                   format='%y/%m/%d',
                   labelAngle=-45,
                   title='Date'
-              )
-        y='macdhist:Q',
+              )),
+        alt.Y('macdhist:Q',
+        axis=alt.Axis(
+                  format='%y/%m/%d',
+                  labelAngle=-45,
+                  title='Date'
+              ))
     )
 
     brush = alt.selection_interval(encodings=['x'],empty='all')
