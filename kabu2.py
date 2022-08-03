@@ -670,6 +670,11 @@ if option:
         opacity=0.3
     ).encode(
         x='Date:T',
+        axis=alt.Axis(
+                  format='%y/%m/%d',
+                  labelAngle=-45,
+                  title='Date'
+              )
         y='macdhist:Q',
     )
 
