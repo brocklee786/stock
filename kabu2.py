@@ -665,12 +665,11 @@ if option:
 
     st.altair_chart(rule + bar + average1 + average2 + average3 + bollinger1 + bollinger2, use_container_width=True)
 
-    base2 = alt.Chart(source).mark_area(
+    base2 = base.Chart(source).mark_area(
         color='goldenrod',
         opacity=0.3
     ).encode(
-        x='Date:T',
-        y='macdhist:Q',
+        alt.Y=('macdhist:Q')
     )
 
     brush = alt.selection_interval(encodings=['x'],empty='all')
