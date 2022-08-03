@@ -625,7 +625,7 @@ if option:
               )
         ),
         color=open_close_color
-    ).properties(height=400)
+    ).properties(height=600)
 
     rule = base.mark_rule().encode(
         alt.Y(
@@ -634,37 +634,37 @@ if option:
             scale=alt.Scale(zero=False),
         ),
         alt.Y2('High:Q')
-    ).interactive().properties(height=400)
+    ).interactive().properties(height=600)
 
     bar = base.mark_bar().encode(
         alt.Y('Open:Q'),
         alt.Y2('Close:Q')
-    ).interactive().properties(height=400)
+    ).interactive().properties(height=600)
 
     average1 = base.mark_line(opacity=0.8, clip=True).encode(
             alt.Y("sma01:Q", stack=None, scale=alt.Scale(zero=False)),
             color=ave1_color
-    ).interactive().properties(height=400)
+    ).interactive().properties(height=600)
 
     average2 = base.mark_line(opacity=0.8, clip=True).encode(
             alt.Y("sma02:Q", stack=None, scale=alt.Scale(zero=False)),
             color=ave2_color
-    ).interactive().properties(height=400)
+    ).interactive().properties(height=600)
 
     average3 = base.mark_line(opacity=0.8, clip=True).encode(
             alt.Y("sma03:Q", stack=None, scale=alt.Scale(zero=False)),
             color=ave3_color
-    ).interactive().properties(height=400)
+    ).interactive().properties(height=600)
 
     bollinger1 = base.mark_line(opacity=0.8, clip=True).encode(
             alt.Y("upper:Q", stack=None, scale=alt.Scale(zero=False)),
             color=ave1_color
-    ).interactive().properties(height=400)
+    ).interactive().properties(height=600)
 
     bollinger2 = base.mark_line(opacity=0.8, clip=True).encode(
             alt.Y("lower:Q", stack=None, scale=alt.Scale(zero=False)),
             color=ave1_color
-    ).interactive().properties(height=400)
+    ).interactive().properties(height=600)
 
     st.altair_chart(rule + bar + average1 + average2 + average3 + bollinger1 + bollinger2, use_container_width=True)
 
