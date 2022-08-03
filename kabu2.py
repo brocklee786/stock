@@ -606,7 +606,7 @@ if option:
     source['macd'], source['macdsignal'], source['macdhist'] = ta.MACD(source['Close'], fastperiod=12, slowperiod=26, signalperiod=9)
     
     #RSI
-    source['RSI'] = ta.RSI(source['close'], timeperiod = span02)
+    source['RSI'] = ta.RSI(source['Close'], timeperiod = span02)
     
     open_close_color = alt.condition("datum.Open <= datum.Close",
                                      alt.value("#06982d"),
