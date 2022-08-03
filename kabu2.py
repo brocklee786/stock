@@ -565,7 +565,7 @@ if option:
         st.sidebar.write('優良企業？') 
        
     st.sidebar.write('表示日数を指定して下さい')
-    days = st.sidebar.slider('日数', 1, 400, 20)
+    days = st.sidebar.slider('日数', 1, 400, 300)
     
     tkr = yf.Ticker(str(option) + '.T')
     hist = tkr.history(period=f'{days}d')
@@ -602,6 +602,8 @@ if option:
     #ボリンジャーバンド
     source['upper'],source['middle'],source['lower'] = ta.BBANDS(source['Close'], timeperiod=25, nbdevup=2, nbdevdn=2, matype=0)
     
+    #MACD
+    source['macd'], source['macdsignal'], source['macdhist'] = ta.MACD(source['Close'], fastperiod=12, slowperiod=26, signalperiod=9)
     
     open_close_color = alt.condition("datum.Open <= datum.Close",
                                      alt.value("#06982d"),
@@ -663,7 +665,19 @@ if option:
 
     st.altair_chart(rule + bar + average1 + average2 + average3 + bollinger1 + bollinger2, use_container_width=True)
 
-    
+    base2 = alt.Chart(source).mark_area(
+        color='goldenrod',
+        opacity=0.3
+    ).encode(
+        x='Date:T',
+        y='macdhist:Q',
+    )
+
+    brush = alt.selection_interval(encodings=['x'],empty='all')
+    background = base2.add_selection(brush)
+    selected = base2.transform_filter(brush).mark_area(color='goldenrod')
+
+    st.altair_chart(background + selected)
    
    
  
