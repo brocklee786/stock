@@ -703,7 +703,7 @@ if option:
                   title='RSI'
               ))
         
-    )
+    ).interactive()
     
     st.altair_chart(base3, use_container_width=True)
    
