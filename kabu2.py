@@ -690,7 +690,7 @@ if option:
 
     st.altair_chart(background + selected, use_container_width=True)
     
-    base3 = alt.Chart(source).encode(
+    base3 = alt.Chart(source).mark_line().encode(
          alt.X('Date:T',
               axis=alt.Axis(
                   format='%y/%m/%d',
