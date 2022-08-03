@@ -677,9 +677,7 @@ if option:
               )),
         alt.Y('macdhist:Q',
         axis=alt.Axis(
-                  format='%y/%m/%d',
-                  labelAngle=-45,
-                  title='Date'
+                  title='MACD'
               ))
     )
 
