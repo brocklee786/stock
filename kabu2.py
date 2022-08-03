@@ -601,7 +601,8 @@ if option:
 
     #ボリンジャーバンド
     source['upper'],source['middle'],source['lower'] = ta.BBANDS(source['Close'], timeperiod=25, nbdevup=2, nbdevdn=2, matype=0)
-
+    
+    
     open_close_color = alt.condition("datum.Open <= datum.Close",
                                      alt.value("#06982d"),
                                      alt.value("#ae1325"))
