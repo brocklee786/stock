@@ -605,6 +605,9 @@ if option:
     #MACD
     source['macd'], source['macdsignal'], source['macdhist'] = ta.MACD(source['Close'], fastperiod=12, slowperiod=26, signalperiod=9)
     
+    #RSI
+    source['RSI'] = ta.RSI(source['close'], timeperiod = span02)
+    
     open_close_color = alt.condition("datum.Open <= datum.Close",
                                      alt.value("#06982d"),
                                      alt.value("#ae1325"))
@@ -686,6 +689,21 @@ if option:
     selected = base2.transform_filter(brush).mark_area(color='goldenrod').interactive()
 
     st.altair_chart(background + selected, use_container_width=True)
+    
+    base3 = alt.Chart(source).encode(
+         alt.X('Date:T',
+              axis=alt.Axis(
+                  format='%y/%m/%d',
+                  labelAngle=-45,
+                  title='Date'
+              )
+        ),
+        alt.Y('RSI:Q',
+        axis=alt.Axis(
+                  title='RSI'
+              ))
+        
+    ).interactive()
    
    
  
