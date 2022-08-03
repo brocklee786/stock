@@ -671,11 +671,11 @@ if option:
     ).encode(
         x='Date:T',
         y='macdhist:Q',
-    ).interactive()
+    )
 
     brush = alt.selection_interval(encodings=['x'],empty='all')
-    background = base2.add_selection(brush)
-    selected = base2.transform_filter(brush).mark_area(color='goldenrod')
+    background = base2.add_selection(brush).interactive()
+    selected = base2.transform_filter(brush).mark_area(color='goldenrod').interactive()
 
     st.altair_chart(background + selected, use_container_width=True)
    
