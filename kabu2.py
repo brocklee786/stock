@@ -58,7 +58,7 @@ st.title('株価評価')
 
 option = st.text_input('銘柄コードを入力してください')
  
-@st.cache
+
 def get_basic_info(option):
     ticker = str(option)
     url = "https://minkabu.jp/stock/" + ticker
