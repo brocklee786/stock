@@ -415,12 +415,12 @@ if option:
     num_PER = float(new_df['PER(調整後)'][0])
     num_PSR = float(new_df['PSR'][0])
     num_PBR = float(new_df['PBR'][0])
-    num_profit = float(new_df2['純利益'][0])
-    num_asset = float(new_df3['総資産'][0])
+    num_profit = float(new_df2['純利益'][0]) * 1000000
+    num_asset = float(new_df3['総資産'][0]) * 1000000
     num_capital_ratio_percent = float(new_df3['自己資本率'][0])
     num_capital_ratio = float(new_df3['自己資本率'][0]) / 100
     num_BPS = float(new_df3['1株純資産'][0])
-    num_EPS = float(new_df2['1株益'][0])
+    num_EPS = (float(new_df2['純利益'][0]) / float(new_df['発行済株数'][0])) * 1000000
     #それぞれのデータ
     #if stock_value:
         #num_stock_value = int(stock_value)
@@ -563,6 +563,197 @@ if option:
         st.sidebar.write('<span style="color:red">キャッシュフローによる健全性評価</span>',
               unsafe_allow_html=True)
         st.sidebar.write('優良企業？') 
+        
+    #理論株価と株価の関係性のグラフ
+
+    tkr = yf.Ticker(str(option) + '.T')
+    hist = tkr.history(period='max')
+    
+
+    #BPS
+    BPS_now = float(new_df3['1株純資産'][0])
+    BPS2 = float(new_df3['1株純資産'][1])
+    BPS3 = float(new_df3['1株純資産'][2])
+    BPS4 = float(new_df3['1株純資産'][3])
+
+    #st.write(BPS2)
+
+    #発行株式数
+    number_of_stock = float(new_df3['純資産'][0]) / float(new_df3['1株純資産'][0]) * 1000000
+    number_of_stock2 = float(new_df3['純資産'][1]) / float(new_df3['1株純資産'][1]) * 1000000
+    number_of_stock3 = float(new_df3['純資産'][2]) / float(new_df3['1株純資産'][2]) * 1000000
+    number_of_stock4 = float(new_df3['純資産'][3]) / float(new_df3['1株純資産'][3]) * 1000000
+
+    #st.write(number_of_stock)
+
+    #EPS
+    EPS_now = float(new_df2['純利益'][0]) / number_of_stock * 1000000
+    EPS2 = float(new_df2['純利益'][1]) / number_of_stock * 1000000
+    EPS3 = float(new_df2['純利益'][2]) / number_of_stock * 1000000
+    EPS4 = float(new_df2['純利益'][3]) / number_of_stock * 1000000
+
+    #st.write(EPS_now)
+    
+    #ROA
+    ROA_now = float(new_df2['純利益'][0]) / float(new_df3['純資産'][0]) * 100
+    ROA2 = float(new_df2['純利益'][1]) / float(new_df3['純資産'][1]) 
+    if ROA2 >= 0.3:
+        ROA2 = 0.3
+    ROA3 = float(new_df2['純利益'][2]) / float(new_df3['純資産'][2])
+    if ROA3 >= 0.3:
+        ROA3 = 0.3
+    ROA4 = float(new_df2['純利益'][3]) / float(new_df3['純資産'][3]) 
+    if ROA4 >= 0.3:
+        ROA4 = 0.3
+ 
+    #st.write(ROA_now)
+
+    #株価
+    stockprice = hist['Close']['2022-05-12T00:00:00']
+    stockprice2 = hist['Close']['2021-05-12T00:00:00']
+    stockprice3 = hist['Close']['2020-05-12T00:00:00']
+    stockprice4 = hist['Close']['2019-05-15T00:00:00']
+
+    #st.write(stockprice2)
+
+    #自己資本比率
+    zikoshihon_now = float(new_df3['自己資本率'][0])
+    zikoshihon2 = float(new_df3['自己資本率'][1])
+    zikoshihon3 = float(new_df3['自己資本率'][2])
+    zikoshihon4 = float(new_df3['自己資本率'][3])
+
+    #st.write(zikoshihon4)
+
+    #PBR
+    PBR_now = stockprice / BPS_now
+    PBR2 = stockprice / BPS2
+    PBR3 = stockprice / BPS3
+    PBR4 = stockprice / BPS4
+
+    #st.write(PBR_now)
+    
+    #割引率の計算
+    if zikoshihon2 >= 80:
+        discount2 = 0.8
+    elif 80 > zikoshihon2 >=67:
+        discount2 = 0.75
+    elif 67> zikoshihon2 >= 50:
+        discount2 = 0.7
+    elif 50 > zikoshihon2 >= 33:
+        discount2 = 0.65
+    elif 33 > zikoshihon2 >= 10:
+        discount2 = 0.6
+    else:
+        discount2 = 0.5
+
+    if zikoshihon3 >= 80:
+        discount3 = 0.8
+    elif 80 > zikoshihon3 >=67:
+        discount3 = 0.75
+    elif 67> zikoshihon3 >= 50:
+        discount3 = 0.7
+    elif 50 > zikoshihon3 >= 33:
+        discount3 = 0.65
+    elif 33 > zikoshihon3 >= 10:
+        discount3 = 0.6
+    else:
+        discount3 = 0.5
+
+    if zikoshihon4 >= 80:
+        discount4 = 0.8
+    elif 80 > zikoshihon4 >=67:
+        discount4 = 0.75
+    elif 67> zikoshihon4 >= 50:
+        discount4 = 0.7
+    elif 50 > zikoshihon4 >= 33:
+        discount4 = 0.65
+    elif 33 > zikoshihon4 >= 10:
+        discount4 = 0.6
+    else:
+        discount4 = 0.5
+ 
+    #財務レバレッジ補正
+    financial_leverage_correction2 = 1 / (zikoshihon2 + 0.33)
+    financial_leverage_correction3 = 1 / (zikoshihon3 + 0.33)
+    financial_leverage_correction4 = 1 / (zikoshihon4 + 0.33)
+ 
+    #リスク評価率
+    if PBR2 >= 0.5:
+        risk2 = 1
+    elif 0.5 > PBR2 >=0.41:
+        risk2 = 0.8
+    elif 0.41 > PBR2 >= 0.34:
+        risk2 = 0.66
+    elif 0.34 > PBR2 >= 0.25:
+        risk2 = 0.5
+    elif 0.25 > PBR2 >= 0.21:
+        risk2 = 0.33
+    elif 0.2 > PBR2 >= 0.04:
+        risk2 = (PBR2 / 5 * 50) + 50
+    else:
+        risk2 = (PBR2 - 1) * 10 + 5
+ 
+    if PBR3 >= 0.5:
+        risk3 = 1
+    elif 0.5 > PBR3 >=0.41:
+        risk3 = 0.8
+    elif 0.41 > PBR3 >= 0.34:
+        risk3 = 0.66
+    elif 0.34 > PBR3 >= 0.25:
+        risk3 = 0.5
+    elif 0.25 > PBR3 >= 0.21:
+        risk3 = 0.33
+    elif 0.2 > PBR3 >= 0.04:
+        risk3 = (PBR3 / 5 * 50) + 50
+    else:
+        risk3 = (PBR3 - 1) * 10 + 5
+
+    if PBR4 >= 0.5:
+        risk4 = 1
+    elif 0.5 > PBR4 >=0.41:
+        risk4 = 0.8
+    elif 0.41 > PBR4 >= 0.34:
+        risk4 = 0.66
+    elif 0.34 > PBR4 >= 0.25:
+        risk4 = 0.5
+    elif 0.25 > PBR4 >= 0.21:
+        risk4 = 0.33
+    elif 0.2 > PBR4 >= 0.04:
+        risk4 = (PBR4 / 5 * 50) + 50
+    else:
+        risk4 = (PBR4 - 1) * 10 + 5
+   
+    #資産価値
+    asset_value2 = BPS2 * discount2
+    asset_value3 = BPS3 * discount3
+    asset_value4 = BPS4 * discount4
+    int_asset_value2 = int(asset_value2)
+    int_asset_value3 = int(asset_value3)
+    int_asset_value4 = int(asset_value4)
+
+    #事業価値
+    business_value2 = EPS2 * ROA2 * 150 * financial_leverage_correction2
+    business_value3 = EPS3 * ROA3 * 150 * financial_leverage_correction3
+    business_value4 = EPS4 * ROA4 * 150 * financial_leverage_correction4
+    int_business_value2 = int(business_value2)
+    int_business_value3 = int(business_value3)
+    int_business_value4 = int(business_value4)
+
+    #理論株価
+    theoretical_stock_price2 = (asset_value2 + business_value2) * risk2
+    theoretical_stock_price3 = (asset_value3 + business_value3) * risk3
+    theoretical_stock_price4 = (asset_value4 + business_value4) * risk4
+    int_theoretical_stock_price2 = int(theoretical_stock_price2)
+    int_theoretical_stock_price3 = int(theoretical_stock_price3)
+    int_theoretical_stock_price4 = int(theoretical_stock_price4)
+    #上限株価
+    max_stock_price2 = asset_value2 + (business_value2 * 2)
+    max_stock_price3 = asset_value3 + (business_value3 * 2)
+    max_stock_price4 = asset_value4 + (business_value4 * 2)
+    int_max_stock_price2 = int(max_stock_price2)
+    int_max_stock_price3 = int(max_stock_price3)
+    int_max_stock_price4 = int(max_stock_price4)
+
        
     st.sidebar.write('表示日数を指定して下さい')
     days = st.sidebar.slider('日数', 1, 400, 300)
