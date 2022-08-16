@@ -756,7 +756,10 @@ if option:
 
     theoretical = [{'2022':int_theoretical_stock_price, '2021': int_theoretical_stock_price2, '2020': int_theoretical_stock_price3, '2019': int_theoretical_stock_price4}]
     theoretical_data = pd.DataFrame(theoretical)
-    st.table(theoretical_data)
+    theoretical_data2 = theretical_data.reset_index()
+    st.write('<span style="color:red">理論株価推移</span>',
+              unsafe_allow_html=True)
+    st.table(theoretical_data2)
        
     st.sidebar.write('表示日数を指定して下さい')
     days = st.sidebar.slider('日数', 1, 400, 300)
@@ -781,7 +784,7 @@ if option:
     source = pd.DataFrame(b)
 
     price = source['Close']
-
+    
 
     #移動平均
     #移動平均
