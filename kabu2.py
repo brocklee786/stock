@@ -754,6 +754,12 @@ if option:
     int_max_stock_price3 = int(max_stock_price3)
     int_max_stock_price4 = int(max_stock_price4)
 
+    stockvalue = [{'2022':stock_value, '2021': stockprice2, '2020': stockprice3, '2019': stockprice4}]
+    stockvalue_data = pd.DataFrame(stockvalue)
+    st.write('<span style="color:red">株価推移</span>',
+              unsafe_allow_html=True)
+    st.table(stockvalue_data)
+    
     theoretical = [{'2022':int_theoretical_stock_price, '2021': int_theoretical_stock_price2, '2020': int_theoretical_stock_price3, '2019': int_theoretical_stock_price4}]
     theoretical_data = pd.DataFrame(theoretical)
     st.write('<span style="color:red">理論株価推移</span>',
