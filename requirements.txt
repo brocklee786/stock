@@ -9,4 +9,4 @@ lxml
 altair==4.2.0
 yfinance==0.1.72
 prophet
-pandas_datareader.data
+pandas_datareader
