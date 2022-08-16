@@ -755,8 +755,8 @@ if option:
     int_max_stock_price4 = int(max_stock_price4)
 
     theoretical = [{'2022':int_theoretical_stock_price, '2021': int_theoretical_stock_price2, '2020': int_theoretical_stock_price3, '2019': int_theoretical_stock_price4}]
-    theoretical_data = pd.DataFrame(theoretical)
-    theoretical_data2 = theretical_data.reset_index()
+    theoretical_data = theretical_data.reset_index()
+    theoretical_data2 = pd.DataFrame(theoretical_data)
     st.write('<span style="color:red">理論株価推移</span>',
               unsafe_allow_html=True)
     st.table(theoretical_data2)
