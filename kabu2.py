@@ -673,9 +673,9 @@ if option:
         discount4 = 0.5
  
     #財務レバレッジ補正
-    financial_leverage_correction2 = 1 / (zikoshihon2 + 0.33)
-    financial_leverage_correction3 = 1 / (zikoshihon3 + 0.33)
-    financial_leverage_correction4 = 1 / (zikoshihon4 + 0.33)
+    financial_leverage_correction2 = 1 / ((zikoshihon2 / 100) + 0.33)
+    financial_leverage_correction3 = 1 / ((zikoshihon3 / 100) + 0.33)
+    financial_leverage_correction4 = 1 / ((zikoshihon4 / 100) + 0.33)
  
     #リスク評価率
     if PBR2 >= 0.5:
@@ -754,6 +754,9 @@ if option:
     int_max_stock_price3 = int(max_stock_price3)
     int_max_stock_price4 = int(max_stock_price4)
 
+    theoretical = [{'2022':int_theoretical_stock_price, '2021': int_theoretical_stock_price2, '2020': int_theoretical_stock_price3, '2019': int_theoretical_stock_price4}]
+    theoretical_data = pd.DataFrame(theoretical)
+    st.table(theoretical_data)
        
     st.sidebar.write('表示日数を指定して下さい')
     days = st.sidebar.slider('日数', 1, 400, 300)
