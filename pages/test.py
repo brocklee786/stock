@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 from prophet import Prophet
 from pandas_datareader.data import DataReader
 import datetime
+import streamlit as st
 
 start = datetime.date(2010,1,1)
 end = datetime.date(2021,1,1)
