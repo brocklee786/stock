@@ -759,7 +759,13 @@ if option:
     st.write('<span style="color:red">理論株価推移</span>',
               unsafe_allow_html=True)
     st.table(theoretical_data)
-       
+    
+    max_theoretical = [{'2022':int_max_stock_price, '2021': int_max_stock_price2, '2020': int_max_stock_price3, '2019': int_max_stock_price4}]
+    max_theoretical_data = pd.DataFrame(max_theoretical)
+    st.write('<span style="color:red">上限株価推移</span>',
+              unsafe_allow_html=True)
+    st.table(max_theoretical_data)
+    
     st.sidebar.write('表示日数を指定して下さい')
     days = st.sidebar.slider('日数', 1, 1460, 300)
     
