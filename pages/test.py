@@ -58,4 +58,4 @@ model = Prophet()
 model.fit(data_test)
 
 fig_test = model.plot(pred)
-st.write(fig_test)
+st.pyplot(fig_test)
