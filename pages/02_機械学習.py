@@ -10,9 +10,9 @@ st.title('機械学習')
 option = st.text_input('銘柄コードを入力してください')
 
 if option:
-          start = datetime.date(2010,1,1)
-          end = datetime.date(2021,1,1)
-          data_train = DataReader(option, 'yahoo', start, end)
+          start = datetime.date(2015,1,1)
+          end = datetime.date(2022,8,19)
+          data_train = DataReader(option + '.T', 'yahoo', start, end)
 
           data_train['ds'] = data_train.index
           data_train = data_train.rename({'Adj Close':'y'}, axis=1)
@@ -47,6 +47,7 @@ if option:
 
           pred = model.predict(future)
           fig_pred = model.plot(pred)
+          st.pyplot(fig_pred)
 
           fig_components = model.plot_components(pred)
 
