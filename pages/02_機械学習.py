@@ -12,13 +12,13 @@ option = st.text_input('銘柄コードを入力してください')
 
 if option:
           start = datetime.date(2015,1,1)
-          end = datetime.date(2022,8,19)
+          end = datetime.date.today()
           data_train = DataReader(option + '.T', 'yahoo', start, end)
 
           data_train['ds'] = data_train.index
           data_train = data_train.rename({'Adj Close':'y'}, axis=1)
 
-          #data_train['y'] = np.log(data_train['y'])
+          data_train['y'] = np.log(data_train['y'])
 
 
           params = {'growth': 'linear',
