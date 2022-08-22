@@ -12,7 +12,7 @@ option = st.text_input('銘柄コードを入力してください')
 if option:
           start = datetime.date(2010,1,1)
           end = datetime.date(2021,1,1)
-          data_train = DataReader(, 'yahoo', start, end)
+          data_train = DataReader(option, 'yahoo', start, end)
 
           data_train['ds'] = data_train.index
           data_train = data_train.rename({'Adj Close':'y'}, axis=1)
