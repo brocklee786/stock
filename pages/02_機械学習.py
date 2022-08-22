@@ -18,7 +18,7 @@ if option:
           data_train['ds'] = data_train.index
           data_train = data_train.rename({'Adj Close':'y'}, axis=1)
 
-          data_train['y'] = np.log(data_train['y'])
+          #data_train['y'] = np.log(data_train['y'])
 
 
           params = {'growth': 'linear',
@@ -47,7 +47,6 @@ if option:
           )
 
           pred = model.predict(future)
-          st.pyplot(pred)
           fig_pred = model.plot(pred)
           st.pyplot(fig_pred)
 
