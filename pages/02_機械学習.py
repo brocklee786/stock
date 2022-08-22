@@ -41,7 +41,7 @@ if option:
           model.fit(data_train)
 
           future = model.make_future_dataframe(
-              periods=600, 
+              periods=300, 
               freq = 'd'  
           )
 
@@ -49,19 +49,4 @@ if option:
           fig_pred = model.plot(pred)
           st.pyplot(fig_pred)
 
-          fig_components = model.plot_components(pred)
-
-          start = datetime.date(2021,1,1)
-          end = datetime.date(2022,7,1)
-
-          data_test = DataReader('^N225', 'yahoo', start, end)
-
-          data_test['ds'] = data_test.index
-          data_test = data_test.rename({'Adj Close':'y'} ,axis=1)
-          data_test['y'] = np.log(data_test['y'])
-
-          model = Prophet()
-          model.fit(data_test)
-
-          fig_test = model.plot(pred)
-          st.pyplot(fig_test)
+          
