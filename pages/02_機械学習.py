@@ -47,7 +47,7 @@ if option:
           )
 
           pred = model.predict(future)
-          st.write(model)
+          st.table(model)
           fig_pred = model.plot(pred)
           st.pyplot(fig_pred)
 
