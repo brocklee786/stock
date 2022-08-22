@@ -47,6 +47,7 @@ if option:
           )
 
           pred = model.predict(future)
+          st.pyplot(pred)
           fig_pred = model.plot(pred)
           st.pyplot(fig_pred)
 
