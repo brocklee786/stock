@@ -21,7 +21,7 @@ if option:
           data_train['y'] = np.log(data_train['y'])
 
 
-          params = {'growth': 'linear',
+          params = {'growth': 'logistic',
                     'changepoints': None,
                     'n_changepoints': 25,
                     'changepoint_range': 0.8,
