@@ -6,6 +6,7 @@ from pandas_datareader.data import DataReader
 import datetime
 import streamlit as st
 
+st.set_page_config(layout="wide")
 st.title('機械学習')
 option = st.text_input('銘柄コードを入力してください')
 
