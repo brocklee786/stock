@@ -17,7 +17,7 @@ if option:
 
           data_train['ds'] = data_train.index
           data_train = data_train.rename({'Adj Close':'y'}, axis=1)
-          st.table(data_train)
+          
           data_train['y'] = np.log(data_train['y'])
 
 
