@@ -14,7 +14,7 @@ import sys
 import subprocess
 
 # check if the library folder already exists, to avoid building everytime you load the pahe
-if not os.path.isdir("/tmp/ta-lib"):
+
 # Download ta-lib to disk
 with open("/tmp/ta-lib-0.4.0-src.tar.gz", "wb") as file:
         response = requests.get(
