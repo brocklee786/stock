@@ -24,7 +24,7 @@ with open("/tmp/ta-lib-0.4.0-src.tar.gz", "wb") as file:
 default_cwd = os.getcwd()
 os.chdir("/tmp")
 # untar
-os.system("tar -zxvf ta-lib-0.4.0-src.tar.gz")
+os.system("tar -zxvf TA-Lib-0.4.25.tar.gz")
 os.chdir("/tmp/ta-lib")
 os.system("ls -la /app/equity/")
 # build
