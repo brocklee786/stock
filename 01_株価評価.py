@@ -771,11 +771,9 @@ if option:
     source['sma02'] = price.rolling(window=span02).mean()
     source['sma03'] = price.rolling(window=span03).mean()
 
-    #ボリンジャーバンド
-    source['upper'],source['middle'],source['lower'] = ta.BBANDS(source['Close'], timeperiod=25, nbdevup=2, nbdevdn=2, matype=0)
+   
     
-    #MACD
-    source['macd'], source['macdsignal'], source['macdhist'] = ta.MACD(source['Close'], fastperiod=12, slowperiod=26, signalperiod=9)
+    
     
     #RSI
     # 前日との差分を計算
