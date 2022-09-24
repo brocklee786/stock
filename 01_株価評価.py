@@ -12,41 +12,7 @@ import altair as alt
 import os
 import sys
 import subprocess
-
-
-# Download ta-lib to disk
-with open("/tmp/ta-lib-0.4.0-src.tar.gz", "wb") as file:
-        response = requests.get(
-            "http://prdownloads.sourceforge.net/ta-lib/ta-lib-0.4.0-src.tar.gz"
-        )
-        file.write(response.content)
-# get our current dir, to configure it back again. Just house keeping
-default_cwd = os.getcwd()
-os.chdir("/tmp")
-# untar
-os.system("tar -zxvf TA-Lib-0.4.25.tar.gz")
-os.chdir("/tmp/ta-lib")
-os.system("ls -la /app/equity/")
-# build
-os.system("./configure --prefix=/home/appuser")
-os.system("make")
-# install
-os.system("make install")
-# back to the cwd
-os.chdir(default_cwd)
-sys.stdout.flush()
-
-# add the library to our current environment
-from ctypes import *
-
-lib = CDLL("/home/appuser/lib/libta_lib.so.0.0.0")
-# import library
-try:
-    import talib
-except ImportError:
-    subprocess.check_call([sys.executable, "-m", "pip", "install", "--global-option=build_ext", "--global-option=-L/home/appuser/lib/", "--global-option=-I/home/appuser/include/", "ta-lib"])
-finally:
-    import talib
+import talib as ta
 
 
 st.set_page_config(layout="wide")
@@ -812,7 +778,24 @@ if option:
     source['macd'], source['macdsignal'], source['macdhist'] = ta.MACD(source['Close'], fastperiod=12, slowperiod=26, signalperiod=9)
     
     #RSI
-    source['RSI'] = ta.RSI(source['Close'], timeperiod = span02)
+    # 前日との差分を計算
+    df_diff = source["Close"].diff(1)
+ 
+    # 計算用のDataFrameを定義
+    df_up, df_down = df_diff.copy(), df_diff.copy()
+    
+    # df_upはマイナス値を0に変換
+    # df_downはプラス値を0に変換して正負反転
+    df_up[df_up < 0] = 0
+    df_down[df_down > 0] = 0
+    df_down = df_down * -1
+    
+    # 期間14でそれぞれの平均を算出
+    df_up_sma14 = df_up.rolling(window=14, center=False).mean()
+    df_down_sma14 = df_down.rolling(window=14, center=False).mean()
+ 
+    # RSIを算出
+    source["RSI"] = 100.0 * (df_up_sma14 / (df_up_sma14 + df_down_sma14))
     
     open_close_color = alt.condition("datum.Open <= datum.Close",
                                      alt.value("#06982d"),
@@ -862,39 +845,13 @@ if option:
             color=ave3_color
     ).interactive().properties(height=600)
 
-    bollinger1 = base.mark_line(opacity=0.8, clip=True).encode(
-            alt.Y("upper:Q", stack=None, scale=alt.Scale(zero=False)),
-            color=ave1_color
-    ).interactive().properties(height=600)
+    
 
-    bollinger2 = base.mark_line(opacity=0.8, clip=True).encode(
-            alt.Y("lower:Q", stack=None, scale=alt.Scale(zero=False)),
-            color=ave1_color
-    ).interactive().properties(height=600)
+    st.altair_chart(rule + bar + average1 + average2 + average3 , use_container_width=True)
 
-    st.altair_chart(rule + bar + average1 + average2 + average3 + bollinger1 + bollinger2, use_container_width=True)
+    
 
-    base2 = alt.Chart(source).mark_area(
-        color='goldenrod',
-        opacity=0.3
-    ).encode(
-        alt.X('Date:T',
-        axis=alt.Axis(
-                  format='%y/%m/%d',
-                  labelAngle=-45,
-                  title='Date'
-              )),
-        alt.Y('macdhist:Q',
-        axis=alt.Axis(
-                  title='MACD'
-              ))
-    )
-
-    brush = alt.selection_interval(encodings=['x'],empty='all')
-    background = base2.add_selection(brush).interactive()
-    selected = base2.transform_filter(brush).mark_area(color='goldenrod').interactive()
-
-    st.altair_chart(background + selected, use_container_width=True)
+    
     
     base3 = alt.Chart(source).mark_line().encode(
          alt.X('Date:T',
@@ -1293,4 +1250,3 @@ expander2 = st.sidebar.expander('事業価値算出方法')
 expander2.write('EPS x ROA x 150 x 財務レバレッジ補正')
 expander3 = st.sidebar.expander('理論株価算出方法')
 expander3.write('(資産価値 + 事業価値) x リスク評価率')
- 
