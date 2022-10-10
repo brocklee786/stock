@@ -12,7 +12,7 @@ import altair as alt
 import os
 import sys
 import subprocess
-import plotly.graph_objects as go
+
 
 st.set_page_config(layout="wide")
 
