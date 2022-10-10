@@ -19,10 +19,10 @@ st.set_page_config(layout="wide")
 st.title('RSI分析')
 option = st.text_input('銘柄コードを入力してください')
 if option:
-        days = st.slider('日数', 1, 3000, 1500)
+        days = st.slider('日数', 1, 2000, 1500)
         ticker = str(option) + '.T'
         tkr = yf.Ticker(ticker)
-        hist = tkr.history(period='3000d')
+        hist = tkr.history(period='2000d')
         hist = hist.reset_index()
         hist = hist.set_index(['Date'])
         hist = hist.rename_axis('Date').reset_index()
@@ -82,13 +82,13 @@ if option:
         for i in range(1,days):
                 #上昇トレンドのとき
                 
-                sub1 = source['sma01'][3000-i-1] - source['sma01'][3000-i]
-                sub2 = source['sma01'][3000-i-2] - source['sma01'][3000-i-1]
+                sub1 = source['sma01'][2000-i-1] - source['sma01'][2000-i]
+                sub2 = source['sma01'][2000-i-2] - source['sma01'][2000-i-1]
                 
                 if sub1>0 and sub2<0:
-                        if source['sma01'][3000-i-10] - source['sma01'][3000-i-1] > 0:
-                                Price.append(source['Close'][3000-i-1])
-                                RSI_list.append(source['RSI'][3000-i-1])
+                        if source['sma01'][2000-i-10] - source['sma01'][2000-i-1] > 0:
+                                Price.append(source['Close'][2000-i-1])
+                                RSI_list.append(source['RSI'][2000-i-1])
 
         figure, ax = plt.subplots()
         plt.scatter(Price, RSI_list)
@@ -107,13 +107,13 @@ if option:
         for i in range(15,days):
                 #上昇トレンドのとき
                 
-                sub1 = source['sma01'][3000-i-1] - source['sma01'][3000-i]
-                sub2 = source['sma01'][3000-i-2] - source['sma01'][3000-i-1]
+                sub1 = source['sma01'][2000-i-1] - source['sma01'][2000-i]
+                sub2 = source['sma01'][2000-i-2] - source['sma01'][2000-i-1]
                 
                 if sub1<0 and sub2>0:
-                        if source['sma01'][3000-i-10] - source['sma01'][3000-i-1] > 0:
-                                Price2.append(source['Close'][3000-i-1])
-                                RSI_list2.append(source['RSI'][3000-i-1])
+                        if source['sma01'][2000-i-10] - source['sma01'][2000-i-1] > 0:
+                                Price2.append(source['Close'][2000-i-1])
+                                RSI_list2.append(source['RSI'][2000-i-1])
                         
 
         figure, ax = plt.subplots()
