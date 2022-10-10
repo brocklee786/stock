@@ -19,7 +19,7 @@ st.set_page_config(layout="wide")
 st.title('RSI分析')
 option = st.text_input('銘柄コードを入力してください')
 if option:
-        days = st.slider('日数', 1, 2000, 1500)
+        days = st.slider('日数', 1, 2000, 500)
         ticker = str(option) + '.T'
         tkr = yf.Ticker(ticker)
         hist = tkr.history(period='2000d')
