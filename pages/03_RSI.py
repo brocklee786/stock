@@ -71,6 +71,8 @@ if option:
         # 期間14でそれぞれの平均を算出
         df_up_sma14 = df_up.rolling(window=RSI_days, center=False).mean()
         df_down_sma14 = df_down.rolling(window=RSI_days, center=False).mean()
+        
+      
 
         # RSIを算出
         source["RSI"] = 100.0 * (df_up_sma14 / (df_up_sma14 + df_down_sma14))
@@ -86,7 +88,7 @@ if option:
                 sub2 = source['sma01'][2000-i-2] - source['sma01'][2000-i-1]
                 
                 if sub1>0 and sub2<0:
-                        if source['sma01'][2000-i+10] - source['sma01'][2000-i-1] < 0:
+                        if source['RSI'][2000-i-1+14] < 50:
                                 Price.append(source['Close'][2000-i-1])
                                 AVE_RSI = (source['RSI'][2000-i-1] + source['RSI'][2000-i] + source['RSI'][2000-i+1] + source['RSI'][2000-i+2] + source['RSI'][2000-i+3] + source['RSI'][2000-i+4] + source['RSI'][2000-i+5] + source['RSI'][2000-i+6] + source['RSI'][2000-i+7] + source['RSI'][2000-i+8]) / 10
                                 RSI_list.append(AVE_RSI)
@@ -112,7 +114,7 @@ if option:
                 sub2 = source['sma01'][2000-i-2] - source['sma01'][2000-i-1]
                 
                 if sub1<0 and sub2>0:
-                        if source['sma01'][2000-i+10] - source['sma01'][2000-i-1] > 0:
+                        if source['RSI'][2000-i-1+14] > 50:
                                 Price2.append(source['Close'][2000-i-1])
                                 AVE_RSI = (source['RSI'][2000-i-1] + source['RSI'][2000-i] + source['RSI'][2000-i+1] + source['RSI'][2000-i+2] + source['RSI'][2000-i+3] + source['RSI'][2000-i+4] + source['RSI'][2000-i+5] + source['RSI'][2000-i+6] + source['RSI'][2000-i+7] + source['RSI'][2000-i+8]) / 10
                                 RSI_list2.append(AVE_RSI)
