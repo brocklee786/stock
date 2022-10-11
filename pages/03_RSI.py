@@ -84,10 +84,10 @@ if option:
         for i in range(1,days):
                 #上昇トレンドのとき
                 
-                sub1 = source['sma01'][2000-i-1] - source['sma01'][2000-i]
-                sub2 = source['sma01'][2000-i-2] - source['sma01'][2000-i-1]
+                sub1 = source['sma01'][2000-i] - source['sma01'][2000-i-1]
+                sub2 = source['sma01'][2000-i-1] - source['sma01'][2000-i-2]
                 
-                if sub1>0 and sub2<0:
+                if sub1<0 and sub2>0:
                         if source['RSI'][2000-i-1+14] < 50:
                                 Price.append(source['Close'][2000-i-1])
                                 AVE_RSI = (source['RSI'][2000-i-1] + source['RSI'][2000-i] + source['RSI'][2000-i+1] + source['RSI'][2000-i+2] + source['RSI'][2000-i+3] + source['RSI'][2000-i+4] + source['RSI'][2000-i+5] + source['RSI'][2000-i+6] + source['RSI'][2000-i+7] + source['RSI'][2000-i+8]) / 10
@@ -110,10 +110,10 @@ if option:
         for i in range(15,days):
                 #下降トレンド
                 
-                sub1 = source['sma01'][2000-i-1] - source['sma01'][2000-i]
-                sub2 = source['sma01'][2000-i-2] - source['sma01'][2000-i-1]
+                sub1 = source['sma01'][2000-i] - source['sma01'][2000-i-1]
+                sub2 = source['sma01'][2000-i-1] - source['sma01'][2000-i-2]
                 
-                if sub1<0 and sub2>0:
+                if sub1>0 and sub2<0:
                         if source['RSI'][2000-i-1+14] > 50:
                                 Price2.append(source['Close'][2000-i-1])
                                 AVE_RSI = (source['RSI'][2000-i-1] + source['RSI'][2000-i] + source['RSI'][2000-i+1] + source['RSI'][2000-i+2] + source['RSI'][2000-i+3] + source['RSI'][2000-i+4] + source['RSI'][2000-i+5] + source['RSI'][2000-i+6] + source['RSI'][2000-i+7] + source['RSI'][2000-i+8]) / 10
