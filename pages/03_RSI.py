@@ -86,9 +86,10 @@ if option:
                 sub2 = source['sma01'][2000-i-2] - source['sma01'][2000-i-1]
                 
                 if sub1>0 and sub2<0:
-                        if source['sma01'][2000-i-10] - source['sma01'][2000-i-1] > 0:
+                        if source['sma01'][2000-i-10] - source['sma01'][2000-i-1]  0:
                                 Price.append(source['Close'][2000-i-1])
-                                RSI_list.append(source['RSI'][2000-i-1])
+                                AVE_RSI = (source['RSI'][2000-i-1] + source['RSI'][2000-i] + source['RSI'][2000-i+1] + source['RSI'][2000-i+2] + source['RSI'][2000-i+3] + source['RSI'][2000-i+4] + source['RSI'][2000-i+5] + source['RSI'][2000-i+6] + source['RSI'][2000-i+7] + source['RSI'][2000-i+8]) / 10
+                                RSI_list.append(AVE_RSI)
 
         figure, ax = plt.subplots()
         plt.scatter(Price, RSI_list)
@@ -105,7 +106,7 @@ if option:
 
         
         for i in range(15,days):
-                #上昇トレンドのとき
+                #下降トレンド
                 
                 sub1 = source['sma01'][2000-i-1] - source['sma01'][2000-i]
                 sub2 = source['sma01'][2000-i-2] - source['sma01'][2000-i-1]
