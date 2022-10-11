@@ -81,7 +81,7 @@ if option:
         RSI_list = []
 
         
-        for i in range(1,days):
+        for i in range(15,days):
                 #上昇トレンドのとき
                 
                 sub1 = source['sma01'][2000-i] - source['sma01'][2000-i-1]
