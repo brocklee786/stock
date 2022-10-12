@@ -91,7 +91,7 @@ if option:
                         #if sub3 < 50:
                         if source['RSI'][2000-i-1] > 60:
                                 Price.append(source['Close'][2000-i-1])
-                                AVE_RSI = (source['RSI'][2000-i-3] + source['RSI'][2000-i-2] + source['RSI'][2000-i-1]]) / 3
+                                AVE_RSI = (source['RSI'][2000-i-3] + source['RSI'][2000-i-2] + source['RSI'][2000-i-1]) / 3
                                 RSI_list.append(AVE_RSI)
 
         
