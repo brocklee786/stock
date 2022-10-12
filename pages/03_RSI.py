@@ -92,7 +92,11 @@ if option:
                                 Price.append(source['Close'][2000-i-1])
                                 AVE_RSI = (source['RSI'][2000-i-1] + source['RSI'][2000-i] + source['RSI'][2000-i+1] + source['RSI'][2000-i+2] + source['RSI'][2000-i+3] + source['RSI'][2000-i+4] + source['RSI'][2000-i+5] + source['RSI'][2000-i+6] + source['RSI'][2000-i+7] + source['RSI'][2000-i+8]) / 10
                                 RSI_list.append(AVE_RSI)
-
+        
+        sum_RSI = sum(RSI_list)
+        AVEG_RSI = sum_RSI / len(AVE_RSI)
+        st.write(AVEG_RSI)
+        
         figure, ax = plt.subplots()
         plt.scatter(Price, RSI_list)
 
@@ -119,9 +123,7 @@ if option:
                                 AVE_RSI = (source['RSI'][2000-i-1] + source['RSI'][2000-i] + source['RSI'][2000-i+1] + source['RSI'][2000-i+2] + source['RSI'][2000-i+3] + source['RSI'][2000-i+4] + source['RSI'][2000-i+5] + source['RSI'][2000-i+6] + source['RSI'][2000-i+7] + source['RSI'][2000-i+8]) / 10
                                 RSI_list2.append(AVE_RSI)
                                 
-        sum_RSI = sum(AVE_RSI)
-        AVEG_RSI = sum_RSI / len(AVE_RSI)
-        st.write(AVEG_RSI)
+        
                         
 
         figure, ax = plt.subplots()
