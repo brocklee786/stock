@@ -89,7 +89,7 @@ if option:
                 sub3 = source['RSI'][2000-i-1+14]
                 if sub1<0 and sub2>0:
                         if sub3 < 50:
-                                if source['RSI'][2000-i-1] > 50:
+                                if source['RSI'][2000-i-1] > 60:
                                         Price.append(source['Close'][2000-i-1])
                                         AVE_RSI = (source['RSI'][2000-i+4] + source['RSI'][2000-i+5] + source['RSI'][2000-i+6] + source['RSI'][2000-i+7] + source['RSI'][2000-i+8]) / 5
                                         RSI_list.append(AVE_RSI)
@@ -119,7 +119,7 @@ if option:
                 
                 if sub1>0 and sub2<0:
                         if source['RSI'][2013-i] > 50:
-                                if source['RSI'][2000-i-1] < 50:
+                                if source['RSI'][2000-i-1] < 40:
                                         Price2.append(source['Close'][2000-i-1])
                                         AVE_RSI2 = (source['RSI'][2000-i+4] + source['RSI'][2000-i+5] + source['RSI'][2000-i+6] + source['RSI'][2000-i+7] + source['RSI'][2000-i+8]) / 5
                                         RSI_list2.append(AVE_RSI2)
