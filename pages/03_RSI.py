@@ -93,9 +93,7 @@ if option:
                                 AVE_RSI = (source['RSI'][2000-i-1] + source['RSI'][2000-i] + source['RSI'][2000-i+1] + source['RSI'][2000-i+2] + source['RSI'][2000-i+3] + source['RSI'][2000-i+4] + source['RSI'][2000-i+5] + source['RSI'][2000-i+6] + source['RSI'][2000-i+7] + source['RSI'][2000-i+8]) / 10
                                 RSI_list.append(AVE_RSI)
         
-        sum_RSI = sum(RSI_list)
-        AVEG_RSI = sum_RSI / len(RSI_list)
-        st.write(AVEG_RSI)
+        
         
         figure, ax = plt.subplots()
         plt.scatter(Price, RSI_list)
@@ -105,6 +103,7 @@ if option:
 
         figure.savefig('graph.png')	
         image = Image.open('graph.png')
+        
         
         
         Price2= []
@@ -120,8 +119,8 @@ if option:
                 if sub1>0 and sub2<0:
                         if source['RSI'][2013-i] > 50:
                                 Price2.append(source['Close'][2000-i-1])
-                                AVE_RSI = (source['RSI'][2000-i-1] + source['RSI'][2000-i] + source['RSI'][2000-i+1] + source['RSI'][2000-i+2] + source['RSI'][2000-i+3] + source['RSI'][2000-i+4] + source['RSI'][2000-i+5] + source['RSI'][2000-i+6] + source['RSI'][2000-i+7] + source['RSI'][2000-i+8]) / 10
-                                RSI_list2.append(AVE_RSI)
+                                AVE_RSI2 = (source['RSI'][2000-i-1] + source['RSI'][2000-i] + source['RSI'][2000-i+1] + source['RSI'][2000-i+2] + source['RSI'][2000-i+3] + source['RSI'][2000-i+4] + source['RSI'][2000-i+5] + source['RSI'][2000-i+6] + source['RSI'][2000-i+7] + source['RSI'][2000-i+8]) / 10
+                                RSI_list2.append(AVE_RSI2)
                                 
         
                         
@@ -146,3 +145,10 @@ if option:
                 st.write('下降トレンドから上昇トレンドへの転換時')
                 st.image(image2,use_column_width='TRUE')
 
+        sum_RSI = sum(RSI_list)
+        AVEG_RSI = sum_RSI / len(RSI_list)
+        st.write('上昇トレンドから下降トレンドへの転換時の平均RSIは'+str(AVEG_RSI))
+        
+        sum_RSI2 = sum(RSI_list2)
+        AVEG_RSI2 = sum_RSI / len(RSI_list2)
+        st.write('上昇トレンドから下降トレンドへの転換時の平均RSIは'+str(AVEG_RSI))
