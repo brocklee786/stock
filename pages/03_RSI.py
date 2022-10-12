@@ -152,3 +152,6 @@ if option:
         sum_RSI2 = sum(RSI_list2)
         AVEG_RSI2 = sum_RSI / len(RSI_list2)
         st.write('下降トレンドから上昇トレンドへの転換時の平均RSIは'+str(AVEG_RSI2))
+        
+        st.table(RSI_list)
+        st.table(RSI_list2)
