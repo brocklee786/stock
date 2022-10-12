@@ -94,7 +94,7 @@ if option:
                                 RSI_list.append(AVE_RSI)
         
         sum_RSI = sum(RSI_list)
-        AVEG_RSI = sum_RSI / len(AVE_RSI)
+        AVEG_RSI = sum_RSI / len(RSI_list)
         st.write(AVEG_RSI)
         
         figure, ax = plt.subplots()
