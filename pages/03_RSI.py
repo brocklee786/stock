@@ -139,19 +139,71 @@ if option:
 
         left_column, right_column = st.columns(2)
 
-        with left_column:
-                st.write('上昇トレンドから下降トレンドへの転換時')
-                st.image(image,use_column_width='TRUE')
         
-        with right_column:
-                st.write('下降トレンドから上昇トレンドへの転換時')
-                st.image(image2,use_column_width='TRUE')
 
         sum_RSI = sum(RSI_list)
         AVEG_RSI = sum_RSI / len(RSI_list)
-        st.write('上昇トレンドから下降トレンドへの転換時の平均RSIは'+str(AVEG_RSI))
+        AVEG_RSI = int(AVEG_RSI)
         
         sum_RSI2 = sum(RSI_list2)
         AVEG_RSI2 = sum_RSI2 / len(RSI_list2)
-        st.write('下降トレンドから上昇トレンドへの転換時の平均RSIは'+str(AVEG_RSI2))
+        AVEG_RSI2 = int(AVEG_RSI2)
         
+        
+        #RSIが転換した時に移動平均線も転換しているか
+
+        change = []
+        no_change = []
+        change2 = []
+        no_change2 = []
+        
+        for i in range(15,days):
+                #上昇トレンドから下降トレンドのとき
+                
+                sub1 = source['RSI'][2000-i] - source['RSI'][2000-i-1]
+                sub2 = source['RSI'][2000-i-1] - source['RSI'][2000-i-2]
+                sub3 = source['RSI'][2000-i-1+14]
+                if sub1<0 and sub2>0 and source['RSI'][2000-i-3] > 60:
+                        for a in range(1,5):
+                                trend_change = source['sma01'][2000-i+a] - source['sma01'][2000-i-1+a]
+                                if trend_change < 0:
+                                        change.append(1)
+                                        break
+                                else:
+                                        no_change.append(1)
+
+
+        for i in range(15,days):
+                #下降トレンドから上昇トレンドのとき
+                
+                sub1 = source['RSI'][2000-i] - source['RSI'][2000-i-1]
+                sub2 = source['RSI'][2000-i-1] - source['RSI'][2000-i-2]
+                sub3 = source['RSI'][2000-i-1+14]
+                if sub1>0 and sub2<0 and source['RSI'][2000-i-3] < 40:
+                        for a in range(1,5):
+                                trend_change = source['sma01'][2000-i+a] - source['sma01'][2000-i-1+a]
+                                if trend_change > 0:
+                                        change2.append(1)
+                                        break
+                                else:
+                                        no_change2.append(1)
+
+        
+        probability = len(change) * 100 / (len(change) + len(no_change))
+        probability = int(probability)
+        probability2 = len(change2) * 100 / (len(change2) + len(no_change2))
+        probability2 = int(probability2)
+
+        
+        
+
+        with left_column:
+                st.write('上昇トレンドから下降トレンドへの転換時')
+                st.image(image,use_column_width='TRUE')
+                st.write('上昇トレンドから下降トレンドへの転換時の平均RSIは'+str(AVEG_RSI) + '%')
+                st.write('確率は' + str(probability) + '%')
+        with right_column:
+                st.write('下降トレンドから上昇トレンドへの転換時')
+                st.image(image2,use_column_width='TRUE')
+                st.write('下降トレンドから上昇トレンドへの転換時の平均RSIは'+str(AVEG_RSI2) + '%')
+                st.write('確率は' + str(probability2) + '%')
