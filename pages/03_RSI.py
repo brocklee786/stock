@@ -198,14 +198,12 @@ if option:
         
 
         with left_column:
-                st.write('<span style="color:red">上昇トレンドから下降トレンドへの転換時</span>',
-              　unsafe_allow_html=True)
+                st.write('<span style="color:red">上昇トレンドから下降トレンドへの転換時</span>', unsafe_allow_html=True)
                 st.image(image,use_column_width='TRUE')
                 st.write('上昇トレンドから下降トレンドへの転換時の平均RSIは'+str(AVEG_RSI) + '%')
                 st.write('確率は' + str(probability) + '%')
         with right_column:
-                st.write('<span style="color:red">下降トレンドから上昇トレンドへの転換時</span>',
-              　unsafe_allow_html=True)
+                st.write('<span style="color:red">下降トレンドから上昇トレンドへの転換時</span>', unsafe_allow_html=True)
                 st.image(image2,use_column_width='TRUE')
                 st.write('下降トレンドから上昇トレンドへの転換時の平均RSIは'+str(AVEG_RSI2) + '%')
                 st.write('確率は' + str(probability2) + '%')
