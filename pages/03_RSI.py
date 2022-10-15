@@ -274,6 +274,3 @@ if option:
         max = max(change3_probability)
         max_day = change3_probability.index(max)
         st.write('RSIが' + str(max_day) + '日間のとき、確率が最大で' + str(max) + '%です')
-
-        
-　　　　 
