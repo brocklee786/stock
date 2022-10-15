@@ -209,7 +209,7 @@ if option:
         percent50_probability = len(percent50_raise) * 100 / (len(percent50_raise) + len(percent50_unraise))
         percent50_probability = int(percent50_probability)
         
-        st.write('RSI50%を超えた時、上昇トレンドが続く確率は'+str(percent50_probability) + '%')
+        
         
         
 
