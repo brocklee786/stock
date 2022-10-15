@@ -224,7 +224,7 @@ if option:
                 st.write('下降トレンドから上昇トレンドへの転換時の平均RSIは'+str(AVEG_RSI2) + '%')
                 st.write('確率は' + str(probability2) + '%')
                 
-　　　　change3_probability = []
+　　　　 change3_probability = []
         #フィッティングした際にRSIが一番高くなるものを算出
         for i in range(1,20):
                 #RSI
