@@ -223,8 +223,11 @@ if option:
                 st.image(image2,use_column_width='TRUE')
                 st.write('下降トレンドから上昇トレンドへの転換時の平均RSIは'+str(AVEG_RSI2) + '%')
                 st.write('確率は' + str(probability2) + '%')
-                
-　　　　 change3_probability = []
+        
+        
+        st.write('RSI50%を超えた時、上昇トレンドが続く確率は'+str(percent50_probability) + '%')
+        
+        change3_probability = []
         #フィッティングした際にRSIが一番高くなるものを算出
         for i in range(1,20):
                 #RSI
@@ -271,3 +274,6 @@ if option:
         max = max(change3_probability)
         max_day = change3_probability.index(max)
         st.write('RSIが' + str(max_day) + '日間のとき、確率が最大で' + str(max) + '%です')
+
+        
+　　　　 
