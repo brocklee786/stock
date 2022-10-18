@@ -125,10 +125,11 @@ if st.button('計算し,古山にLINEに通知する'):
                     useful_code.append({
                     'Company Code':code,
                     'Maximum Percent':max_num,
-                    'RSI Days':max_day})
+                    'RSI Days':max_day,
+                    'RSI Now':source['RSI'][499]})
     
             if max_num2 > 80 and 45 < source['RSI'][499] < 55:
-                    percent_50.append({'Company Code':code,'Maximum Percent':max_num2,'RSI Days':max_day2})
+                    percent_50.append({'Company Code':code,'Maximum Percent':max_num2,'RSI Days':max_day2,'RSI Now':source['RSI'][499]})
     
     #データフレームを画像に変換
     def TablePlot(df,outputPath,w,h):
@@ -275,10 +276,11 @@ if st.button('計算し,前嶋にLINEに通知する'):
                     useful_code.append({
                     'Company Code':code,
                     'Maximum Percent':max_num,
-                    'RSI Days':max_day})
+                    'RSI Days':max_day,
+                    'RSI Now':source['RSI'][499]})
     
             if max_num2 > 80 and 45 < source['RSI'][499] < 55:
-                    percent_50.append({'Company Code':code,'Maximum Percent':max_num2,'RSI Days':max_day2})
+                    percent_50.append({'Company Code':code,'Maximum Percent':max_num2,'RSI Days':max_day2,'RSI Now':source['RSI'][499]})
     
     #データフレームを画像に変換
     def TablePlot(df,outputPath,w,h):
