@@ -178,4 +178,4 @@ if st.button('古山にLINEに通知する'):
     st.write('順張り')
     st.table(percent_50)
     st.balloons()
-
+    st.balloons()
