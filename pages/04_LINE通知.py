@@ -23,10 +23,10 @@ useful_code = []
 percent_50 = []
 #リストに入っているすべてのコードでRSIが一番高い際の値とそのRSIの日数を計算
 if st.button('古山にLINEに通知する'):
-    
+    st.write('calculating...')
       
     for code in codes:
-            st.write('calculating...')
+            
             ticker = str(code) + '.T'
             tkr = yf.Ticker(ticker)
             hist = tkr.history(period='500d')
