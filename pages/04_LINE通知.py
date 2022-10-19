@@ -23,7 +23,7 @@ useful_code = []
 percent_50 = []
 #リストに入っているすべてのコードでRSIが一番高い際の値とそのRSIの日数を計算
 if st.button('古山にLINEに通知する'):
-    st.write('calculating...')
+    
       
     for code in codes:
             st.write('calculating...')
@@ -85,7 +85,7 @@ if st.button('古山にLINEに通知する'):
                 
                     for k in range(20,490):
                             #下降トレンドから上昇トレンドのとき
-                            min_RSI_list = []
+                            
                             sub1 = source['RSI'][500-k] - source['RSI'][500-k-1]
                             sub2 = source['RSI'][500-k-1] - source['RSI'][500-k-2]
                             #sub3 = source['RSI'][500-k-1+14]
