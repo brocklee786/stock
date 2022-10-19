@@ -26,6 +26,7 @@ if st.button('古山にLINEに通知する'):
     st.write('calculating...')
       
     for code in codes:
+            st.write('calculating...')
             ticker = str(code) + '.T'
             tkr = yf.Ticker(ticker)
             hist = tkr.history(period='500d')
@@ -88,12 +89,8 @@ if st.button('古山にLINEに通知する'):
                             sub1 = source['RSI'][500-k] - source['RSI'][500-k-1]
                             sub2 = source['RSI'][500-k-1] - source['RSI'][500-k-2]
                             #sub3 = source['RSI'][500-k-1+14]
-                            min_RSI_list.append(source['RSI'][500-k-1])
-                            min_RSI_list.append(source['RSI'][500-k-2])
-                            min_RSI_list.append(source['RSI'][500-k-3])
-                            min_RSI_list.append(source['RSI'][500-k-4])
-                            min_RSI = min(min_RSI_list)
-                            if sub1>0 and sub2<0 and min_RSI < 40:
+                            
+                            if sub1>0 and sub2<0 and source['RSI'][500-k-2] < 40:
                                     for a in range(1,5):
                                             trend_change = source['sma01'][500-k+a] - source['sma01'][500-k-1+a]
                                             if trend_change > 0:
@@ -133,7 +130,7 @@ if st.button('古山にLINEに通知する'):
                     'Company Code':code,
                     'Maximum Percent':max_num,
                     'RSI Days':max_day,
-                    'RSI Now':source['RSI'][498]})
+                    'RSI Now':source['RSI'][499]})
     
             if max_num2 > 80 and 45 < source['RSI'][499] < 50 and source['sma01'][499] - source['sma01'][498] > 0:
                     percent_50.append({'Company Code':code,'Maximum Percent':max_num2,'RSI Days':max_day2,'RSI Now':source['RSI'][499]})
