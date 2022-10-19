@@ -93,7 +93,7 @@ if st.button('古山にLINEに通知する'):
                             min_RSI_list.append(source['RSI'][500-k-3])
                             min_RSI_list.append(source['RSI'][500-k-4])
                             min_RSI = min(min_RSI_list)
-                            if sub1>0 and sub2<0 and min_RSI < 30:
+                            if sub1>0 and sub2<0 and min_RSI < 40:
                                     for a in range(1,5):
                                             trend_change = source['sma01'][500-k+a] - source['sma01'][500-k-1+a]
                                             if trend_change > 0:
@@ -128,7 +128,7 @@ if st.button('古山にLINEに通知する'):
         
     
         
-            if max_num > 50 and source['RSI'][499] < 30:
+            if max_num > 50 and source['RSI'][499] < 40:
                     useful_code.append({
                     'Company Code':code,
                     'Maximum Percent':max_num,
