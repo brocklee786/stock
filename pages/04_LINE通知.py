@@ -173,7 +173,9 @@ if st.button('古山にLINEに通知する'):
 
     main_gazo1()
     main_gazo2()
+    st.write('逆張り')
     st.table(useful_code)
+    st.write('順張り')
     st.table(percent_50)
     st.balloons()
 
