@@ -170,9 +170,9 @@ if st.button('古山にLINEに通知する'):
 
 
     useful_code = pd.DataFrame(useful_code)
-    TablePlot(useful_code,'table1.png',7,5)
+    TablePlot(useful_code,'table1.png',10,10)
     percent_50 = pd.DataFrame(percent_50)
-    TablePlot(percent_50,'table2.png',7,10)
+    TablePlot(percent_50,'table2.png',10,10)
 
     main_gazo1()
     main_gazo2()
