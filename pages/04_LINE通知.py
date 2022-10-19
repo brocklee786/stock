@@ -84,11 +84,16 @@ if st.button('古山にLINEに通知する'):
                 
                     for k in range(20,490):
                             #下降トレンドから上昇トレンドのとき
-                        
+                            min_RSI_list = []
                             sub1 = source['RSI'][500-k] - source['RSI'][500-k-1]
                             sub2 = source['RSI'][500-k-1] - source['RSI'][500-k-2]
                             #sub3 = source['RSI'][500-k-1+14]
-                            if sub1>0 and sub2<0 and source['RSI'][500-k-3] < 40:
+                            min_RSI_list.append(source['RSI'][500-k-1])
+                            min_RSI_list.append(source['RSI'][500-k-2])
+                            min_RSI_list.append(source['RSI'][500-k-3])
+                            min_RSI_list.append(source['RSI'][500-k-4])
+                            min_RSI = min(min_RSI_list)
+                            if sub1>0 and sub2<0 and min_RSI < 30:
                                     for a in range(1,5):
                                             trend_change = source['sma01'][500-k+a] - source['sma01'][500-k-1+a]
                                             if trend_change > 0:
