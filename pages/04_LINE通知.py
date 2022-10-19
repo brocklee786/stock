@@ -121,7 +121,7 @@ if st.button('計算し、古山にLINEに通知する'):
         
     
         
-            if max_num > 50 and source['RSI'][498] < 30:
+            if max_num > 50 and source['RSI'][499] < 30:
                     useful_code.append({
                     'Company Code':code,
                     'Maximum Percent':max_num,
