@@ -324,6 +324,7 @@ if st.button('計算し,前嶋にLINEに通知する'):
 
     main_gazo1()
     main_gazo2()
+    st.balloons()
     
 expander1 = st.sidebar.expander('逆張り')
 expander1.write('RSIが30％以下反転した際に 5日以内に移動平均線が転換している確率が50%より大きい&現在のRSIが30%未満')
