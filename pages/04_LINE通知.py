@@ -90,7 +90,7 @@ if st.button('古山にLINEに通知する'):
                             sub2 = source['RSI'][500-k-1] - source['RSI'][500-k-2]
                             #sub3 = source['RSI'][500-k-1+14]
                             
-                            if sub1>0 and sub2<0 and source['RSI'][500-k-2] < 40:
+                            if sub1>0 and sub2<0 and source['RSI'][500-k-3] < 40:
                                     for a in range(1,5):
                                             trend_change = source['sma01'][500-k+a] - source['sma01'][500-k-1+a]
                                             if trend_change > 0:
