@@ -88,7 +88,7 @@ if st.button('古山にLINEに通知する'):
                             sub1 = source['RSI'][500-k] - source['RSI'][500-k-1]
                             sub2 = source['RSI'][500-k-1] - source['RSI'][500-k-2]
                             #sub3 = source['RSI'][500-k-1+14]
-                            if sub1>0 and sub2<0 and source['RSI'][500-k-3] < 40:
+                            if sub1>0 and sub2<0 and source['RSI'][500-k-3] < 30:
                                     for a in range(1,5):
                                             trend_change = source['sma01'][500-k+a] - source['sma01'][500-k-1+a]
                                             if trend_change > 0:
@@ -179,3 +179,7 @@ if st.button('古山にLINEに通知する'):
     st.table(percent_50)
     st.balloons()
     st.balloons()
+expander1 = st.sidebar.expander('逆張り')
+expander1.write('RSIが30％以下で反転した際に 5日以内に移動平均線が転換している確率が50%より大きい&現在のRSIが30%未満')
+expander1 = st.sidebar.expander('順張り')
+expander1.write('現在のRSIが45%~50%&その確率が80%よりも大きい')
