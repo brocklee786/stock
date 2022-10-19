@@ -12,6 +12,7 @@ import altair as alt
 import os
 import sys
 import subprocess
+import time
 
 st.set_page_config(layout="wide")
 
@@ -22,7 +23,12 @@ useful_code = []
 percent_50 = []
 #リストに入っているすべてのコードでRSIが一番高い際の値とそのRSIの日数を計算
 if st.button('計算し、古山にLINEに通知する'):
-    
+    my_bar = st.progress(0)
+
+    for percent_complete in range(100):
+        time.sleep(1.3)
+        my_bar.progress(percent_complete + 1)
+      
     for code in codes:
             ticker = str(code) + '.T'
             tkr = yf.Ticker(ticker)
