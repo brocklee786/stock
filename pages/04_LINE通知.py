@@ -173,7 +173,7 @@ if st.button('計算し、古山にLINEに通知する'):
 
     main_gazo1()
     main_gazo2()
-    
+    st.balloons()
 if st.button('計算し,前嶋にLINEに通知する'):
     
     for code in codes:
