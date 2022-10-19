@@ -21,7 +21,7 @@ codes = ['5901','6810','6807','6804','6779','6770','6754','6753','6752','6750','
 useful_code = []
 percent_50 = []
 #リストに入っているすべてのコードでRSIが一番高い際の値とそのRSIの日数を計算
-if st.button('計算し,古山にLINEに通知する'):
+if st.button('計算し、古山にLINEに通知する'):
     
     for code in codes:
             ticker = str(code) + '.T'
@@ -103,7 +103,7 @@ if st.button('計算し,古山にLINEに通知する'):
                     percent50_unraise = []
                     #50%を超えたときに上昇が続いているか(順張り)
                     for j in range(20,500):
-                            raise_continue = source['sma01'][500-j+4] - source['sma01'][500-j-1]
+                            raise_continue = source['sma01'][500-j+10] - source['sma01'][500-j-1]
                             if source['RSI'][500-j-1] > 50 and source['RSI'][500-j-2] < 50:
                                     if raise_continue > 0:
                                             percent50_raise.append(1)
@@ -121,14 +121,14 @@ if st.button('計算し,古山にLINEに通知する'):
         
     
         
-            if max_num > 50 and source['RSI'][499] < 30:
+            if max_num > 60 and source['RSI'][499] < 30:
                     useful_code.append({
                     'Company Code':code,
                     'Maximum Percent':max_num,
                     'RSI Days':max_day,
                     'RSI Now':source['RSI'][499]})
     
-            if max_num2 > 80 and 45 < source['RSI'][499] < 55:
+            if max_num2 > 80 and 45 < source['RSI'][499] < 50 and source['sma01'][499] - source['sma01'][498] > 0:
                     percent_50.append({'Company Code':code,'Maximum Percent':max_num2,'RSI Days':max_day2,'RSI Now':source['RSI'][499]})
     
     #データフレームを画像に変換
@@ -254,7 +254,7 @@ if st.button('計算し,前嶋にLINEに通知する'):
                     percent50_unraise = []
                     #50%を超えたときに上昇が続いているか(順張り)
                     for j in range(20,500):
-                            raise_continue = source['sma01'][500-j+4] - source['sma01'][500-j-1]
+                            raise_continue = source['sma01'][500-j+10] - source['sma01'][500-j-1]
                             if source['RSI'][500-j-1] > 50 and source['RSI'][500-j-2] < 50:
                                     if raise_continue > 0:
                                             percent50_raise.append(1)
@@ -272,14 +272,14 @@ if st.button('計算し,前嶋にLINEに通知する'):
         
     
         
-            if max_num > 50 and source['RSI'][499] < 30:
+            if max_num > 60 and source['RSI'][499] < 30:
                     useful_code.append({
                     'Company Code':code,
                     'Maximum Percent':max_num,
                     'RSI Days':max_day,
                     'RSI Now':source['RSI'][499]})
     
-            if max_num2 > 80 and 45 < source['RSI'][499] < 55:
+            if max_num2 > 80 and 45 < source['RSI'][499] < 55 and source['sma01'][499] - source['sma01'][498]:
                     percent_50.append({'Company Code':code,'Maximum Percent':max_num2,'RSI Days':max_day2,'RSI Now':source['RSI'][499]})
     
     #データフレームを画像に変換
