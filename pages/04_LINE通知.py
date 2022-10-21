@@ -133,7 +133,7 @@ if st.button('古山にLINEに通知する'):
                     'RSI Now':source['RSI'][499],
                     'Price':source['Close'][499]})
     
-            if max_num2 > 80 and 45 < source['RSI'][499] < 50 and source['sma01'][499] - source['sma01'][498] > 0:
+            if max_num2 > 80 and 45 < source['RSI'][499] < 5 and source['sma01'][499] - source['sma01'][498] > 0:
                     percent_50.append({'Company Code':code,'Maximum Percent':max_num2,'RSI Days':max_day2,'RSI Now':source['RSI'][499],'Price':source['Close'][499]})
     
     #データフレームを画像に変換
