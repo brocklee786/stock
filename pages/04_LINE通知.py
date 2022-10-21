@@ -14,6 +14,38 @@ import sys
 import subprocess
 import time
 
+#データフレームを画像に変換
+def TablePlot(df,outputPath,w,h):
+    fig, ax = plt.subplots(figsize=(w,h))
+    ax.axis('off')
+    ax.table(cellText=df.values,
+            colLabels=df.columns,
+            loc='center')
+    plt.savefig(outputPath)
+
+#画像とメッセージをLINEに送信
+def main_gazo1():
+    url = "https://notify-api.line.me/api/notify"
+    token = "Y7qIXR6HxmIoOG2Tpx2X6uAZEfa1RcTIKKkK9tVn0LL"
+    headers = {"Authorization" : "Bearer "+ token}
+
+    message = '逆張り'
+    payload = {"message" :  message}
+    files = {"imageFile":open('./table1.png','rb')}
+
+    requests.post(url ,headers = headers ,params=payload,files=files)
+
+def main_gazo2():
+    url = "https://notify-api.line.me/api/notify"
+    token = "Y7qIXR6HxmIoOG2Tpx2X6uAZEfa1RcTIKKkK9tVn0LL"
+    headers = {"Authorization" : "Bearer "+ token}
+
+    message = '順張り'
+    payload = {"message" :  message}
+    files = {"imageFile":open('./table2.png','rb')}
+
+    requests.post(url ,headers = headers ,params=payload,files=files)
+    
 st.set_page_config(layout="wide")
 
 st.title('RSIによる買い時をラインに通知')
@@ -133,40 +165,10 @@ if st.button('古山にLINEに通知する'):
                     'RSI Now':source['RSI'][499],
                     'Price':source['Close'][499]})
     
-            if max_num2 > 80 and 45 < source['RSI'][499] < 5 and source['sma01'][499] - source['sma01'][498] > 0:
+            if max_num2 > 80 and 45 < source['RSI'][499] < 50 and source['sma01'][499] - source['sma01'][498] > 0:
                     percent_50.append({'Company Code':code,'Maximum Percent':max_num2,'RSI Days':max_day2,'RSI Now':source['RSI'][499],'Price':source['Close'][499]})
-    
-    #データフレームを画像に変換
-    def TablePlot(df,outputPath,w,h):
-        fig, ax = plt.subplots(figsize=(w,h))
-        ax.axis('off')
-        ax.table(cellText=df.values,
-                colLabels=df.columns,
-                loc='center')
-        plt.savefig(outputPath)
 
-    #画像とメッセージをLINEに送信
-    def main_gazo1():
-        url = "https://notify-api.line.me/api/notify"
-        token = "Y7qIXR6HxmIoOG2Tpx2X6uAZEfa1RcTIKKkK9tVn0LL"
-        headers = {"Authorization" : "Bearer "+ token}
-
-        message = '逆張り'
-        payload = {"message" :  message}
-        files = {"imageFile":open('./table1.png','rb')}
-
-        requests.post(url ,headers = headers ,params=payload,files=files)
-
-    def main_gazo2():
-        url = "https://notify-api.line.me/api/notify"
-        token = "Y7qIXR6HxmIoOG2Tpx2X6uAZEfa1RcTIKKkK9tVn0LL"
-        headers = {"Authorization" : "Bearer "+ token}
-
-        message = '順張り'
-        payload = {"message" :  message}
-        files = {"imageFile":open('./table2.png','rb')}
-
-        requests.post(url ,headers = headers ,params=payload,files=files)
+      
 
 
     useful_code = pd.DataFrame(useful_code)
