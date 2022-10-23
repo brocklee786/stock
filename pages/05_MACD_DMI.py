@@ -20,7 +20,7 @@ st.title('MACDとDMI分析')
 option = st.text_input('銘柄コードを入力してください')
 days = st.selectbox(
     '何日間の取引を想定していますか？',
-    (5, 10))
+    (1, 3, 5, 10))
 if option:
         ticker = str(option) + '.T'
         tkr = yf.Ticker(ticker)
