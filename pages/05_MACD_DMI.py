@@ -152,7 +152,8 @@ if option:
                         
                         yesterday2 = source['pDI'][(num)+k-1] - source['mDI'][(num)+k-1]
                         today2 = source['pDI'][(num)+k] - source['mDI'][(num)+k]
-                        if yesterday2<0 and today2>0 :
+                        adx_check2 = source['ADX'][num+k] - source['ADX'][num+k-1]
+                        if yesterday2<0 and today2>0 and adx_check2>0:
                                 MACD_DMI_check.append(num)
                                 break
 
