@@ -18,6 +18,9 @@ st.set_page_config(layout="wide")
  
 st.title('MACDとDMI分析')
 option = st.text_input('銘柄コードを入力してください')
+days = st.selectbox(
+    '何日間の取引を想定していますか？',
+    (5, 10))
 if option:
         ticker = str(option) + '.T'
         tkr = yf.Ticker(ticker)
@@ -90,7 +93,7 @@ if option:
                 #pDIとmDIがクロスしているかどうかを確認する。
                 yesterday = source['pDI'][i-1] - source['mDI'][i-1]
                 today = source['pDI'][i] - source['mDI'][i]
-                sub = source['sma01'][i+5] - source['sma01'][i]
+                sub = source['sma01'][i+days] - source['sma01'][i]
                 adx_check = source['ADX'][i] - source['ADX'][i-1]
                 if yesterday<0 and today>0 and sub > 0 and adx_check>0:
                         DMI_buy.append(i)
@@ -117,7 +120,7 @@ if option:
                 #MACDとシグナルがクロスしているかどうかを確認する。
                 yesterday1 = source['MACD'][i-1] - source['Signal'][i-1]
                 today1 = source['MACD'][i] - source['Signal'][i]
-                sub1 = source['sma01'][i+5] - source['sma01'][i]
+                sub1 = source['sma01'][i+days] - source['sma01'][i]
                 if yesterday1<0 and today1>0 and sub1>0:
                         MACD_buy.append(i)
                 if yesterday1<0 and today1>0 and sub1<0:
@@ -159,7 +162,7 @@ if option:
 
         buy = []
         for num in MACD_DMI_check:
-                sub2 = source['sma01'][num+5] - source['sma01'][num]
+                sub2 = source['sma01'][num+days] - source['sma01'][num]
                 if sub2 > 0:
                         buy.append({'Number':num,'Date':source['Date'][num],'Price':source['Close'][num]})
 
