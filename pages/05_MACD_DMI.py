@@ -91,9 +91,10 @@ if option:
                 yesterday = source['pDI'][i-1] - source['mDI'][i-1]
                 today = source['pDI'][i] - source['mDI'][i]
                 sub = source['sma01'][i+5] - source['sma01'][i]
-                if yesterday<0 and today>0 and sub > 0:
+                adx_check = source['ADX'][i] - source['ADX'][i-1]
+                if yesterday<0 and today>0 and sub > 0 and adx_check>0:
                         DMI_buy.append(i)
-                elif yesterday<0 and today>0 and sub<0:
+                elif yesterday<0 and today>0 and sub<0 and adx_check>0:
                         DMI_Nobuy.append(i)
         for i in range(0,499):
                 source['DMI_buy'] = nan
