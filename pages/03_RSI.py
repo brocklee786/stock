@@ -222,7 +222,7 @@ if option:
         with right_column:
                 st.write('<span style="color:green">下降トレンドから上昇トレンドへの転換時</span>', unsafe_allow_html=True)
                 st.image(image,use_column_width='auto')
-                st.subgheader('下降トレンドから上昇トレンドへの転換時の平均RSIは'+str(AVEG_RSI2) + '%')
+                st.subheader('下降トレンドから上昇トレンドへの転換時の平均RSIは'+str(AVEG_RSI2) + '%')
                 st.subheader('正答率は' + str(probability2) + '%')
         
         
