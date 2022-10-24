@@ -79,8 +79,9 @@ codes = ['5901','6810','6807','6804','6779','6770','6754','6753','6752','6750','
  
 useful_code = []
 percent_50 = []
+st.subheader('RSIによる分析')
 #リストに入っているすべてのコードでRSIが一番高い際の値とそのRSIの日数を計算
-if st.button('古山にLINEに通知する'):
+if st.button('LINEに通知する1'):
     st.write('calculating...')
      
     for code in codes:
@@ -218,7 +219,8 @@ expander1.write('現在のRSIが45%~50%&その確率が80%よりも大きい')
 MACD_buy2 = []
 DMI_buy2 = []
 #MACDとDMIによる通知
-if st.button('古山にLINE'):
+st.subheader('DMIとMACDによる分析')
+if st.button('LINEに通知する2'):
     for code in codes:
         ticker = str(code) + '.T'
         tkr = yf.Ticker(ticker)
