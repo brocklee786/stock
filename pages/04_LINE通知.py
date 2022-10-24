@@ -371,18 +371,20 @@ if st.button('LINEに通知する2'):
         dif2 = DMI_today - DMI_yesterday
         if -5<DMI_today<0 and dif2<0 and adx_trend>0 and DMI_possibility>60:
                     DMI_buy2.append({'Company Code':code,'Maximum Percent':DMI_possibility,'Price':source['Close'][499]})
- 
-    DMI_buy2 = pd.DataFrame(DMI_buy2)
-    TablePlot(DMI_buy2,'table3.png',10,10)
-    MACD_buy2 = pd.DataFrame(MACD_buy2)
-    TablePlot(MACD_buy2,'table4.png',10,10)
- 
-    main_gazo3()
-    main_gazo4()
-    st.subheader('DMI')
-    st.table(DMI_buy2)
-    st.subheader('MACD')
-    st.table(MACD_buy2)
+    if len(DMI_buy2)>0
+        DMI_buy2 = pd.DataFrame(DMI_buy2)
+        TablePlot(DMI_buy2,'table3.png',10,10)
+        main_gazo3()
+        st.subheader('DMI')
+        st.table(DMI_buy2)
+        
+    if len(MACD_buy2)>0:
+        MACD_buy2 = pd.DataFrame(MACD_buy2)
+        TablePlot(MACD_buy2,'table4.png',10,10)
+        main_gazo4()
+        st.subheader('MACD')
+        st.table(MACD_buy2)
+        
     st.balloons()
     st.balloons()
     
