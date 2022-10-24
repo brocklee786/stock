@@ -173,9 +173,9 @@ if option:
         #それぞれの正答率を求める
         if len(DMI_buy)>0:
             DMI_possibility = int(len(DMI_buy) * 100 / (len(DMI_buy) + len(DMI_Nobuy)))
-        if len(MACD_buy):
+        if len(MACD_buy)>0:
             MACD_possibility = int(len(MACD_buy) * 100 / (len(MACD_buy) + len(MACD_Nobuy)))
-        if len(colab_possibility):
+        if len(buy)>0:
             colab_possibility = int(len(buy) * 100 / len(MACD_DMI_check))
         
         
