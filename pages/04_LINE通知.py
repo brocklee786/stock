@@ -287,11 +287,11 @@ if st.button('古山にLINE'):
  
         DMI_buy = []
         DMI_Nobuy = []
-        for i in range(20,485):
+        for i in range(20,489):
                 #pDIとmDIがクロスしているかどうかを確認する。
                 yesterday = source['pDI'][i-1] - source['mDI'][i-1]
                 today = source['pDI'][i] - source['mDI'][i]
-                sub = source['sma01'][i+days] - source['sma01'][i]
+                sub = source['Close'][i+days] - source['Close'][i]
                 adx_check = source['ADX'][i] - source['ADX'][i-1]
                 if yesterday<0 and today>0 and sub > 0 and adx_check>0:
                         DMI_buy.append(i)
@@ -305,11 +305,11 @@ if st.button('古山にLINE'):
        
         MACD_buy = []
         MACD_Nobuy = []
-        for i in range(20,490):
+        for i in range(20,489):
                 #MACDとシグナルがクロスしているかどうかを確認する。
                 yesterday1 = source['MACD'][i-1] - source['Signal'][i-1]
                 today1 = source['MACD'][i] - source['Signal'][i]
-                sub1 = source['sma01'][i+days] - source['sma01'][i]
+                sub1 = source['Close'][i+days] - source['Close'][i]
                 if yesterday1<0 and today1>0 and sub1>0:
                         MACD_buy.append(i)
                 if yesterday1<0 and today1>0 and sub1<0:
@@ -318,7 +318,7 @@ if st.button('古山にLINE'):
        
  
         MACD_buy_check = []
-        for i in range(20,490):
+        for i in range(20,489):
                 #MACDとシグナルがクロスしているかどうかを確認する。
                 yesterday1 = source['MACD'][i-1] - source['Signal'][i-1]
                 today1 = source['MACD'][i] - source['Signal'][i]
@@ -341,7 +341,7 @@ if st.button('古山にLINE'):
  
         buy = []
         for num in MACD_DMI_check:
-                sub2 = source['sma01'][num+days] - source['sma01'][num]
+                sub2 = source['Close'][num+days] - source['Close'][num]
                 if sub2 > 0:
                         buy.append({'Number':num,'Date':source['Date'][num],'Price':source['Close'][num]})
  
