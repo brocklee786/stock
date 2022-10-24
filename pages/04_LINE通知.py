@@ -360,14 +360,14 @@ if st.button('古山にLINE'):
         MACD_today = source['MACD'][499] - source['Signal'][499]
         MACD_yesterday = source['MACD'][498] - source['MACD'][498]
         dif = MACD_today - MACD_yesterday
-        if -5<MACD_today<0 and dif<0:
+        if -5<MACD_today<0 and dif<0 and MACD_possibility>60:
                     MACD_buy2.append({'Company Code':code,'Maximum Percent':MACD_possibility,'Price':source['Close'][499]})
        
         DMI_today = source['pDI'][499] - source['mDI'][499]
         DMI_yesterday = source['pDI'][498] - source['mDI'][498]
         adx_trend = source['ADX'][499] - source['ADX'][498]
         dif2 = DMI_today - DMI_yesterday
-        if -5<DMI_today<0 and dif2<0 and  adx_trend>0:
+        if -5<DMI_today<0 and dif2<0 and adx_trend>0 and DMI_possibility>60:
                     DMI_buy2.append({'Company Code':code,'Maximum Percent':DMI_possibility,'Price':source['Close'][499]})
  
     DMI_buy2 = pd.DataFrame(DMI_buy2)
