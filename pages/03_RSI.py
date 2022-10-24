@@ -274,4 +274,4 @@ if option:
 
         max = max(change5_probability)
         max_day5 = change5_probability.index(max)
-        st.write('RSIが' + str(max_day5 + 1) + '日間のとき、確率が最大で' + str(max) + '%です')
+        st.subheader('RSIが' + str(max_day5 + 1) + '日間のとき、確率が最大で' + str(max) + '%です')
