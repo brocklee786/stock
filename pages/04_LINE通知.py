@@ -71,7 +71,7 @@ def main_gazo4():
    
 st.set_page_config(layout="wide")
  
-st.title('RSIによる買い時をラインに通知')
+st.title('LINEに通知')
 days = st.selectbox(
     '何日間の取引を想定していますか？',
     (1,3, 5, 10))
