@@ -205,9 +205,9 @@ if st.button('LINEに通知する1'):
  
     main_gazo1()
     main_gazo2()
-    st.write('逆張り')
+    st.subheader('逆張り')
     st.table(useful_code)
-    st.write('順張り')
+    st.subheader('順張り')
     st.table(percent_50)
     st.balloons()
     st.balloons()
@@ -375,7 +375,17 @@ if st.button('LINEに通知する2'):
     DMI_buy2 = pd.DataFrame(DMI_buy2)
     TablePlot(DMI_buy2,'table3.png',10,10)
     MACD_buy2 = pd.DataFrame(MACD_buy2)
-    TablePlot(MACD_buy2,'table4.png',20,10)
+    TablePlot(MACD_buy2,'table4.png',10,10)
  
     main_gazo3()
     main_gazo4()
+    st.subheader('DMI')
+    st.table(DMI_buy2)
+    st.subheader('MACD')
+    st.table(MACD_buy2)
+    st.balloons()
+    st.balloons()
+    
+    
+    
+    
