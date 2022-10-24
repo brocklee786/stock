@@ -239,9 +239,9 @@ if option:
        
 
         # st.altair_chart(plot, use_container_width=True)
-
-        st.subheader('DMIの正答率は' + str(DMI_possibility) + '%')
-        if st.button('DMI正答率のグラフを表示する'):
+        if len(DMI_buy)>0:
+            st.subheader('DMIの正答率は' + str(DMI_possibility) + '%')
+            if st.button('DMI正答率のグラフを表示する'):
                 figure1, ax = plt.subplots()
                 plt.rcParams["figure.figsize"] = (10, 4)
                 plt.plot(source['Date'], source['Close'],label='Close')
@@ -252,20 +252,27 @@ if option:
                 plt.title('DMI')
                 ax.legend()
                 st.pyplot(figure1)
+        else:
+            st.subheader('DMIの正答率は0%')
         
+        if len(MACD_buy)>0:
+            st.subheader('MACDの正答率は' + str(MACD_possibility) + '%')
+            if st.button('MACD正答率のグラフを表示する'):
+                    figure2, ax = plt.subplots()
+                    plt.rcParams["figure.figsize"] = (10, 4)
+                    plt.plot(source['Date'], source['Close'],label='Close')
+                    plt.scatter(source['Date'],source['MACD_buy'],color='r',label='MACD_buy')
+                    plt.scatter(source['Date'],source['MACD_Nobuy'],color='g',label='MACD_Nobuy')
+                    plt.xlabel("DATE")
+                    plt.ylabel("PRICE")
+                    plt.title('MACD')
+                    ax.legend()
+                    st.pyplot(figure2)
+        else:
+            st.subheader('MACDの正答率は0%')
+      
 
-        st.subheader('MACDの正答率は' + str(MACD_possibility) + '%')
-        if st.button('MACD正答率のグラフを表示する'):
-                figure2, ax = plt.subplots()
-                plt.rcParams["figure.figsize"] = (10, 4)
-                plt.plot(source['Date'], source['Close'],label='Close')
-                plt.scatter(source['Date'],source['MACD_buy'],color='r',label='MACD_buy')
-                plt.scatter(source['Date'],source['MACD_Nobuy'],color='g',label='MACD_Nobuy')
-                plt.xlabel("DATE")
-                plt.ylabel("PRICE")
-                plt.title('MACD')
-                ax.legend()
-                st.pyplot(figure2)
-
-        
-        st.subheader('DMIとMACDの組み合わせの正答率は' + str(colab_possibility) + '%')
+        if len(buy)>0:
+            st.subheader('DMIとMACDの組み合わせの正答率は' + str(colab_possibility) + '%')
+        else:
+            st.subheader('DMIとMACDの組み合わせの正答率は0%')
