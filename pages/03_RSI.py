@@ -215,18 +215,18 @@ if option:
         
 
         with left_column:
-                st.write('<span style="color:green">上昇トレンドから下降トレンドへの転換時</span>', unsafe_allow_html=True)
+                st.subheader('<span style="color:green">上昇トレンドから下降トレンドへの転換時</span>', unsafe_allow_html=True)
                 st.image(image,use_column_width='auto')
-                st.write('上昇トレンドから下降トレンドへの転換時の平均RSIは'+str(AVEG_RSI) + '%')
-                st.write('確率は' + str(probability) + '%')
+                st.subheader('上昇トレンドから下降トレンドへの転換時の平均RSIは'+str(AVEG_RSI) + '%')
+                st.subheader('正答率は' + str(probability) + '%')
         with right_column:
-                st.write('<span style="color:green">下降トレンドから上昇トレンドへの転換時</span>', unsafe_allow_html=True)
+                st.subheader('<span style="color:green">下降トレンドから上昇トレンドへの転換時</span>', unsafe_allow_html=True)
                 st.image(image,use_column_width='auto')
-                st.write('下降トレンドから上昇トレンドへの転換時の平均RSIは'+str(AVEG_RSI2) + '%')
-                st.write('確率は' + str(probability2) + '%')
+                st.subgheader('下降トレンドから上昇トレンドへの転換時の平均RSIは'+str(AVEG_RSI2) + '%')
+                st.subheader('正答率は' + str(probability2) + '%')
         
         
-        st.write('RSI50%を超えた時、上昇トレンドが続く確率は'+str(percent50_probability) + '%')
+        st.subheader('RSI50%を超えた時、上昇トレンドが続く確率は'+str(percent50_probability) + '%')
         
         change5_probability = []
         #フィッティングした際にRSIが一番高くなるものを算出
