@@ -171,10 +171,12 @@ if option:
         #st.table(correct)
 
         #それぞれの正答率を求める
-        piece = len(DMI_buy) + len(DMI_Nobuy)
-        DMI_possibility = int(len(DMI_buy) * 100 / (len(DMI_buy) + len(DMI_Nobuy)))
-        MACD_possibility = int(len(MACD_buy) * 100 / (len(MACD_buy) + len(MACD_Nobuy)))
-        colab_possibility = int(len(buy) * 100 / len(MACD_DMI_check))
+        if len(DMI_buy)>0:
+            DMI_possibility = int(len(DMI_buy) * 100 / (len(DMI_buy) + len(DMI_Nobuy)))
+        if len(MACD_buy):
+            MACD_possibility = int(len(MACD_buy) * 100 / (len(MACD_buy) + len(MACD_Nobuy)))
+        if len(colab_possibility):
+            colab_possibility = int(len(buy) * 100 / len(MACD_DMI_check))
         
         
         # open_close_color = alt.condition("datum.Open <= datum.Close",
