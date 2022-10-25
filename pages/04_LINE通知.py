@@ -15,6 +15,8 @@ import subprocess
 import time
 from math import nan
  
+ 
+
 #データフレームを画像に変換
 def TablePlot(df,outputPath,w,h):
     fig, ax = plt.subplots(figsize=(w,h))
@@ -22,6 +24,7 @@ def TablePlot(df,outputPath,w,h):
     ax.table(cellText=df.values,
             colLabels=df.columns,
             loc='center')
+    plt.rcParams['font.family'] = 'MS Gothic'
     plt.savefig(outputPath)
  
 #画像とメッセージをLINEに送信
@@ -68,6 +71,289 @@ def main_gazo4():
     files = {"imageFile":open('./table4.png','rb')}
  
     requests.post(url ,headers = headers ,params=payload,files=files)
+
+
+def get_basic_info(option):
+    ticker = str(option)
+    url = "https://minkabu.jp/stock/" + ticker
+    html = requests.get(url)
+ 
+    soup = BeautifulSoup(html.content, "html.parser")
+ 
+    basic_info = {}
+    tr_all = soup.find_all('tr')
+    for tr in tr_all:
+        th = tr.find('th')
+        if th is None:
+            continue
+       
+        td = tr.find('td')
+   
+        key = th.text
+        value = td.text
+   
+        basic_info[key] = value
+    print(basic_info)
+    return(basic_info)
+   
+def get_company_info(option):
+
+    ticker = str(option)
+    url = "https://minkabu.jp/stock/" + ticker + "/fundamental"
+    html = requests.get(url)
+    soup = BeautifulSoup(html.content,"html.parser")
+
+    basic_info2 = {}
+    dl_all = soup.find_all("dl",{"class":"md_dataList"})
+
+    for i in range(len(dl_all)):
+        dt = dl_all[i].find_all("dt")  
+        dd = dl_all[i].find_all("dd")
+        for i,j in zip(dt,dd):
+            soup1 = BeautifulSoup(str(i),"lxml")
+            soup2 = BeautifulSoup(str(j),"lxml")
+            text1 = soup1.get_text()
+            text2 = soup2.get_text()
+            basic_info2[text1] = text2
+
+    return(basic_info2)
+   
+ # 単位を削除する関数
+def trim_unit(x):
+   
+    # 単位=円を削除
+    yen_re = re.search(r"([+-]?\d{1,3}(,\d{3})*\.\d+)円", x)
+    if yen_re:
+        value = yen_re.group(1)
+        value = value.replace(',', '')
+ 
+        return value
+   
+    # 単位=%を削除
+    perc_re = re.search(r"(\d+\.\d+)%", x)
+    if perc_re:
+        value = perc_re.group(1)
+        return np.float64(value)
+   
+    # 単位=株を削除
+    stock_re = re.search(r"(\d{1,3}(,\d{3})*)株", x)
+    if stock_re:
+        value = stock_re.group(1)
+        value = value.replace(',', '')
+        return np.int64(value)
+   
+    # 単位=倍を削除
+    times_re = re.search(r"(\d+\.\d+)倍", x)
+    if times_re:
+        value = times_re.group(1)
+        return np.float64(value)
+   
+    # 単位=百万円を削除
+    million_yen_re = re.search(r"(\d{1,3}(,\d{3})*)百万円", x)
+    if million_yen_re:
+        value = million_yen_re.group(1)
+        value = value.replace(',', '')
+        value = np.int64(value) * 1000000
+        return value
+   
+    # 単位=千株を削除
+    thousand_stock_re = re.search(r"(\d{1,3}(,\d{3})*)千株", x)
+    if thousand_stock_re:
+        value = thousand_stock_re.group(1)
+        value = value.replace(',', '')
+        value = np.int64(value) * 1000
+        return value
+   
+    return x
+ 
+def get_kessan(option):
+    # 指定URLのHTMLデータを取得
+    code = int(option)
+    url = "https://minkabu.jp/stock/{0:d}/settlement".format(code)
+    html = requests.get(url)
+    # BeautifulSoupのHTMLパーサーを生成
+    soup = BeautifulSoup(html.content, "html.parser")
+ 
+    # 全<table>要素を抽出
+    table_all = soup.find_all('table')
+ 
+    # 決算情報の<table>要素を検索する。
+    fin_table1 = None
+    for table in table_all:
+   
+        # <caption>要素を取得
+        caption = table.find('caption')
+        if caption is None:
+            continue
+   
+        # <caption>要素の文字列が目的のものと一致したら終了
+        if caption.text == '決算情報':
+            fin_table1 = table
+            break
+ 
+    # <table>要素内のヘッダ情報を取得する。
+    headers = []
+    thead_th = fin_table1.find('thead').find_all('th')
+    for th in thead_th:
+        headers.append(th.text)
+ 
+    # <table>要素内のデータを取得する。
+    rows = []
+    tbody_tr = fin_table1.find('tbody').find_all('tr')
+    for tr in tbody_tr:
+   
+        # 1行内のデータを格納するためのリスト
+        row = []
+   
+        # <tr>要素内の<th>要素を取得する。
+        th = tr.find('th')
+        row.append(th.text)
+   
+        # <tr>要素内の<td>要素を取得する。
+        td_all = tr.find_all('td')
+        for td in td_all:
+            row.append(td.text)
+   
+        # 1行のデータを格納したリストを、リストに格納
+        rows.append(row)
+ 
+    # DataFrameを生成する
+    df2 = pd.DataFrame(rows, columns=headers)
+ 
+    # 先頭の列(決算期)をインデックスに指定する
+    df2 = df2.set_index(headers[0])
+    return(df2)
+ 
+#財務情報を取得
+def get_zaimu(option):
+    # 指定URLのHTMLデータを取得
+    code = int(option)
+    url = "https://minkabu.jp/stock/{0:d}/settlement".format(code)
+    html = requests.get(url)
+    # BeautifulSoupのHTMLパーサーを生成
+    soup = BeautifulSoup(html.content, "html.parser")
+ 
+    # 全<table>要素を抽出
+    table_all = soup.find_all('table')
+ 
+    # 財務情報の<table>要素を検索する。
+    fin_table1 = None
+    for table in table_all:
+   
+        # <caption>要素を取得
+        caption = table.find('caption')
+        if caption is None:
+            continue
+   
+        # <caption>要素の文字列が目的のものと一致したら終了
+        if caption.text == '財務情報':
+            fin_table1 = table
+            break
+ 
+    # <table>要素内のヘッダ情報を取得する。
+    headers = []
+    thead_th = fin_table1.find('thead').find_all('th')
+    for th in thead_th:
+        headers.append(th.text)
+ 
+    # <table>要素内のデータを取得する。
+    rows = []
+    tbody_tr = fin_table1.find('tbody').find_all('tr')
+    for tr in tbody_tr:
+   
+        # 1行内のデータを格納するためのリスト
+        row = []
+   
+        # <tr>要素内の<th>要素を取得する。
+        th = tr.find('th')
+        row.append(th.text)
+   
+        # <tr>要素内の<td>要素を取得する。
+        td_all = tr.find_all('td')
+        for td in td_all:
+            row.append(td.text)
+   
+        # 1行のデータを格納したリストを、リストに格納
+        rows.append(row)
+ 
+    # DataFrameを生成する
+    df3 = pd.DataFrame(rows, columns=headers)
+ 
+    # 先頭の列(決算期)をインデックスに指定する
+    df3 = df3.set_index(headers[0])
+    return(df3)
+
+def get_cashflow(option):
+    # 指定URLのHTMLデータを取得
+    code = int(option)
+    url = "https://minkabu.jp/stock/{0:d}/settlement".format(code)
+    html = requests.get(url)
+    # BeautifulSoupのHTMLパーサーを生成
+    soup = BeautifulSoup(html.content, "html.parser")
+ 
+    # 全<table>要素を抽出
+    table_all = soup.find_all('table')
+ 
+    # キャッシュフロー情報の<table>要素を検索する。
+    fin_table1 = table_all[4]
+ 
+    # <table>要素内のヘッダ情報を取得する。
+    headers = []
+    thead_th = fin_table1.find('thead').find_all('th')
+    for th in thead_th:
+        headers.append(th.text)
+ 
+    # <table>要素内のデータを取得する。
+    rows = []
+    tbody_tr = fin_table1.find('tbody').find_all('tr')
+ 
+    for tr in tbody_tr:
+ 
+ 
+        # <tr>要素内の<th>要素を取得する。
+        th = tr.find('th')
+ 
+        # 1行内のデータを格納するためのリスト
+        row = []
+ 
+        row.append(th.text)
+ 
+        # <tr>要素内の<td>要素を取得する。
+        td_all = tr.find_all('td')
+        for td in td_all:
+            row.append(td.text)
+ 
+        # 1行のデータを格納したリストを、リストに格納
+        rows.append(row)
+ 
+    rows.pop(0)
+ 
+ 
+    # DataFrameを生成する
+    df4 = pd.DataFrame(rows, columns=headers)
+ 
+    # 先頭の列(決算期)をインデックスに指定する
+    df4 = df4.set_index(headers[0])
+    
+   
+    return(df4)
+
+# 数値のカンマを削除する関数
+def trim_camma_kessan(x):
+    # 2,946,639.3のようなカンマ区切り、小数点有りの数値か否か確認する
+    comma_re = re.search(r"(\d{1,3}(,\d{3})*(\.\d+){0,1})", x)
+    if comma_re:
+        value = comma_re.group(1)
+        value = value.replace(',', '') # カンマを削除
+        return value
+   
+    return x
+ 
+
+    
+def trim_camma_cashflow(x):
+    y = x.replace(',','')
+    return y
    
 st.set_page_config(layout="wide")
  
@@ -79,6 +365,8 @@ codes = ['5901','6810','6807','6804','6779','6770','6754','6753','6752','6750','
  
 useful_code = []
 percent_50 = []
+RSI_gyakucode = []
+RSI_juncode = []
 st.subheader('RSIによる分析')
 #リストに入っているすべてのコードでRSIが一番高い際の値とそのRSIの日数を計算
 if st.button('LINEに通知する1'):
@@ -185,38 +473,306 @@ if st.button('LINEに通知する1'):
    
        
             if max_num > 50 and source['RSI'][499] < 40:
+                    company_info = get_company_info(code)
                     useful_code.append({
-                    'Company Code':code,
-                    'Maximum Percent':max_num,
-                    'RSI Days':max_day,
-                    'RSI Now':source['RSI'][499],
-                    'Price':source['Close'][499]})
+                    '社名':company_info['社名'],
+                    '銘柄コード':code,
+                    '最大正解確率':max_num,
+                    'RSI日数':max_day,
+                    'RSI現在':source['RSI'][499],
+                    '株価':source['Close'][499]})
+                    RSI_gyakucode.append(code)
+                    
    
             if max_num2 > 70 and 45 < source['RSI'][499] < 50 and source['sma01'][499] - source['sma01'][498] > 0:
-                    percent_50.append({'Company Code':code,'Maximum Percent':max_num2,'RSI Days':max_day2,'RSI Now':source['RSI'][499],'Price':source['Close'][499]})
+                    company_info = get_company_info(code)
+                    percent_50.append({'社名':company_info['社名'],'銘柄コード':code,'最大正解確率':max_num2,'RSI日数':max_day2,'RSI現在':source['RSI'][499],'株価':source['Close'][499]})
+                    RSI_juncode.append(code)
+    RSI_theoretical_price = []
+    if len(RSI_gyakucode)>0:
+        for code in RSI_gyakucode:
+                option = code
+
+                ticker_dict = get_basic_info(option)
+                
+                df = pd.DataFrame.from_dict([ticker_dict])
+                df2 = pd.DataFrame(get_kessan(option))
+                df3 = pd.DataFrame(get_zaimu(option))
+                
+            
+            
+            
+                
+            
+                # 各列に対して、trim_unitを適用する
+                new_df = df.copy()
+                for col in new_df.columns:
+                    new_df[col] = new_df[col].map(lambda v : trim_unit(v))
+            
+            
+                #st.table(new_df)
+            
+                #データフレームから辞書型にして使えるように変更
+                dict = new_df.to_dict()
+            
+                # 各列に対して、trim_cammaを適用する(決算)
+                new_df2 = df2.copy()
+                for col in df2.columns:
+                    new_df2[col] = df2[col].map(lambda v : trim_camma_kessan(v))
+            
+                #st.table(new_df2)
+            
+                # 各列に対して、trim_cammaを適用する(財務)
+                new_df3 = df3.copy()
+                for col in df3.columns:
+                    new_df3[col] = df3[col].map(lambda v : trim_camma_kessan(v))
+            
+
+
+                
+            
+            
+                #stock_value = st.text_input('現在の株価を入力してください')
+            
+                #データを数値に変換
+                if new_df['PER(調整後)'][0] == '---':
+                    break
+
+                num_PER = float(new_df['PER(調整後)'][0])
+                num_PSR = float(new_df['PSR'][0])
+                num_PBR = float(new_df['PBR'][0])
+                num_profit = float(new_df2['純利益'][0]) * 1000000
+                num_asset = float(new_df3['総資産'][0]) * 1000000
+                num_capital_ratio_percent = float(new_df3['自己資本率'][0])
+                num_capital_ratio = float(new_df3['自己資本率'][0]) / 100
+                num_BPS = float(new_df3['1株純資産'][0])
+                num_EPS = (float(new_df2['純利益'][0]) / float(new_df['発行済株数'][0])) * 1000000
+                #それぞれのデータ
+                #if stock_value:
+                    #num_stock_value = int(stock_value)
+                    #データの整理
+                EPS = num_EPS
+                PSR = num_PSR
+                PBR = num_PBR
+                BPS = num_BPS
+                ROA = (num_profit / num_asset)
+                if ROA >= 0.3:
+                    ROA = 0.3
+                PER = num_PER
+            
+            
+                #割引率の計算
+                if num_capital_ratio_percent >= 80:
+                    discount = 0.8
+                elif 80 > num_capital_ratio_percent >=67:
+                    discount = 0.75
+                elif 67> num_capital_ratio_percent >= 50:
+                    discount = 0.7
+                elif 50 > num_capital_ratio_percent >= 33:
+                    discount = 0.65
+                elif 33 > num_capital_ratio_percent >= 10:
+                    discount = 0.6
+                else:
+                    discount = 0.5
+            
+                #財務レバレッジ補正
+                financial_leverage_correction = 1 / (num_capital_ratio + 0.33)
+            
+                #リスク評価率
+                if PBR >= 0.5:
+                    risk = 1
+                elif 0.5 > PBR >=0.41:
+                    risk = 0.8
+                elif 0.41 > PBR >= 0.34:
+                    risk = 0.66
+                elif 0.34 > PBR >= 0.25:
+                    risk = 0.5
+                elif 0.25 > PBR >= 0.21:
+                    risk = 0.33
+                elif 0.2 > PBR >= 0.04:
+                    risk = (PBR / 5 * 50) + 50
+                else:
+                    risk = (PBR-1) * 10 +5
+            
+            
+                #資産価値
+                asset_value = BPS * discount
+                int_asset_value = int(asset_value)
+                #事業価値
+                business_value = EPS * ROA * 150 * financial_leverage_correction
+                int_business_value = int(business_value)
+                #理論株価
+                theoretical_stock_price = (asset_value + business_value) * risk
+                int_theoretical_stock_price = int(theoretical_stock_price)
+                #上限株価
+                max_stock_price = asset_value + (business_value * 2)
+                int_max_stock_price = int(max_stock_price)
+                
+                stock_value = new_df['時価総額'][0] / new_df['発行済株数'][0]
+                
+
+                RSI_theoretical_price.append(int_theoretical_stock_price)
+
+    for i in range(len(RSI_theoretical_price)):
+        useful_code[i]['理論株価'] = RSI_theoretical_price[i]
+
+
+    RSI_theoretical_price2 = []
+    if len(RSI_juncode)>0:
+        for code in RSI_juncode:
+                option = code
+
+                ticker_dict = get_basic_info(option)
+                
+                df = pd.DataFrame.from_dict([ticker_dict])
+                df2 = pd.DataFrame(get_kessan(option))
+                df3 = pd.DataFrame(get_zaimu(option))
+                df4 = pd.DataFrame(get_cashflow(option))
+            
+            
+            
+                
+            
+                # 各列に対して、trim_unitを適用する
+                new_df = df.copy()
+                for col in new_df.columns:
+                    new_df[col] = new_df[col].map(lambda v : trim_unit(v))
+            
+            
+                #st.table(new_df)
+            
+                #データフレームから辞書型にして使えるように変更
+                dict = new_df.to_dict()
+            
+                # 各列に対して、trim_cammaを適用する(決算)
+                new_df2 = df2.copy()
+                for col in df2.columns:
+                    new_df2[col] = df2[col].map(lambda v : trim_camma_kessan(v))
+            
+                #st.table(new_df2)
+            
+                # 各列に対して、trim_cammaを適用する(財務)
+                new_df3 = df3.copy()
+                for col in df3.columns:
+                    new_df3[col] = df3[col].map(lambda v : trim_camma_kessan(v))
+            
+                #st.table(new_df3)
+                # 各列に対して、trim_cammaを適用する(キャッシュフロー)
+                new_df4 = df4.copy()
+                for col in df4.columns:
+                    new_df4[col] = df4[col].map(lambda v : trim_camma_cashflow(v))
+
+                
+            
+            
+                #stock_value = st.text_input('現在の株価を入力してください')
+            
+                #データを数値に変換
+                if new_df['PER(調整後)'][0] == '---':
+                    break
+
+                num_PER = float(new_df['PER(調整後)'][0])
+                num_PSR = float(new_df['PSR'][0])
+                num_PBR = float(new_df['PBR'][0])
+                num_profit = float(new_df2['純利益'][0]) * 1000000
+                num_asset = float(new_df3['総資産'][0]) * 1000000
+                num_capital_ratio_percent = float(new_df3['自己資本率'][0])
+                num_capital_ratio = float(new_df3['自己資本率'][0]) / 100
+                num_BPS = float(new_df3['1株純資産'][0])
+                num_EPS = (float(new_df2['純利益'][0]) / float(new_df['発行済株数'][0])) * 1000000
+                #それぞれのデータ
+                #if stock_value:
+                    #num_stock_value = int(stock_value)
+                    #データの整理
+                EPS = num_EPS
+                PSR = num_PSR
+                PBR = num_PBR
+                BPS = num_BPS
+                ROA = (num_profit / num_asset)
+                if ROA >= 0.3:
+                    ROA = 0.3
+                PER = num_PER
+            
+            
+                #割引率の計算
+                if num_capital_ratio_percent >= 80:
+                    discount = 0.8
+                elif 80 > num_capital_ratio_percent >=67:
+                    discount = 0.75
+                elif 67> num_capital_ratio_percent >= 50:
+                    discount = 0.7
+                elif 50 > num_capital_ratio_percent >= 33:
+                    discount = 0.65
+                elif 33 > num_capital_ratio_percent >= 10:
+                    discount = 0.6
+                else:
+                    discount = 0.5
+            
+                #財務レバレッジ補正
+                financial_leverage_correction = 1 / (num_capital_ratio + 0.33)
+            
+                #リスク評価率
+                if PBR >= 0.5:
+                    risk = 1
+                elif 0.5 > PBR >=0.41:
+                    risk = 0.8
+                elif 0.41 > PBR >= 0.34:
+                    risk = 0.66
+                elif 0.34 > PBR >= 0.25:
+                    risk = 0.5
+                elif 0.25 > PBR >= 0.21:
+                    risk = 0.33
+                elif 0.2 > PBR >= 0.04:
+                    risk = (PBR / 5 * 50) + 50
+                else:
+                    risk = (PBR-1) * 10 +5
+            
+            
+                #資産価値
+                asset_value = BPS * discount
+                int_asset_value = int(asset_value)
+                #事業価値
+                business_value = EPS * ROA * 150 * financial_leverage_correction
+                int_business_value = int(business_value)
+                #理論株価
+                theoretical_stock_price = (asset_value + business_value) * risk
+                int_theoretical_stock_price = int(theoretical_stock_price)
+                #上限株価
+                max_stock_price = asset_value + (business_value * 2)
+                int_max_stock_price = int(max_stock_price)
+                
+                stock_value = new_df['時価総額'][0] / new_df['発行済株数'][0]
+                
+
+                RSI_theoretical_price.append(int_theoretical_stock_price)
+
+    for i in range(len(RSI_theoretical_price2)):
+        percent_50[i]['理論株価'] = RSI_theoretical_price2[i]
  
-     
- 
- 
+    
     useful_code = pd.DataFrame(useful_code)
-    TablePlot(useful_code,'table1.png',10,10)
+    if len(useful_code)>0:
+        TablePlot(useful_code,'table1.png',10,6)
+        main_gazo1()
+        st.subheader('逆張り')
+        st.table(useful_code)
     percent_50 = pd.DataFrame(percent_50)
-    TablePlot(percent_50,'table2.png',10,10)
- 
-    main_gazo1()
-    main_gazo2()
-    st.subheader('逆張り')
-    st.table(useful_code)
-    st.subheader('順張り')
-    st.table(percent_50)
+    if len(percent_50)>0:
+        TablePlot(percent_50,'table2.png',10,6)
+        main_gazo2()
+        st.subheader('順張り')
+        st.table(percent_50)
+
     st.balloons()
     st.balloons()
 expander1 = st.sidebar.expander('逆張り')
 expander1.write('RSIが30%以下で反転した際に 5日以内に移動平均線が転換している確率が50%より大きい&現在のRSIが30%未満')
 expander1 = st.sidebar.expander('順張り')
 expander1.write('現在のRSIが45%~50%&その確率が80%よりも大きい')
- 
+
+MACD_code = []
 MACD_buy2 = []
+DMI_code = []
 DMI_buy2 = []
 #MACDとDMIによる通知
 st.subheader('DMIとMACDによる分析')
@@ -363,14 +919,281 @@ if st.button('LINEに通知する2'):
         MACD_yesterday = source['MACD'][498] - source['MACD'][498]
         dif = MACD_today - MACD_yesterday
         if -5<MACD_today<0 and dif<0 and MACD_possibility>60:
-                    MACD_buy2.append({'Company Code':code,'Maximum Percent':MACD_possibility,'Price':source['Close'][499]})
+                    company_info = get_company_info(code)
+                    MACD_code.append(code)
+                    MACD_buy2.append({'社名':company_info['社名'],'銘柄コード':code,'正解確率':MACD_possibility,'株価':source['Close'][499]})
        
         DMI_today = source['pDI'][499] - source['mDI'][499]
         DMI_yesterday = source['pDI'][498] - source['mDI'][498]
         adx_trend = source['ADX'][499] - source['ADX'][498]
         dif2 = DMI_today - DMI_yesterday
         if -5<DMI_today<0 and dif2<0 and adx_trend>0 and DMI_possibility>60:
-                    DMI_buy2.append({'Company Code':code,'Maximum Percent':DMI_possibility,'Price':source['Close'][499]})
+                    company_info = get_company_info(code)
+                    DMI_code.append(code)
+                    DMI_buy2.append({'社名':company_info['社名'],'銘柄コード':code,'正解確率':DMI_possibility,'株価':source['Close'][499]})
+
+
+
+    #ファンダメンタル(理論株価の計算)
+    pd.DataFrame(MACD_buy2)
+    pd.DataFrame(DMI_buy2)
+    
+    MACD_theoretical_price = []
+    if len(MACD_code)>0:
+        for code in MACD_code:
+                option = code
+
+                ticker_dict = get_basic_info(option)
+                
+                df = pd.DataFrame.from_dict([ticker_dict])
+                df2 = pd.DataFrame(get_kessan(option))
+                df3 = pd.DataFrame(get_zaimu(option))
+                
+            
+            
+            
+                
+            
+                # 各列に対して、trim_unitを適用する
+                new_df = df.copy()
+                for col in new_df.columns:
+                    new_df[col] = new_df[col].map(lambda v : trim_unit(v))
+            
+            
+                #st.table(new_df)
+            
+                #データフレームから辞書型にして使えるように変更
+                dict = new_df.to_dict()
+            
+                # 各列に対して、trim_cammaを適用する(決算)
+                new_df2 = df2.copy()
+                for col in df2.columns:
+                    new_df2[col] = df2[col].map(lambda v : trim_camma_kessan(v))
+            
+                #st.table(new_df2)
+            
+                # 各列に対して、trim_cammaを適用する(財務)
+                new_df3 = df3.copy()
+                for col in df3.columns:
+                    new_df3[col] = df3[col].map(lambda v : trim_camma_kessan(v))
+            
+
+
+                
+            
+            
+                #stock_value = st.text_input('現在の株価を入力してください')
+            
+                #データを数値に変換
+                if new_df['PER(調整後)'][0] == '---':
+                    break
+                num_PER = float(new_df['PER(調整後)'][0])
+                num_PSR = float(new_df['PSR'][0])
+                num_PBR = float(new_df['PBR'][0])
+                num_profit = float(new_df2['純利益'][0]) * 1000000
+                num_asset = float(new_df3['総資産'][0]) * 1000000
+                num_capital_ratio_percent = float(new_df3['自己資本率'][0])
+                num_capital_ratio = float(new_df3['自己資本率'][0]) / 100
+                num_BPS = float(new_df3['1株純資産'][0])
+                num_EPS = (float(new_df2['純利益'][0]) / float(new_df['発行済株数'][0])) * 1000000
+                #それぞれのデータ
+                #if stock_value:
+                    #num_stock_value = int(stock_value)
+                    #データの整理
+                EPS = num_EPS
+                PSR = num_PSR
+                PBR = num_PBR
+                BPS = num_BPS
+                ROA = (num_profit / num_asset)
+                if ROA >= 0.3:
+                    ROA = 0.3
+                PER = num_PER
+            
+            
+                #割引率の計算
+                if num_capital_ratio_percent >= 80:
+                    discount = 0.8
+                elif 80 > num_capital_ratio_percent >=67:
+                    discount = 0.75
+                elif 67> num_capital_ratio_percent >= 50:
+                    discount = 0.7
+                elif 50 > num_capital_ratio_percent >= 33:
+                    discount = 0.65
+                elif 33 > num_capital_ratio_percent >= 10:
+                    discount = 0.6
+                else:
+                    discount = 0.5
+            
+                #財務レバレッジ補正
+                financial_leverage_correction = 1 / (num_capital_ratio + 0.33)
+            
+                #リスク評価率
+                if PBR >= 0.5:
+                    risk = 1
+                elif 0.5 > PBR >=0.41:
+                    risk = 0.8
+                elif 0.41 > PBR >= 0.34:
+                    risk = 0.66
+                elif 0.34 > PBR >= 0.25:
+                    risk = 0.5
+                elif 0.25 > PBR >= 0.21:
+                    risk = 0.33
+                elif 0.2 > PBR >= 0.04:
+                    risk = (PBR / 5 * 50) + 50
+                else:
+                    risk = (PBR-1) * 10 +5
+            
+            
+                #資産価値
+                asset_value = BPS * discount
+                int_asset_value = int(asset_value)
+                #事業価値
+                business_value = EPS * ROA * 150 * financial_leverage_correction
+                int_business_value = int(business_value)
+                #理論株価
+                theoretical_stock_price = (asset_value + business_value) * risk
+                int_theoretical_stock_price = int(theoretical_stock_price)
+                #上限株価
+                max_stock_price = asset_value + (business_value * 2)
+                int_max_stock_price = int(max_stock_price)
+                
+                stock_value = new_df['時価総額'][0] / new_df['発行済株数'][0]
+                
+
+                MACD_theoretical_price.append(int_theoretical_stock_price)
+        
+
+    DMI_theoretical_price = []
+    if len(DMI_code)>0:
+        for code in DMI_code:
+                option = code
+
+                ticker_dict = get_basic_info(option)
+                
+                df = pd.DataFrame.from_dict([ticker_dict])
+                df2 = pd.DataFrame(get_kessan(option))
+                df3 = pd.DataFrame(get_zaimu(option))
+
+            
+            
+            
+                
+            
+                # 各列に対して、trim_unitを適用する
+                new_df = df.copy()
+                for col in new_df.columns:
+                    new_df[col] = new_df[col].map(lambda v : trim_unit(v))
+            
+            
+                #st.table(new_df)
+            
+                #データフレームから辞書型にして使えるように変更
+                dict = new_df.to_dict()
+            
+                # 各列に対して、trim_cammaを適用する(決算)
+                new_df2 = df2.copy()
+                for col in df2.columns:
+                    new_df2[col] = df2[col].map(lambda v : trim_camma_kessan(v))
+            
+                #st.table(new_df2)
+            
+                # 各列に対して、trim_cammaを適用する(財務)
+                new_df3 = df3.copy()
+                for col in df3.columns:
+                    new_df3[col] = df3[col].map(lambda v : trim_camma_kessan(v))
+            
+
+
+                
+            
+            
+                #stock_value = st.text_input('現在の株価を入力してください')
+            
+                #データを数値に変換
+                if new_df['PER(調整後)'][0] == '---':
+                    break
+                num_PER = float(new_df['PER(調整後)'][0])
+                num_PSR = float(new_df['PSR'][0])
+                num_PBR = float(new_df['PBR'][0])
+                num_profit = float(new_df2['純利益'][0]) * 1000000
+                num_asset = float(new_df3['総資産'][0]) * 1000000
+                num_capital_ratio_percent = float(new_df3['自己資本率'][0])
+                num_capital_ratio = float(new_df3['自己資本率'][0]) / 100
+                num_BPS = float(new_df3['1株純資産'][0])
+                num_EPS = (float(new_df2['純利益'][0]) / float(new_df['発行済株数'][0])) * 1000000
+                #それぞれのデータ
+                #if stock_value:
+                    #num_stock_value = int(stock_value)
+                    #データの整理
+                EPS = num_EPS
+                PSR = num_PSR
+                PBR = num_PBR
+                BPS = num_BPS
+                ROA = (num_profit / num_asset)
+                if ROA >= 0.3:
+                    ROA = 0.3
+                PER = num_PER
+            
+            
+                #割引率の計算
+                if num_capital_ratio_percent >= 80:
+                    discount = 0.8
+                elif 80 > num_capital_ratio_percent >=67:
+                    discount = 0.75
+                elif 67> num_capital_ratio_percent >= 50:
+                    discount = 0.7
+                elif 50 > num_capital_ratio_percent >= 33:
+                    discount = 0.65
+                elif 33 > num_capital_ratio_percent >= 10:
+                    discount = 0.6
+                else:
+                    discount = 0.5
+            
+                #財務レバレッジ補正
+                financial_leverage_correction = 1 / (num_capital_ratio + 0.33)
+            
+                #リスク評価率
+                if PBR >= 0.5:
+                    risk = 1
+                elif 0.5 > PBR >=0.41:
+                    risk = 0.8
+                elif 0.41 > PBR >= 0.34:
+                    risk = 0.66
+                elif 0.34 > PBR >= 0.25:
+                    risk = 0.5
+                elif 0.25 > PBR >= 0.21:
+                    risk = 0.33
+                elif 0.2 > PBR >= 0.04:
+                    risk = (PBR / 5 * 50) + 50
+                else:
+                    risk = (PBR-1) * 10 +5
+            
+            
+                #資産価値
+                asset_value = BPS * discount
+                int_asset_value = int(asset_value)
+                #事業価値
+                business_value = EPS * ROA * 150 * financial_leverage_correction
+                int_business_value = int(business_value)
+                #理論株価
+                theoretical_stock_price = (asset_value + business_value) * risk
+                int_theoretical_stock_price = int(theoretical_stock_price)
+                #上限株価
+                max_stock_price = asset_value + (business_value * 2)
+                int_max_stock_price = int(max_stock_price)
+                
+                stock_value = new_df['時価総額'][0] / new_df['発行済株数'][0]
+                
+
+                DMI_theoretical_price.append(int_theoretical_stock_price)
+
+    for i in range(len(MACD_theoretical_price)):
+        MACD_buy2[i]['理論株価'] = MACD_theoretical_price[i]
+
+    for i in range(len(DMI_theoretical_price)):
+        DMI_buy2[i]['理論株価'] = DMI_theoretical_price[i]
+
+
     if len(DMI_buy2)>0:
         DMI_buy2 = pd.DataFrame(DMI_buy2)
         TablePlot(DMI_buy2,'table3.png',10,10)
@@ -387,7 +1210,3 @@ if st.button('LINEに通知する2'):
         
     st.balloons()
     st.balloons()
-    
-    
-    
-    
