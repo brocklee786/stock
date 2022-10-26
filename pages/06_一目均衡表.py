@@ -120,7 +120,7 @@ if option:
  
         #ゴールデンクロスを検出
         check1 = []
-        for i in range(27,499):
+        for i in range(27,498):
             yesterday = source['base_line'][i]- source['conversion_line'][i]
             today = source['base_line'][i+1]- source['conversion_line'][i+1]
             if yesterday>0 and today<0:
