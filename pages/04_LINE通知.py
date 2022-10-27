@@ -72,7 +72,16 @@ def main_gazo4():
  
     requests.post(url ,headers = headers ,params=payload,files=files)
 
-
+def main_gazo5():
+    url = "https://notify-api.line.me/api/notify"
+    token = "Y7qIXR6HxmIoOG2Tpx2X6uAZEfa1RcTIKKkK9tVn0LL"
+    headers = {"Authorization" : "Bearer "+ token}
+ 
+    message = '一目均衡表'
+    payload = {"message" :  message}
+    files = {"imageFile":open('./table5.png','rb')}
+ 
+    requests.post(url ,headers = headers ,params=payload,files=files)
 def get_basic_info(option):
     ticker = str(option)
     url = "https://minkabu.jp/stock/" + ticker
@@ -1210,3 +1219,232 @@ if st.button('LINEに通知する2'):
         
     st.balloons()
     st.balloons()
+ichimoku=[]
+ichimoku_code=[]
+st.subheader('一目均衡表よる分析')
+if st.button('LINEに通知する3'):
+    for code in codes:
+        ticker = str(code) + '.T'
+        tkr = yf.Ticker(ticker)
+        hist = tkr.history(period='500d')
+        hist = hist.reset_index()
+        hist = hist.set_index(['Date'])
+        hist = hist.rename_axis('Date').reset_index()
+        hist = hist.T
+        a = hist.to_dict()
+ 
+        for items in a.values():
+                time = items['Date']
+                items['Date'] = time.strftime("%Y/%m/%d")
+ 
+        b = [x for x in a.values()]
+ 
+        source = pd.DataFrame(b)
+       
+        price = source['Close']
+ 
+        #移動平均
+        span01=5
+        span02=25
+        span03=50
+ 
+        source['sma01'] = price.rolling(window=span01).mean()
+        source['sma02'] = price.rolling(window=span02).mean()
+        source['sma03'] = price.rolling(window=span03).mean()
+       
+ 
+        # 基準線
+        high26 = source["High"].rolling(window=26).max()
+        low26 = source["Low"].rolling(window=26).min()
+        source["base_line"] = (high26 + low26) / 2
+       
+        # 転換線
+        high9 = source["High"].rolling(window=9).max()
+        low9 = source["Low"].rolling(window=9).min()
+        source["conversion_line"] = (high9 + low9) / 2
+       
+        # 先行スパン1
+        leading_span1 = (source["base_line"] + source["conversion_line"]) / 2
+        source["leading_span1"] = leading_span1.shift(25)
+       
+        # 先行スパン2
+        high52 = source["High"].rolling(window=52).max()
+        low52 = source["Low"].rolling(window=52).min()
+        leading_span2 = (high52 + low52) / 2
+        source["leading_span2"] = leading_span2.shift(25)
+       
+        # 遅行スパン
+        source["lagging_span"] = source["Close"].shift(-25)
+
+        #ローソク足が雲を上抜けする
+        check1 = []
+        for i in range(489,498):
+            if source['leading_span1'][i]>source['leading_span2'][i]:
+                yesterday = source['Close'][i] - source['leading_span1'][i]
+                today = source['Close'][i+1] - source['leading_span1'][i+1]
+                if yesterday<0 and today>0:
+                    check1.append(1)
+            else:
+                yesterday = source['Close'][i] - source['leading_span2'][i]
+                today = source['Close'][i+1] - source['leading_span2'][i+1]
+                if yesterday<0 and today>0:
+                    check1.append(1)
+    
+
+        #ゴールデンクロスを検出
+        for i in range(489,498):
+                yesterday = source['base_line'][i]- source['conversion_line'][i]
+                today = source['base_line'][i+1]- source['conversion_line'][i+1]
+                if yesterday>0 and today<0:
+                    check1.append(1)
+                    break
+
+    
+        #遅行スパンがローソク足を上抜け
+        for i in range(489,498):
+                yesterday = source['lagging_span'][i] - source['Close'][i]
+                today = source['lagging_span'][i+1] - source['Close'][i+1]
+                if yesterday>0 and today<0:
+                    check1.append(1)
+                    break
+
+        if len(check1)>2:
+            company_info = get_company_info(code)
+            ichimoku.append({'社名':company_info['社名'],'銘柄コード':code,'株価':source['Close'][499]})
+            ichimoku_code.append(code)
+            
+    ichimoku_theoretical_price = []
+    if len(ichimoku_code)>0:
+        for code in ichimoku_code:
+                option = code
+
+                ticker_dict = get_basic_info(option)
+                
+                df = pd.DataFrame.from_dict([ticker_dict])
+                df2 = pd.DataFrame(get_kessan(option))
+                df3 = pd.DataFrame(get_zaimu(option))
+                
+            
+            
+            
+                
+            
+                # 各列に対して、trim_unitを適用する
+                new_df = df.copy()
+                for col in new_df.columns:
+                    new_df[col] = new_df[col].map(lambda v : trim_unit(v))
+            
+            
+                #st.table(new_df)
+            
+                #データフレームから辞書型にして使えるように変更
+                dict = new_df.to_dict()
+            
+                # 各列に対して、trim_cammaを適用する(決算)
+                new_df2 = df2.copy()
+                for col in df2.columns:
+                    new_df2[col] = df2[col].map(lambda v : trim_camma_kessan(v))
+            
+                #st.table(new_df2)
+            
+                # 各列に対して、trim_cammaを適用する(財務)
+                new_df3 = df3.copy()
+                for col in df3.columns:
+                    new_df3[col] = df3[col].map(lambda v : trim_camma_kessan(v))
+            
+
+
+                
+            
+            
+                #stock_value = st.text_input('現在の株価を入力してください')
+            
+                #データを数値に変換
+                if new_df['PER(調整後)'][0] == '---':
+                    break
+
+                num_PER = float(new_df['PER(調整後)'][0])
+                num_PSR = float(new_df['PSR'][0])
+                num_PBR = float(new_df['PBR'][0])
+                num_profit = float(new_df2['純利益'][0]) * 1000000
+                num_asset = float(new_df3['総資産'][0]) * 1000000
+                num_capital_ratio_percent = float(new_df3['自己資本率'][0])
+                num_capital_ratio = float(new_df3['自己資本率'][0]) / 100
+                num_BPS = float(new_df3['1株純資産'][0])
+                num_EPS = (float(new_df2['純利益'][0]) / float(new_df['発行済株数'][0])) * 1000000
+                #それぞれのデータ
+                #if stock_value:
+                    #num_stock_value = int(stock_value)
+                    #データの整理
+                EPS = num_EPS
+                PSR = num_PSR
+                PBR = num_PBR
+                BPS = num_BPS
+                ROA = (num_profit / num_asset)
+                if ROA >= 0.3:
+                    ROA = 0.3
+                PER = num_PER
+            
+            
+                #割引率の計算
+                if num_capital_ratio_percent >= 80:
+                    discount = 0.8
+                elif 80 > num_capital_ratio_percent >=67:
+                    discount = 0.75
+                elif 67> num_capital_ratio_percent >= 50:
+                    discount = 0.7
+                elif 50 > num_capital_ratio_percent >= 33:
+                    discount = 0.65
+                elif 33 > num_capital_ratio_percent >= 10:
+                    discount = 0.6
+                else:
+                    discount = 0.5
+            
+                #財務レバレッジ補正
+                financial_leverage_correction = 1 / (num_capital_ratio + 0.33)
+            
+                #リスク評価率
+                if PBR >= 0.5:
+                    risk = 1
+                elif 0.5 > PBR >=0.41:
+                    risk = 0.8
+                elif 0.41 > PBR >= 0.34:
+                    risk = 0.66
+                elif 0.34 > PBR >= 0.25:
+                    risk = 0.5
+                elif 0.25 > PBR >= 0.21:
+                    risk = 0.33
+                elif 0.2 > PBR >= 0.04:
+                    risk = (PBR / 5 * 50) + 50
+                else:
+                    risk = (PBR-1) * 10 +5
+            
+            
+                #資産価値
+                asset_value = BPS * discount
+                int_asset_value = int(asset_value)
+                #事業価値
+                business_value = EPS * ROA * 150 * financial_leverage_correction
+                int_business_value = int(business_value)
+                #理論株価
+                theoretical_stock_price = (asset_value + business_value) * risk
+                int_theoretical_stock_price = int(theoretical_stock_price)
+                #上限株価
+                max_stock_price = asset_value + (business_value * 2)
+                int_max_stock_price = int(max_stock_price)
+                
+                stock_value = new_df['時価総額'][0] / new_df['発行済株数'][0]
+                
+
+                ichimoku_theoretical_price.append(int_theoretical_stock_price)
+
+    for i in range(len(ichimoku_theoretical_price)):
+        ichimoku[i]['理論株価'] = ichimoku_theoretical_price[i]
+
+    if len(ichimoku)>0:
+        ichimoku = pd.DataFrame(ichimoku)
+        TablePlot(ichimoku,'table5.png',10,10)
+        main_gazo5()
+        st.subheader('一目均衡表')
+        st.table(ichimoku)
+ 
