@@ -636,7 +636,7 @@ if st.button('LINEに通知する1'):
                 df = pd.DataFrame.from_dict([ticker_dict])
                 df2 = pd.DataFrame(get_kessan(option))
                 df3 = pd.DataFrame(get_zaimu(option))
-                df4 = pd.DataFrame(get_cashflow(option))
+                
             
             
             
