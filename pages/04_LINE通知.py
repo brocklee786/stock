@@ -667,9 +667,7 @@ if st.button('LINEに通知する1'):
             
                 #st.table(new_df3)
                 # 各列に対して、trim_cammaを適用する(キャッシュフロー)
-                new_df4 = df4.copy()
-                for col in df4.columns:
-                    new_df4[col] = df4[col].map(lambda v : trim_camma_cashflow(v))
+                
 
                 
             
