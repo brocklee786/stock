@@ -13,3 +13,4 @@ pandas_datareader
 plotly
 mplfinance
 seaborn
+linregress
