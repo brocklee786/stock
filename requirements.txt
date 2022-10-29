@@ -12,3 +12,4 @@ prophet
 pandas_datareader
 plotly
 mplfinance
+seaborn
