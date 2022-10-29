@@ -114,7 +114,7 @@ if option:
             return trendlines
 
 
-        figure, axis1 = plt.subplots(figsize=(20,10))
+        figure, axis1 = plt.subplots(figsize=(15,7))
 
         # ローソク足
         mpf.candlestick2_ohlc(
