@@ -114,7 +114,7 @@ if option:
             return trendlines
 
 
-        figure, (axis1,axis2) = plt.subplots(2, 1, figsize=(20,10), dpi=200, gridspec_kw = {'height_ratios':[3, 1]})
+        figure, axis1 = plt.subplots(figsize=(20,10))
 
         # ローソク足
         mpf.candlestick2_ohlc(
