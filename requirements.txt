@@ -11,3 +11,4 @@ yfinance==0.1.72
 prophet
 pandas_datareader
 plotly
+mplfinance
