@@ -13,5 +13,4 @@ pandas_datareader
 plotly
 mplfinance
 seaborn
-scipy.stats
 linregress
