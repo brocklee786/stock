@@ -22,7 +22,7 @@ import mplfinance.original_flavor as mpf
  
 st.set_page_config(layout="wide")
 days = st.selectbox(
-    '何日間の取引を想定していますか？',
+    '何日間表示しますか？',
     (50,100,150,200,300))
 option = st.text_input('銘柄コードを入力してください')
 if option:
