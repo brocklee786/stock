@@ -82,10 +82,11 @@ if option:
             bollinger_today = source['2upper'][i]
             bollinger_direction = bollinger_today - bollinger_yesterday
             price_today = source['Close'][i]
+            price_yesterday = source['Close'][i-1]
             price_direction = source['sma01'][i] - source['sma01'][i-1]
             price_direction2 = source['sma02'][i] - source['sma02'][i-1]
             price_direction3 = source['sma03'][i] - source['sma03'][i-1]
-            if rci_short>80 and rci_long>80 and bollinger_direction>0 and price_today>bollinger_today and price_direction>0 and price_direction2>0 and price_direction3>0 and price_direction>price_direction2>price_direction3:
+            if rci_short>80 and rci_long>80 and bollinger_direction>0 and price_today>bollinger_today and price_yesterday>bollinger_yesterday and price_direction>0 and price_direction2>0 and price_direction3>0 and price_direction>price_direction2>price_direction3:
                 all.append(i)
                 if price_dif>0:
                     up.append(i)
