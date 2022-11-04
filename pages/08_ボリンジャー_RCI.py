@@ -82,7 +82,7 @@ if option:
             bollinger_today = source['2upper'][i]
             bollinger_direction = bollinger_today - bollinger_yesterday
             price_today = source['Close'][i]
-            price_yesterday = source['Close'][i-1]
+            price_yesterday = source['High'][i-1]
             price_direction = source['sma01'][i] - source['sma01'][i-1]
             price_direction2 = source['sma02'][i] - source['sma02'][i-1]
             price_direction3 = source['sma03'][i] - source['sma03'][i-1]
