@@ -23,7 +23,7 @@ def RCI(x):
 
 st.set_page_config(layout="wide")
  
-st.title('移動平均線、ボリンジャーバンド、RCI組み合わせ')
+st.title('逆張り')
 days = st.selectbox(
     '何日間の取引を想定していますか？',
     (1,3,5, 10))
@@ -117,7 +117,7 @@ if option:
                 #if price_dif>0:
                     #up.append(i)
                     
-            if rci_short<-80 and rci_long<-80 and 20<RSI_today<30 and price_today<bollinger_today:
+            if rci_short<-80 and rci_long<-80 and RSI_today<30 and price_today<bollinger_today:
                 all.append(i)
                 if price_dif>0:
                     up.append(i)
@@ -128,7 +128,7 @@ if option:
         st.subheader('確率は' + str(percent) + '%')
 
         expander1 = st.expander('条件')
-        expander1.write('終値が+2シグマを超えている。RCIの値が70%以上。ボリンジャーバンドが拡大している。移動平均線が上向き。')
+        expander1.write('RCI(9日,14日が-80以下。RSI(14日)が30以下。終値がボリンジャーバンド(3シグマ,25日)以下。')
             
 
 
