@@ -71,6 +71,29 @@ if option:
         #RCI
         source['RCI_short'] = source["Close"].rolling(9).apply(RCI)
         source['RCI_long'] = source["Close"].rolling(14).apply(RCI)
+        
+        #RSI
+        # 前日との差分を計算
+        df_diff = source["Close"].diff(1)
+
+        # 計算用のDataFrameを定義
+        df_up, df_down = df_diff.copy(), df_diff.copy()
+
+        # df_upはマイナス値を0に変換
+        # df_downはプラス値を0に変換して正負反転
+        df_up[df_up < 0] = 0
+        df_down[df_down > 0] = 0
+        df_down = df_down * -1
+
+
+        # 期間14でそれぞれの平均を算出
+        df_up_sma14 = df_up.rolling(window=14, center=False).mean()
+        df_down_sma14 = df_down.rolling(window=14, center=False).mean()
+        
+      
+
+        # RSIを算出
+        source["RSI"] = 100.0 * (df_up_sma14 / (df_up_sma14 + df_down_sma14))
 
         up = []
         all = []
@@ -88,12 +111,13 @@ if option:
             price_direction = source['sma01'][i] - source['sma01'][i-1]
             price_direction2 = source['sma02'][i] - source['sma02'][i-1]
             price_direction3 = source['sma03'][i] - source['sma03'][i-1]
+            RSI_today = source['RSI'][i]
             #if rci_short>90 and rci_long>90 and bollinger_direction>0 and price_today>bollinger_today and price_yesterday>bollinger_yesterday and price_day>bollinger_day and price_direction>0 and price_direction2>0 and price_direction3>0 and price_direction>price_direction2>price_direction3:
                 #all.append(i)
                 #if price_dif>0:
                     #up.append(i)
                     
-            if rci_short<-80 and rci_long<-80 and price_today<bollinger_today:
+            if rci_short<-80 and rci_long<-80 and and RSI_today<30 price_today<bollinger_today:
                 all.append(i)
                 if price_dif>0:
                     up.append(i)
