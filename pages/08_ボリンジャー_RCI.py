@@ -128,7 +128,7 @@ if option:
         st.subheader('確率は' + str(percent) + '%')
 
         expander1 = st.expander('条件')
-        expander1.write('RCI(9日,14日が-80以下。RSI(14日)が30以下。終値がボリンジャーバンド(3シグマ,25日)以下。')
+        expander1.write('RCI(9日,14日)が-80以下。RSI(14日)が30以下。終値がボリンジャーバンド(3シグマ,25日)以下。')
             
 
 
