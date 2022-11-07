@@ -80,7 +80,7 @@ if option:
             rci_long = source['RCI_long'][i]
             bollinger_day = source['2upper'][i-2]
             bollinger_yesterday = source['2upper'][i-1]
-            bollinger_today = source['2upper'][i]
+            bollinger_today = source['2lower'][i]
             bollinger_direction = bollinger_today - bollinger_yesterday
             price_today = source['High'][i]
             price_yesterday = source['High'][i-1]
