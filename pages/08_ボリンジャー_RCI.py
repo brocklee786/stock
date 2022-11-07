@@ -117,7 +117,7 @@ if option:
                 #if price_dif>0:
                     #up.append(i)
                     
-            if rci_short<-80 and rci_long<-80 and and RSI_today<30 price_today<bollinger_today:
+            if rci_short<-80 and rci_long<-80 and RSI_today<30 and price_today<bollinger_today:
                 all.append(i)
                 if price_dif>0:
                     up.append(i)
