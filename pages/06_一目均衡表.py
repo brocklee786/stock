@@ -183,7 +183,7 @@ if option:
             percent = len(price_up)*100 / len(check3)
  
         st.subheader('三役好転が起きたときに' + str(days) + '日後に上昇する確率は' + str(percent) + '%')
- 
+        
 
        
 
