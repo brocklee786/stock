@@ -168,10 +168,10 @@ for code in codes:
             conversion_line1 = source['conversion_line'][today+i]
             base_line1 = source['base_line'][today+i]
             conversion_line_yesterday1 = source['conversion_line'][yesterday+i]
-            base_line_yesterday1 = source['base_line'][yesterday]
+            base_line_yesterday1 = source['base_line'][yesterday+i]
             price2 = source['Close'][today+i]
-            conversion_direction1 = source['conversion_line'][today] - source['conversion_line'][96]
-            RSI_today2 = source['RSI'][today]
+            conversion_direction1 = source['conversion_line'][today+i] - source['conversion_line'][96+i]
+            RSI_today2 = source['RSI'][today+i]
         #均衡表の好転
         if conversion_line1>=base_line1 and conversion_line_yesterday1<base_line_yesterday1 and price2>conversion_line1 and conversion_direction1>0 and RSI_today2>60:
             day2_kinkouhyou.append(code)
@@ -202,10 +202,10 @@ for code in codes:
             conversion_line1 = source['conversion_line'][today+i]
             base_line1 = source['base_line'][today+i]
             conversion_line_yesterday1 = source['conversion_line'][yesterday+i]
-            base_line_yesterday1 = source['base_line'][yesterday]
+            base_line_yesterday1 = source['base_line'][yesterday+i]
             price2 = source['Close'][today+i]
-            conversion_direction1 = source['conversion_line'][today] - source['conversion_line'][96]
-            RSI_today2 = source['RSI'][today]
+            conversion_direction1 = source['conversion_line'][today+i] - source['conversion_line'][96+i]
+            RSI_today2 = source['RSI'][today+i]
         #均衡表の好転
         if conversion_line1>=base_line1 and conversion_line_yesterday1<base_line_yesterday1 and price2>conversion_line1 and conversion_direction1>0 and RSI_today2>60:
             day3_kinkouhyou.append(code)
