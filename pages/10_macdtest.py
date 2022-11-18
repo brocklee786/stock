@@ -137,7 +137,16 @@ for code in codes:
                 DMI_percent_list.append(percent_dmi)
                 DMI_win.append(len(DMI_buy))
                 DMI_win_price.append(sum(price_dmi_win))
-
+        hist_all = []       
+        for i in range(20,490):
+         hist=source['Hist'][i]
+         if hist<0:
+          hist.append(hist_all)
+          
+        hist_ave = sum(hist_all)/len(hist_all)
+          
+        
+          
 
         #MACDの確率を計算
         MACD_buy = []
@@ -154,7 +163,8 @@ for code in codes:
                 price_days_before4 = source['Close'][i+days-3]
                 price_99 = source['Close'][i+1] * 0.97
                 price_percent3 = source['Close'][i+1] * 0.03 * -1
-                if yesterday1<0 and today1>0:
+                hist_3day = source['Hist'][i-3]
+                if yesterday1<0 and today1>0 and hist_3day<hist_ave:
                         if price_days_before1>price_99 and price_days_before2>price_99 and price_days_before3>price_99 and price_days_before4>price_99 and sub>0:
                                 MACD_buy.append(i)
                                 price_macd_win.append(sub1)
