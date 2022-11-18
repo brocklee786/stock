@@ -116,11 +116,10 @@ for code in codes:
         df_down[df_down > 0] = 0
         df_down = df_down * -1
 
-        #RSIの日数を指定
-        RSI_days = st.slider('RSIの日数', 1, 20, 14)
+   
         # 期間14でそれぞれの平均を算出
-        df_up_sma14 = df_up.rolling(window=RSI_days, center=False).mean()
-        df_down_sma14 = df_down.rolling(window=RSI_days, center=False).mean()
+        df_up_sma14 = df_up.rolling(window=14, center=False).mean()
+        df_down_sma14 = df_down.rolling(window=14, center=False).mean()
         
       
 
