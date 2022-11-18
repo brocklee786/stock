@@ -180,7 +180,7 @@ for code in codes:
                 price_99 = source['Close'][i+1] * 0.97
                 price_percent3 = source['Close'][i+1] * 0.03 * -1
                 RSI = source['RSI'][i]
-                if yesterday1<0 and today1>0 and RSI<30:
+                if yesterday1<0 and today1>0 and RSI<40:
                         if price_days_before1>price_99 and price_days_before2>price_99 and price_days_before3>price_99 and price_days_before4>price_99 and sub>0:
                                 MACD_buy.append(i)
                                 price_macd_win.append(sub1)
