@@ -67,8 +67,8 @@ for code in codes:
  
         # MACD計算
  
-        exp12 = source['Close'].ewm(span=12).mean()
-        exp26 = source['Close'].ewm(span=26).mean()
+        exp12 = source['Close'].ewm(span=12, adjust=False).mean()
+        exp26 = source['Close'].ewm(span=26, adjust=False).mean()
         source['MACD'] = exp12 - exp26
  
         # シグナル計算
