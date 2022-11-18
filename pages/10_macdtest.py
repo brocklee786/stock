@@ -141,7 +141,7 @@ for code in codes:
         for i in range(20,490):
          hist=source['Hist'][i]
          if hist<0:
-          hist.append(hist_all)
+          hist_all.append(hist)
           
         hist_ave = sum(hist_all)/len(hist_all)
           
