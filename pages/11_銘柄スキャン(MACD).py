@@ -16,11 +16,9 @@ import subprocess
 
 st.set_page_config(layout="wide")
 
-st.title('MACDとDMI分析')
+st.title('MACD')
 
-days = st.selectbox(
-    '何日間の取引を想定していますか？',
-    (5,1, 3, 10))
+
 
 
 DMI_percent_list = []
@@ -113,13 +111,6 @@ for code in codes:
         #MACDとシグナルがクロスしているかどうかを確認する。
         yesterday1 = source['MACD'][498] - source['Signal'][498]
         today1 = source['MACD'][499] - source['Signal'][499]
-        #sub1 = source['Close'][i+days] - source['Close'][i]
-        price_days_before1 = source['Close'][i+days]
-        price_days_before2 = source['Close'][i+days-1]
-        price_days_before3 = source['Close'][i+days-2]
-        price_days_before4 = source['Close'][i+days-3]
-        price_99 = source['Close'][i+1] * 0.97
-        price_percent3 = source['Close'][i+1] * 0.03 * -1
         if yesterday1<0 and today1>0:
            MACD_buy.append(code)
         #st.table(MACD_buy)
