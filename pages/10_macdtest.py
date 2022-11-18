@@ -102,6 +102,30 @@ for code in codes:
         DX = (source['pDI']-source['mDI']).abs()/(source['pDI']+source['mDI']) * 100
         DX = DX.fillna(0)
         source['ADX'] = DX.rolling(14).mean()
+        
+        #RSI
+        # 前日との差分を計算
+        df_diff = source["Close"].diff(1)
+
+        # 計算用のDataFrameを定義
+        df_up, df_down = df_diff.copy(), df_diff.copy()
+
+        # df_upはマイナス値を0に変換
+        # df_downはプラス値を0に変換して正負反転
+        df_up[df_up < 0] = 0
+        df_down[df_down > 0] = 0
+        df_down = df_down * -1
+
+        #RSIの日数を指定
+        RSI_days = st.slider('RSIの日数', 1, 20, 14)
+        # 期間14でそれぞれの平均を算出
+        df_up_sma14 = df_up.rolling(window=RSI_days, center=False).mean()
+        df_down_sma14 = df_down.rolling(window=RSI_days, center=False).mean()
+        
+      
+
+        # RSIを算出
+        source["RSI"] = 100.0 * (df_up_sma14 / (df_up_sma14 + df_down_sma14))
 
         #DMIの確率を計算
         DMI_buy = []
@@ -156,8 +180,8 @@ for code in codes:
                 price_days_before4 = source['Close'][i+days-3]
                 price_99 = source['Close'][i+1] * 0.97
                 price_percent3 = source['Close'][i+1] * 0.03 * -1
-                hist_3day = source['Hist'][i-5]
-                if yesterday1<0 and today1>0 :
+                RSI = source['RSI'][i]
+                if yesterday1<0 and today1>0 and RSI<30:
                         if price_days_before1>price_99 and price_days_before2>price_99 and price_days_before3>price_99 and price_days_before4>price_99 and sub>0:
                                 MACD_buy.append(i)
                                 price_macd_win.append(sub1)
