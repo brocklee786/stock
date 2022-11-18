@@ -78,6 +78,31 @@ for code in codes:
         # ヒストグラム(MACD - シグナル)
  
         source['Hist'] = source['MACD'] - source['Signal']
+        
+        
+        #RSI
+        # 前日との差分を計算
+        df_diff = source["Close"].diff(1)
+
+        # 計算用のDataFrameを定義
+        df_up, df_down = df_diff.copy(), df_diff.copy()
+
+        # df_upはマイナス値を0に変換
+        # df_downはプラス値を0に変換して正負反転
+        df_up[df_up < 0] = 0
+        df_down[df_down > 0] = 0
+        df_down = df_down * -1
+
+   
+        # 期間14でそれぞれの平均を算出
+        df_up_sma14 = df_up.rolling(window=14, center=False).mean()
+        df_down_sma14 = df_down.rolling(window=14, center=False).mean()
+        
+      
+
+        # RSIを算出
+        source["RSI"] = 100.0 * (df_up_sma14 / (df_up_sma14 + df_down_sma14))
+
 
 
         # DMIの計算
@@ -111,7 +136,8 @@ for code in codes:
         #MACDとシグナルがクロスしているかどうかを確認する。
         yesterday1 = source['MACD'][498] - source['Signal'][498]
         today1 = source['MACD'][499] - source['Signal'][499]
-        if yesterday1<0 and today1>0:
+        RSI = source['RSI'][499]
+        if yesterday1<0 and today1>0 and RSI<30:
            MACD_buy.append(code)
         #st.table(MACD_buy)
         if len(MACD_buy):
