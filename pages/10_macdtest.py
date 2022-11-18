@@ -74,7 +74,7 @@ for code in codes:
  
         # シグナル計算
  
-        source['Signal'] = source['MACD'].rolling(window=9).mean()
+        source['Signal'] = source['MACD'].ewm(span=9, adjust=False).mean()
  
         # ヒストグラム(MACD - シグナル)
  
