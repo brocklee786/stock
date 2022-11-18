@@ -282,7 +282,7 @@ for code in codes:
         check3_all_sum.append(len(check3_all))
         check3_up_sum.append(len(check3_up_sum))
 
-    st.write(code)
+   
 step1 = sum(percent_step1)/len(percent_step1)
 step2 = sum(percent_step2)/len(percent_step2)
 step3 = sum(percent_step3)/len(percent_step3)
