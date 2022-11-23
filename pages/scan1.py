@@ -300,6 +300,7 @@ for code in codes:
 
         if slow_percentd_yesterday<20 and slow_percentd>20 and percentk_direction>0 and percentk>95:
             check3_all.append(i)
+            st.write(code,i)
 
             
             if price_days_before1>price_99 and price_days_before2>price_99 and price_days_before3>price_99 and price_days_before4>price_99  and price_days>price_99:
@@ -319,7 +320,8 @@ for code in codes:
             percent_list3.append(percent3)
             win3.append(len(check3_up))
             win_price3.append(sum(price3_win))
-            day3.append(check3_all)
+            
+            
 
 
 
@@ -352,5 +354,3 @@ st.subheader('確率の平均:' + str(probability3))
 st.subheader('勝率は:' + str(win_probability3))
 st.subheader('起きた回数:' + str(sum(chance3_all)))
 st.subheader('儲け:' + str(win3_1))
-
-st.table(day3)
