@@ -354,3 +354,5 @@ st.subheader('確率の平均:' + str(probability3))
 st.subheader('勝率は:' + str(win_probability3))
 st.subheader('起きた回数:' + str(sum(chance3_all)))
 st.subheader('儲け:' + str(win3_1))
+
+st.table(chance3_all)
