@@ -45,7 +45,7 @@ for code in codes:
     option = code
     ticker = str(option) + '.T'
     tkr = yf.Ticker(ticker)
-    hist = tkr.history(period='500d')
+    hist = tkr.history(period='240d')
     hist = hist.reset_index()
     hist = hist.set_index(['Date'])
     hist = hist.rename_axis('Date').reset_index()
@@ -180,7 +180,7 @@ for code in codes:
     price_dif1 = []
     price1_win = []
     
-    for i in range(27,485):
+    for i in range(27,225):
         conversion_line = source['conversion_line'][i]
         conversion_line_yesterday = source['conversion_line'][i-1]
         base_line = source['base_line'][i]
@@ -235,7 +235,7 @@ for code in codes:
             win_price.append(sum(price1_win))
 
     #大循環MACD
-    for i in range(27,485):
+    for i in range(27,225):
         macd1 = source['MACD1'][i]
         macd1_direction = source['MACD1'][i] - source['MACD1'][i-3]
         macd2 = source['MACD2'][i]
@@ -281,7 +281,7 @@ for code in codes:
     price_dif3 = []
     price3_win = []
 
-    for i in range(27,485):
+    for i in range(27,225):
         percentk = source['sct_k_price'][i]
         percentk_direction = source['sct_k_price'][i] - source['sct_k_price'][i-1]
         slow_percentd = source['slow_sct_d_price'][i]
