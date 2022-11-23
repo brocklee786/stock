@@ -313,15 +313,15 @@ for code in codes:
                 price3_win.append(price_buy_percent3)
 
         
-        if len(check3_up):
-            percent3 = (len(check3_up* 100) / (len(check3_up)+ len(check3_down)))
-            chance3 = len(check3_up) + len(check3_down)
-            chance3_all.append(len(check3_all))
-            st.write(code,len(check3_all))
-            st.write(check3_all)
-            percent_list3.append(percent3)
-            win3.append(len(check3_up))
-            win_price3.append(sum(price3_win))
+    if len(check3_up):
+        percent3 = (len(check3_up* 100) / (len(check3_up)+ len(check3_down)))
+        chance3 = len(check3_up) + len(check3_down)
+        chance3_all.append(len(check3_all))
+        st.write(code,len(check3_all))
+        st.write(check3_all)
+        percent_list3.append(percent3)
+        win3.append(len(check3_up))
+        win_price3.append(sum(price3_win))
             
             
 
