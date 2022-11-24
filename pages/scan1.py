@@ -431,7 +431,7 @@ if st.button('計算を行う'):
 
 
 
-  st.write(code)
+      st.write(code)
 
 
 
