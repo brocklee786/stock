@@ -154,16 +154,16 @@ for code in codes:
     # stochasticks K
     source["sct_k_price"] = (
         100*
-        (source["Close"] - source["Close"].rolling(window=KDAY, min_periods=KDAY).min())/
-        (source["Close"].rolling(window=KDAY, min_periods=KDAY).max() - source["Close"].rolling(window=KDAY, min_periods=KDAY).min())
+        (source["Close"] - source["Low"].rolling(window=KDAY, min_periods=KDAY).min())/
+        (source["High"].rolling(window=KDAY, min_periods=KDAY).max() - source["Low"].rolling(window=KDAY, min_periods=KDAY).min())
     )
 
     # stochasticks D
     source["sct_d_price"] = (
         100*
-        (source["Close"] - source["Close"].rolling(window=KDAY, min_periods=KDAY).min())
+        (source["Close"] - source["Low"].rolling(window=KDAY, min_periods=KDAY).min())
         .rolling(window=MDAY, min_periods=MDAY).sum()/
-        (source["Close"].rolling(window=KDAY, min_periods=KDAY).max() - source["Close"].rolling(window=KDAY, min_periods=KDAY).min())
+        (source["High"].rolling(window=KDAY, min_periods=KDAY).max() - source["Low"].rolling(window=KDAY, min_periods=KDAY).min())
         .rolling(window=MDAY, min_periods=MDAY).sum()
     )
 
