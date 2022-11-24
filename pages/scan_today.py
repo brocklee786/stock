@@ -215,8 +215,10 @@ if st.button('スキャンを行う'):
       macd3_direction = source['MACD3'][499] - source['MACD3'][496]
       price = source['Close'][499]
       adx_direction = source['ADX'][499] - source['ADX'][498]
+      difference1 = source['MACD2'][499] - source['MACD1'][499]
+      difference2 = source['MACD2'][498] - source['MACD1'][498]
 
-      if macd1>0 and macd2>0 and macd3>0 and macd3_yesterday<0 and macd1_direction>0 and macd2_direction>0 and adx_direction>0:
+      if macd1>0 and macd2>0 and macd3>0 and macd3_yesterday<0 and macd1_direction>0 and macd2_direction>0 and difference1>difference2+5:
           chance2_all.append(code)
 
 
@@ -261,7 +263,7 @@ if st.button('スキャンを行う'):
   else:
        st.subheader('該当なし')
   expander2 = st.expander('確率計算2')
-  expander2.write('勝率:63%,回数:222回,1回あたりの勝ち額:2348円')
+  expander2.write('勝率:83%,回数:41回,1回あたりの勝ち額:8079円')
 
   st.title('ストキャスティクス')
   if len(chance3_all):
