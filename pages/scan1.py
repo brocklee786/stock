@@ -39,13 +39,20 @@ win3 = []
 win_price3 = []
 day3 = []
 
+chance4_all = []
+percent_list4 = []
+win4 = []
+win_price4 = []
+day4 = []
+
 
 codes = ['5901','6810','6807','6804','6779','6770','6754','6753','6752','6750','6724','6723','5727','5802','5805','5929','5943','6013','6047','6055','6058','6062','6083','6070','6088','6101','6113','6136','6141','6208','6238','6250','6269','6287','6298','6338','6395','6407','6412','6463','6503','6513','6544','6556','6630','6641','6666','6871','6925','6937','6941','6952','6962','6995','6997','6999','7187','7198','7202','7240','7261','7270','7278','7296','7313','7254','7414','7421','7453','7483','7532','7545','7575','7606','7613','7616','7718','7730','7732','7731','7752','7760','7864','7867','7906','7915','7965','7970','7981','7984','7994','8012','8020','8086','8129','8130','8133','8174','8233','8253','8282','8341','8370','8411','8570','8595','8699','8795','8802','8804','8876','8905','8909','8920','8923','8929','8934','9005','9006','9024','9007','9076','9099','9308','9401','9409','9416','9434','9502','9503','9511','9513','9517','9519','9625','9692','9832','1518','1712','1808','1812','1826','1944','1963','1969','2001','2002','2127','2154','2158','2160','2212','2301','2309','2389','2395','2427','2432','2433','2438','2471','2503','2531','2579','2607','2613','2678','2681','2685','2730','2784','2792','2910','2929','3003','3031','3048','3076','3086','3099','3101','3103','3105','3107','3134','3167','3161','3197','3222','3254','3319','3360','3377','3405','3407','3433','3436','3479','3482','3491','3591','3604','3632','3657','3661','3675','3681','3683','3691','3694','3902','3926','3962','3966','3990','3997','4028','4042','4043','4045','4080','4088','4095','4204','4272','4331','4394','4395','4423']
+
 for code in codes:
     option = code
     ticker = str(option) + '.T'
     tkr = yf.Ticker(ticker)
-    hist = tkr.history(period='240d')
+    hist = tkr.history(period='300d')
     hist = hist.reset_index()
     hist = hist.set_index(['Date'])
     hist = hist.rename_axis('Date').reset_index()
@@ -157,21 +164,53 @@ for code in codes:
     # stochasticks K
     source["sct_k_price"] = (
         100*
-        (source["Close"] - source["Close"].rolling(window=KDAY, min_periods=KDAY).min())/
-        (source["Close"].rolling(window=KDAY, min_periods=KDAY).max() - source["Close"].rolling(window=KDAY, min_periods=KDAY).min())
+        (source["Close"] - source["Low"].rolling(window=KDAY, min_periods=KDAY).min())/
+        (source["High"].rolling(window=KDAY, min_periods=KDAY).max() - source["Low"].rolling(window=KDAY, min_periods=KDAY).min())
     )
 
     # stochasticks D
     source["sct_d_price"] = (
         100*
-        (source["Close"] - source["Close"].rolling(window=KDAY, min_periods=KDAY).min())
+        (source["Close"] - source["Low"].rolling(window=KDAY, min_periods=KDAY).min())
         .rolling(window=MDAY, min_periods=MDAY).sum()/
-        (source["Close"].rolling(window=KDAY, min_periods=KDAY).max() - source["Close"].rolling(window=KDAY, min_periods=KDAY).min())
+        (source["High"].rolling(window=KDAY, min_periods=KDAY).max() - source["Low"].rolling(window=KDAY, min_periods=KDAY).min())
         .rolling(window=MDAY, min_periods=MDAY).sum()
     )
 
     # slow stochasticks
     source["slow_sct_d_price"] = source["sct_d_price"].rolling(window=MDAY, min_periods=MDAY).mean()
+
+    #GMMA
+    exp3 = source['Close'].ewm(span=3, adjust=False).mean()
+    exp8 = source['Close'].ewm(span=8, adjust=False).mean()
+    exp10 = source['Close'].ewm(span=10, adjust=False).mean()
+    exp12 = source['Close'].ewm(span=12, adjust=False).mean()
+    exp15 = source['Close'].ewm(span=15, adjust=False).mean()
+    source['EMA3'] = exp3
+    source['EMA5'] = exp5
+    source['EMA8'] = exp8
+    source['EMA10'] = exp10
+    source['EMA12'] = exp12
+    source['EMA15'] = exp15
+
+
+    exp30 = source['Close'].ewm(span=30, adjust=False).mean()
+    exp35 = source['Close'].ewm(span=35, adjust=False).mean()
+    exp40 = source['Close'].ewm(span=40, adjust=False).mean()
+    exp45 = source['Close'].ewm(span=45, adjust=False).mean()
+    exp50 = source['Close'].ewm(span=50, adjust=False).mean()
+    exp60 = source['Close'].ewm(span=60, adjust=False).mean()
+    source['EMA30'] = exp30
+    source['EMA35'] = exp35
+    source['EMA40'] = exp40
+    source['EMA45'] = exp45
+    source['EMA50'] = exp50
+    source['EMA60'] = exp60
+
+  
+
+
+
 
 
     check1_all = []
@@ -180,14 +219,14 @@ for code in codes:
     price_dif1 = []
     price1_win = []
     
-    for i in range(27,225):
+    for i in range(60,285):
         conversion_line = source['conversion_line'][i]
         conversion_line_yesterday = source['conversion_line'][i-1]
         base_line = source['base_line'][i]
         base_line_yesterday = source['base_line'][i-1]
         price = source['Close'][i]
         price_buy = source['Close'][i+1]
-        price_days = source['Low'][i+days+1]
+        price_days = source['Close'][i+days+1]
         price_days_before1 = source['Low'][i+days]
         price_days_before2 = source['Low'][i+days-1]
         price_days_before3 = source['Low'][i+days-2]
@@ -209,7 +248,7 @@ for code in codes:
             check1_all.append(i)
 
             
-            if price_days_before1>price_99 and price_days_before2>price_99 and price_days_before3>price_99 and price_days_before4>price_99  and price_days>price_99:
+            if price_days_before1>price_99 and price_days_before2>price_99 and price_days_before3>price_99 and price_days_before4>price_99  and price_days>price_buy:
                 check1_up.append(i)
                # price_dif1.append(price_change)
                 price1_win.append(price_change)
@@ -235,7 +274,7 @@ for code in codes:
             win_price.append(sum(price1_win))
 
     #大循環MACD
-    for i in range(27,225):
+    for i in range(60,285):
         macd1 = source['MACD1'][i]
         macd1_direction = source['MACD1'][i] - source['MACD1'][i-3]
         macd2 = source['MACD2'][i]
@@ -245,7 +284,7 @@ for code in codes:
         macd3_direction = source['MACD3'][i] - source['MACD3'][i-3]
         price = source['Close'][i]
         price_buy = source['Close'][i+1]
-        price_days = source['Low'][i+days+1]
+        price_days = source['Close'][i+days+1]
         price_days_before1 = source['Low'][i+days]
         price_days_before2 = source['Low'][i+days-1]
         price_days_before3 = source['Low'][i+days-2]
@@ -257,7 +296,7 @@ for code in codes:
 
         if macd1>0 and macd2>0 and macd3>0 and macd3_yesterday<0 and macd1_direction>0 and macd2_direction>0 and adx_direction>0:
 
-            if price_days_before1>price_99 and price_days_before2>price_99 and price_days_before3>price_99 and price_days_before4>price_99  and price_days>price_99:
+            if price_days_before1>price_99 and price_days_before2>price_99 and price_days_before3>price_99 and price_days_before4>price_99  and price_days>price_buy:
                 check2_up.append(i)
                # price_dif1.append(price_change)
                 price2_win.append(price_change)
@@ -281,7 +320,7 @@ for code in codes:
     price_dif3 = []
     price3_win = []
 
-    for i in range(27,225):
+    for i in range(60,285):
         percentk = source['sct_k_price'][i]
         percentk_direction = source['sct_k_price'][i] - source['sct_k_price'][i-1]
         slow_percentd = source['slow_sct_d_price'][i]
@@ -320,6 +359,71 @@ for code in codes:
         percent_list3.append(percent3)
         win3.append(len(check3_up))
         win_price3.append(sum(price3_win))
+
+
+    check4_all = []
+    check4_up = []
+    check4_down = []
+    price_dif4 = []
+    price4_win = []
+
+    for i in range(70,280):
+        price = source['Close'][i]
+        price_buy = source['Close'][i+1]
+        price_days = source['Close'][i+days+1]
+        price_days_before1 = source['Low'][i+days]
+        price_days_before2 = source['Low'][i+days-1]
+        price_days_before3 = source['Low'][i+days-2]
+        price_days_before4 = source['Low'][i+days-3]
+        price_buy_percent3 = source['Close'][i+1] * 0.03 * -1
+        price_99 = source['Close'][i+1] * 0.97
+        price_change = price_days - price_buy
+        ema3 = source['EMA3'][i]
+        ema5 = source['EMA5'][i]
+        ema8 = source['EMA8'][i]
+        ema12 = source['EMA12'][i]
+        ema15 = source['EMA15'][i]
+        ema30 = source['EMA30'][i]
+        ema35 = source['EMA35'][i]
+        ema40 = source['EMA40'][i]
+        ema45 = source['EMA45'][i]
+        ema50 = source['EMA50'][i]
+        ema60 = source['EMA60'][i]
+        ema10 = source['EMA10'][i]
+        ema15_yesterday = source['EMA15'][i-1]
+        width1 = ema3 - ema15
+        width2 = ema30 - ema60
+        ema3_direction = source['EMA3'][i] - source['EMA3'][i-1]
+        ema8_direction = source['EMA8'][i-2] - source['EMA8'][i-3]
+        ema3_direction_yesterday = source['EMA3'][i-1] - source['EMA3'][i-2]
+        slow_percentd = source['slow_sct_d_price'][i]
+        percentk = source['sct_k_price'][i]
+
+
+
+        if ema30>ema35>ema40>ema45>ema50>ema60 and ema3_direction>0 and ema3_direction_yesterday<0 and ema3>ema8 and ema8_direction>0 and width1>width2 and percentk>80:
+            check4_all.append(i)
+            
+
+            
+            if price_days_before1>price_99 and price_days_before2>price_99 and price_days_before3>price_99 and price_days_before4>price_99  and price_days>price_buy:
+                check4_up.append(i)
+               # price_dif1.append(price_change)
+                price4_win.append(price_change)
+
+            else:
+                check4_down.append(i)
+                price4_win.append(price_buy_percent3)
+
+        
+    if len(check4_up):
+        percent4 = (len(check4_up)* 100) / (len(check4_up)+ len(check4_down))
+        chance4 = len(check4_up) + len(check4_down)
+        chance4_all.append(len(check4_all))
+        percent_list4.append(percent4)
+        win4.append(len(check4_up))
+        win_price4.append(sum(price4_win))
+            
             
             
 
@@ -355,3 +459,11 @@ st.subheader('勝率は:' + str(win_probability3))
 st.subheader('起きた回数:' + str(sum(chance3_all)))
 st.subheader('儲け:' + str(win3_1))
 
+probability4 = sum(percent_list4) / len(percent_list4)
+win_probability4 = sum(win4) *100 / sum(chance4_all)
+win4_1 = sum(win_price4) * 100
+st.title('GMMA順張り')
+st.subheader('確率の平均:' + str(probability4))
+st.subheader('勝率は:' + str(win_probability4))
+st.subheader('起きた回数:' + str(sum(chance4_all)))
+st.subheader('儲け:' + str(win4_1))
