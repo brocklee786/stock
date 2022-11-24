@@ -245,8 +245,7 @@ for code in codes:
 
 
 
-st.title('均衡表の好転')
-st.subheader('一目×DMI×RSI')
+st.title('一目×DMI×RSI')
 if len(chance1_all):
      st.table(chance1_all)
 else:
@@ -255,8 +254,7 @@ expander1 = st.expander('確率計算1')
 expander1.write('勝率:95%,回数:22回,1回あたりの勝ち額:2090円')
 
 
-st.title('大循環MACD')
-st.subheader('大循環MACD×ADX')
+st.title('大循環MACD×ADX')
 if len(chance2_all):
      st.table(chance2_all)
 else:
