@@ -293,8 +293,8 @@ for code in codes:
         price_days_before2 = source['Low'][i+days-1]
         price_days_before3 = source['Low'][i+days-2]
         price_days_before4 = source['Low'][i+days-3]
-        price_buy_percent3 = source['Close'][i+1] * 0.01 * -1
-        price_99 = source['Close'][i+1] * 0.99
+        price_buy_percent3 = source['Close'][i+1] * 0.03 * -1
+        price_99 = source['Close'][i+1] * 0.97
         price_change = price_days - price_buy
         adx_direction = source['ADX'][i] - source['ADX'][i-1]
 
