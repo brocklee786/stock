@@ -300,7 +300,7 @@ for code in codes:
 
         if slow_percentd_yesterday<20 and slow_percentd>20 and percentk_direction>0 and percentk>70:
             check3_all.append(i)
-            st.write(code,i)
+            
 
             
             if price_days_before1>price_99 and price_days_before2>price_99 and price_days_before3>price_99 and price_days_before4>price_99  and price_days>price_99:
