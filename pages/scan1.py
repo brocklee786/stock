@@ -288,7 +288,7 @@ for code in codes:
         slow_percentd_yesterday = source['slow_sct_d_price'][i-1]
         price = source['Close'][i]
         price_buy = source['Close'][i+1]
-        price_days = source['Low'][i+days+1]
+        price_days = source['Close'][i+days+1]
         price_days_before1 = source['Low'][i+days]
         price_days_before2 = source['Low'][i+days-1]
         price_days_before3 = source['Low'][i+days-2]
@@ -303,7 +303,7 @@ for code in codes:
             
 
             
-            if price_days_before1>price_99 and price_days_before2>price_99 and price_days_before3>price_99 and price_days_before4>price_99  and price_days>price_99:
+            if price_days_before1>price_99 and price_days_before2>price_99 and price_days_before3>price_99 and price_days_before4>price_99  and price_days>price_buy:
                 check3_up.append(i)
                # price_dif1.append(price_change)
                 price3_win.append(price_change)
