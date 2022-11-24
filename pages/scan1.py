@@ -227,7 +227,7 @@ for code in codes:
     
         
     if len(check1_up):
-            percent1 = (len(check1_up* 100) / (len(check1_up)+ len(check1_down)))
+            percent1 = (len(check1_up)* 100) / (len(check1_up)+ len(check1_down)))
             chance1 = len(check1_up) + len(check1_down)
             chance1_all.append(chance1)
             percent_list.append(percent1)
@@ -267,7 +267,7 @@ for code in codes:
                 price2_win.append(price_buy_percent3)
 
     if len(check2_up):
-            percent2 = (len(check2_up* 100) / (len(check2_up)+ len(check2_down)))
+            percent2 = (len(check2_up)* 100) / (len(check2_up)+ len(check2_down)))
             chance2 = len(check2_up) + len(check2_down)
             chance2_all.append(chance2)
             percent_list2.append(percent2)
@@ -314,7 +314,7 @@ for code in codes:
 
         
     if len(check3_up):
-        percent3 = (len(check3_up* 100) / (len(check3_up)+ len(check3_down)))
+        percent3 = (len(check3_up)* 100) / (len(check3_up)+ len(check3_down)))
         chance3 = len(check3_up) + len(check3_down)
         chance3_all.append(len(check3_all))
         percent_list3.append(percent3)
