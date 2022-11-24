@@ -17,10 +17,8 @@ import subprocess
 
 st.set_page_config(layout="wide")
  
-st.title('一目均衡表×RSI検証')
-days = st.selectbox(
-    '何日間の取引を想定していますか？',
-    (5,1,3,10))
+st.title('銘柄スキャン')
+days = 5
 
 
 chance1_all = []
@@ -248,20 +246,28 @@ for code in codes:
 
 
 st.title('均衡表の好転')
+st.subheader('一目×DMI×RSI')
 if len(chance1_all):
      st.table(chance1_all)
 else:
      st.subheader('該当なし')
+expander1 = st.expander('確率計算1')
+expander1.write('勝率:95%,回数:22回,1回あたりの勝ち額:2090円')
 
 
 st.title('大循環MACD')
+st.subheader('大循環MACD×ADX')
 if len(chance2_all):
      st.table(chance2_all)
 else:
      st.subheader('該当なし')
+expander2 = st.expander('確率計算2')
+expander2.write('勝率:74%,回数:209回,1回あたりの勝ち額:461円')
 
 st.title('ストキャスティクス')
 if len(chance3_all):
      st.table(chance3_all)
 else:
      st.subheader('該当なし')
+expander3 = st.expander('確率計算3')
+expander3.write('勝率:87%,回数:74回,1回あたりの勝ち額:3557円')
