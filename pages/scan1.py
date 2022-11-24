@@ -298,7 +298,7 @@ for code in codes:
         price_change = price_days - price_buy
         adx_direction = source['ADX'][i] - source['ADX'][i-1]
 
-        if slow_percentd_yesterday<20 and slow_percentd>20 and percentk_direction>0 and percentk>95:
+        if slow_percentd_yesterday<20 and slow_percentd>20 and percentk_direction>0 and percentk>70:
             check3_all.append(i)
             st.write(code,i)
 
