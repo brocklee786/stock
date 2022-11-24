@@ -251,7 +251,7 @@ if len(chance1_all):
 else:
      st.subheader('該当なし')
 expander1 = st.expander('確率計算1')
-expander1.write('勝率:95%,回数:22回,1回あたりの勝ち額:2090円')
+expander1.write('勝率:94%,回数:21回,1回あたりの勝ち額:6676円')
 
 
 st.title('大循環MACD×ADX')
@@ -260,7 +260,7 @@ if len(chance2_all):
 else:
      st.subheader('該当なし')
 expander2 = st.expander('確率計算2')
-expander2.write('勝率:74%,回数:209回,1回あたりの勝ち額:461円')
+expander2.write('勝率:63%,回数:222回,1回あたりの勝ち額:2348円')
 
 st.title('ストキャスティクス')
 if len(chance3_all):
@@ -268,4 +268,4 @@ if len(chance3_all):
 else:
      st.subheader('該当なし')
 expander3 = st.expander('確率計算3')
-expander3.write('勝率:87%,回数:74回,1回あたりの勝ち額:3557円')
+expander3.write('勝率:85%,回数:49回,1回あたりの勝ち額:6528円')
