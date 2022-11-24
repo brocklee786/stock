@@ -44,7 +44,7 @@ for code in codes:
     option = code
     ticker = str(option) + '.T'
     tkr = yf.Ticker(ticker)
-    hist = tkr.history(period='240d')
+    hist = tkr.history(period='500d')
     hist = hist.reset_index()
     hist = hist.set_index(['Date'])
     hist = hist.rename_axis('Date').reset_index()
