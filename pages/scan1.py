@@ -17,7 +17,7 @@ import subprocess
 
 st.set_page_config(layout="wide")
  
-st.title('一目均衡表×RSI検証')
+st.title('銘柄スキャン')
 days = st.selectbox(
     '何日間の取引を想定していますか？',
     (5,1,3,10))
@@ -282,6 +282,8 @@ for code in codes:
         macd3 = source['MACD3'][i]
         macd3_yesterday = source['MACD3'][i-1]
         macd3_direction = source['MACD3'][i] - source['MACD3'][i-3]
+        difference1 = source['MACD2'][i] - source['MACD1'][i]
+        difference2 = source['MACD2'][i-1] - source['MACD1'][i-1]
         price = source['Close'][i]
         price_buy = source['Close'][i+1]
         price_days = source['Close'][i+days+1]
@@ -294,7 +296,7 @@ for code in codes:
         price_change = price_days - price_buy
         adx_direction = source['ADX'][i] - source['ADX'][i-1]
 
-        if macd1>0 and macd2>0 and macd3>0 and macd3_yesterday<0 and macd1_direction>0 and macd2_direction>0 and adx_direction>0:
+        if macd1>0 and macd2>0 and macd3>0 and macd3_yesterday<0 and macd1_direction>0 and macd2_direction>0 and difference1>difference2+5:
 
             if price_days_before1>price_99 and price_days_before2>price_99 and price_days_before3>price_99 and price_days_before4>price_99  and price_days>price_buy:
                 check2_up.append(i)
