@@ -342,5 +342,5 @@ if st.button('スキャンを行う'):
        st.table(chance4_all)
   else:
        st.subheader('該当なし')
-  expander3 = st.expander('確率計算4')
-  expander3.write('勝率:79%,回数:34回,1回あたりの勝ち額:3441円')
+  expander4 = st.expander('確率計算4')
+  expander4.write('勝率:79%,回数:34回,1回あたりの勝ち額:3441円')
