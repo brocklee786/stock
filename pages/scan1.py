@@ -369,7 +369,7 @@ if st.button('計算を行う'):
       check4_down = []
       price_dif4 = []
       price4_win = []
-
+      
       for i in range(70,280):
           price = source['Close'][i]
           price_buy = source['Close'][i+1]
@@ -396,15 +396,17 @@ if st.button('計算を行う'):
           ema15_yesterday = source['EMA15'][i-1]
           width1 = ema3 - ema15
           width2 = ema30 - ema60
+          width2_yesterday = source['EMA30'][i-1] - source['EMA60'][i-1]
           ema3_direction = source['EMA3'][i] - source['EMA3'][i-1]
           ema8_direction = source['EMA8'][i-2] - source['EMA8'][i-3]
           ema3_direction_yesterday = source['EMA3'][i-1] - source['EMA3'][i-2]
           slow_percentd = source['slow_sct_d_price'][i]
           percentk = source['sct_k_price'][i]
+          ema30_direction = ema30 - source['EMA30'][i-1]
 
 
 
-          if ema30>ema35>ema40>ema45>ema50>ema60 and ema3_direction>0 and ema3_direction_yesterday<0 and ema3>ema8 and ema8_direction>0 and width1>width2 and percentk>80:
+          if ema30>ema35>ema40>ema45>ema50>ema60 and ema3_direction>0 and ema3_direction_yesterday<0 and ema30_direction>0 and ema3>ema8 and ema8_direction<0 and width1>width2 and width2_yesterday<width2:
               check4_all.append(i)
 
 
@@ -413,6 +415,7 @@ if st.button('計算を行う'):
                   check4_up.append(i)
                  # price_dif1.append(price_change)
                   price4_win.append(price_change)
+
 
               else:
                   check4_down.append(i)
@@ -426,12 +429,13 @@ if st.button('計算を行う'):
           percent_list4.append(percent4)
           win4.append(len(check4_up))
           win_price4.append(sum(price4_win))
+        
+            
 
 
 
 
 
-      st.write(code)
 
 
 
