@@ -238,8 +238,8 @@ if st.button('計算を行う'):
           conversion_direction = source['conversion_line'][i] - source['conversion_line'][i-3]
           baseline_direction = source['base_line'][i+1] - source['base_line'][i]
           RSI_today = source['RSI'][i]
-          price_buy_percent3 = source['Close'][i+1] * 0.03 * -1
-          price_99 = source['Close'][i+1] * 0.97
+          price_buy_percent3 = source['Close'][i+1] * 0.05 * -1
+          price_99 = source['Close'][i+1] * 0.95
           adx_direction = source['ADX'][i] - source['ADX'][i-1]
           RSI_direction = source['RSI'][i] - source['RSI'][i-1]
           pdm = source['pDI'][i]
@@ -294,8 +294,8 @@ if st.button('計算を行う'):
           price_days_before2 = source['Low'][i+days-1]
           price_days_before3 = source['Low'][i+days-2]
           price_days_before4 = source['Low'][i+days-3]
-          price_buy_percent3 = source['Close'][i+1] * 0.03 * -1
-          price_99 = source['Close'][i+1] * 0.97
+          price_buy_percent3 = source['Close'][i+1] * 0.05 * -1
+          price_99 = source['Close'][i+1] * 0.95
           price_change = price_days - price_buy
           adx_direction = source['ADX'][i] - source['ADX'][i-1]
 
@@ -339,8 +339,8 @@ if st.button('計算を行う'):
           price_days_before2 = source['Low'][i+days-1]
           price_days_before3 = source['Low'][i+days-2]
           price_days_before4 = source['Low'][i+days-3]
-          price_buy_percent3 = source['Close'][i+1] * 0.03 * -1
-          price_99 = source['Close'][i+1] * 0.97
+          price_buy_percent3 = source['Close'][i+1] * 0.05 * -1
+          price_99 = source['Close'][i+1] * 0.95
           price_change = price_days - price_buy
           adx_direction = source['ADX'][i] - source['ADX'][i-1]
 
@@ -384,8 +384,8 @@ if st.button('計算を行う'):
           price_days_before2 = source['Low'][i+days-1]
           price_days_before3 = source['Low'][i+days-2]
           price_days_before4 = source['Low'][i+days-3]
-          price_buy_percent3 = source['Close'][i+1] * 0.03 * -1
-          price_99 = source['Close'][i+1] * 0.97
+          price_buy_percent3 = source['Close'][i+1] * 0.05 * -1
+          price_99 = source['Close'][i+1] * 0.95
           price_change = price_days - price_buy
           ema3 = source['EMA3'][i]
           ema5 = source['EMA5'][i]
