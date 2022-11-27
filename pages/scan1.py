@@ -267,12 +267,12 @@ if st.button('計算を行う'):
 
 
 
-            
-           chance1 = len(check1_up) + len(check1_down)
-           chance1_all.append(chance1)
 
-           win.append(len(check1_up))
-           win_price.append(sum(price1_win))
+         chance1 = len(check1_up) + len(check1_down)
+         chance1_all.append(chance1)
+
+         win.append(len(check1_up))
+         win_price.append(sum(price1_win))
 
       #大循環MACD
       for i in range(60,285):
@@ -310,11 +310,11 @@ if st.button('計算を行う'):
 
     
            
-            chance2 = len(check2_up) + len(check2_down)
-            chance2_all.append(chance2)
-           
-            win2.append(len(check2_up))
-            win_price2.append(sum(price2_win))
+          chance2 = len(check2_up) + len(check2_down)
+          chance2_all.append(chance2)
+
+          win2.append(len(check2_up))
+          win_price2.append(sum(price2_win))
 
 
       check3_all = []
@@ -357,11 +357,11 @@ if st.button('計算を行う'):
 
 
         
-        chance3 = len(check3_up) + len(check3_down)
-        chance3_all.append(len(check3_all))
-        
-        win3.append(len(check3_up))
-        win_price3.append(sum(price3_win))
+      chance3 = len(check3_up) + len(check3_down)
+      chance3_all.append(len(check3_all))
+
+      win3.append(len(check3_up))
+      win_price3.append(sum(price3_win))
 
 
       check4_all = []
@@ -424,11 +424,11 @@ if st.button('計算を行う'):
 
       
        
-        chance4 = len(check4_up) + len(check4_down)
-        chance4_all.append(len(check4_all))
- 
-        win4.append(len(check4_up))
-        win_price4.append(sum(price4_win))
+      chance4 = len(check4_up) + len(check4_down)
+      chance4_all.append(len(check4_all))
+
+      win4.append(len(check4_up))
+      win_price4.append(sum(price4_win))
         
             
 
