@@ -459,7 +459,7 @@ if st.button('計算を行う'):
   win_probability3 = sum(win3) *100 / sum(chance3_all)
   win3_1 = sum(win_price3) * 100
   st.title('ストキャスティクス')
-  )
+  
   st.subheader('勝率は:' + str(win_probability3))
   st.subheader('起きた回数:' + str(sum(chance3_all)))
   st.subheader('儲け:' + str(win3_1))
