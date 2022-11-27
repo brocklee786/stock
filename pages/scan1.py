@@ -266,13 +266,13 @@ if st.button('計算を行う'):
       price2_win = []
 
 
-      if len(check1_up):
-              percent1 = (len(check1_up)* 100) / (len(check1_up)+ len(check1_down))
-              chance1 = len(check1_up) + len(check1_down)
-              chance1_all.append(chance1)
-              percent_list.append(percent1)
-              win.append(len(check1_up))
-              win_price.append(sum(price1_win))
+
+            
+            chance1 = len(check1_up) + len(check1_down)
+            chance1_all.append(chance1)
+            
+            win.append(len(check1_up))
+            win_price.append(sum(price1_win))
 
       #大循環MACD
       for i in range(60,285):
@@ -308,13 +308,13 @@ if st.button('計算を行う'):
                   check2_down.append(i)
                   price2_win.append(price_buy_percent3)
 
-      if len(check2_up):
-              percent2 = (len(check2_up)* 100) / (len(check2_up)+ len(check2_down))
-              chance2 = len(check2_up) + len(check2_down)
-              chance2_all.append(chance2)
-              percent_list2.append(percent2)
-              win2.append(len(check2_up))
-              win_price2.append(sum(price2_win))
+    
+           
+            chance2 = len(check2_up) + len(check2_down)
+            chance2_all.append(chance2)
+           
+            win2.append(len(check2_up))
+            win_price2.append(sum(price2_win))
 
 
       check3_all = []
@@ -355,13 +355,13 @@ if st.button('計算を行う'):
                   price3_win.append(price_buy_percent3)
 
 
-      if len(check3_up):
-          percent3 = (len(check3_up)* 100) / (len(check3_up)+ len(check3_down))
-          chance3 = len(check3_up) + len(check3_down)
-          chance3_all.append(len(check3_all))
-          percent_list3.append(percent3)
-          win3.append(len(check3_up))
-          win_price3.append(sum(price3_win))
+
+        
+        chance3 = len(check3_up) + len(check3_down)
+        chance3_all.append(len(check3_all))
+        
+        win3.append(len(check3_up))
+        win_price3.append(sum(price3_win))
 
 
       check4_all = []
@@ -422,13 +422,13 @@ if st.button('計算を行う'):
                   price4_win.append(price_buy_percent3)
 
 
-      if len(check4_up):
-          percent4 = (len(check4_up)* 100) / (len(check4_up)+ len(check4_down))
-          chance4 = len(check4_up) + len(check4_down)
-          chance4_all.append(len(check4_all))
-          percent_list4.append(percent4)
-          win4.append(len(check4_up))
-          win_price4.append(sum(price4_win))
+      
+       
+        chance4 = len(check4_up) + len(check4_down)
+        chance4_all.append(len(check4_all))
+ 
+        win4.append(len(check4_up))
+        win_price4.append(sum(price4_win))
         
             
 
@@ -439,38 +439,36 @@ if st.button('計算を行う'):
 
 
 
-  probability1 = sum(percent_list) / len(percent_list)
+
   win_probability1 = sum(win) *100 / sum(chance1_all)
   win1 = sum(win_price) * 100
   st.title('均衡表の好転')
-  st.subheader('確率の平均:' + str(probability1))
   st.subheader('勝率は:' + str(win_probability1))
   st.subheader('起きた回数:' + str(sum(chance1_all)))
   st.subheader('儲け:' + str(win1))
 
-  probability2 = sum(percent_list2) / len(percent_list2)
   win_probability2 = sum(win2) *100 / sum(chance2_all)
   win2_1 = sum(win_price2) * 100
   st.title('大循環MACD')
-  st.subheader('確率の平均:' + str(probability2))
+
   st.subheader('勝率は:' + str(win_probability2))
   st.subheader('起きた回数:' + str(sum(chance2_all)))
   st.subheader('儲け:' + str(win2_1))
 
-  probability3 = sum(percent_list3) / len(percent_list3)
+ 
   win_probability3 = sum(win3) *100 / sum(chance3_all)
   win3_1 = sum(win_price3) * 100
   st.title('ストキャスティクス')
-  st.subheader('確率の平均:' + str(probability3))
+  )
   st.subheader('勝率は:' + str(win_probability3))
   st.subheader('起きた回数:' + str(sum(chance3_all)))
   st.subheader('儲け:' + str(win3_1))
 
-  probability4 = sum(percent_list4) / len(percent_list4)
+
   win_probability4 = sum(win4) *100 / sum(chance4_all)
   win4_1 = sum(win_price4) * 100
   st.title('GMMA順張り')
-  st.subheader('確率の平均:' + str(probability4))
+
   st.subheader('勝率は:' + str(win_probability4))
   st.subheader('起きた回数:' + str(sum(chance4_all)))
   st.subheader('儲け:' + str(win4_1))
