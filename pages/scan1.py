@@ -273,7 +273,7 @@ if st.button('計算を行う'):
 
       win.append(len(check1_up))
       win_price.append(sum(price1_win))
-      if len(check1_up)==0:
+      if len(check1_up)==0 and len(check1_down)>0:
        st.write(code)
 
       #大循環MACD
@@ -317,7 +317,7 @@ if st.button('計算を行う'):
 
       win2.append(len(check2_up))
       win_price2.append(sum(price2_win))
-      if len(check2_up)==0:
+      if len(check2_up)==0  and len(check2_down)>0:
         st.write(code)
 
 
@@ -366,7 +366,7 @@ if st.button('計算を行う'):
 
       win3.append(len(check3_up))
       win_price3.append(sum(price3_win))
-      if len(check3_up)==0:
+      if len(check3_up)==0 and len(check3_down)>0:
         st.write(code)
 
 
@@ -435,7 +435,7 @@ if st.button('計算を行う'):
 
       win4.append(len(check4_up))
       win_price4.append(sum(price4_win))
-      if len(check4_up)==0:
+      if len(check4_up)==0 and len(check4_down)>0:
         st.write(code)
         
             
