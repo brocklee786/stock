@@ -219,6 +219,7 @@ if st.button('計算を行う'):
       check1_down = []
       price_dif1 = []
       price1_win = []
+      st.write(code)
 
       for i in range(60,985):
           conversion_line = source['conversion_line'][i]
