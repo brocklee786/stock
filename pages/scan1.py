@@ -277,7 +277,7 @@ if st.button('計算を行う'):
        st.write(code,1,len(check1_down))
 
       #大循環MACD
-      for i in range(60,285):
+      for i in range(60,985):
           macd1 = source['MACD1'][i]
           macd1_direction = source['MACD1'][i] - source['MACD1'][i-3]
           macd2 = source['MACD2'][i]
@@ -327,7 +327,7 @@ if st.button('計算を行う'):
       price_dif3 = []
       price3_win = []
 
-      for i in range(60,285):
+      for i in range(60,985):
           percentk = source['sct_k_price'][i]
           percentk_direction = source['sct_k_price'][i] - source['sct_k_price'][i-1]
           slow_percentd = source['slow_sct_d_price'][i]
@@ -376,7 +376,7 @@ if st.button('計算を行う'):
       price_dif4 = []
       price4_win = []
       
-      for i in range(70,280):
+      for i in range(70,980):
           price = source['Close'][i]
           price_buy = source['Close'][i+1]
           price_days = source['Close'][i+days+1]
