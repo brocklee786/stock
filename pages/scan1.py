@@ -53,7 +53,7 @@ if st.button('計算を行う'):
       option = code
       ticker = str(option) + '.T'
       tkr = yf.Ticker(ticker)
-      hist = tkr.history(period='300d')
+      hist = tkr.history(period='1000d')
       hist = hist.reset_index()
       hist = hist.set_index(['Date'])
       hist = hist.rename_axis('Date').reset_index()
@@ -220,7 +220,7 @@ if st.button('計算を行う'):
       price_dif1 = []
       price1_win = []
 
-      for i in range(60,285):
+      for i in range(60,985):
           conversion_line = source['conversion_line'][i]
           conversion_line_yesterday = source['conversion_line'][i-1]
           base_line = source['base_line'][i]
