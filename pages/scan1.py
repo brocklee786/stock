@@ -20,7 +20,7 @@ st.set_page_config(layout="wide")
 st.title('銘柄スキャン')
 days = st.selectbox(
     '何日間の取引を想定していますか？',
-    (2,3,10))
+    (5,2,3,10))
 
 
 chance1_all = []
@@ -249,7 +249,7 @@ if st.button('計算を行う'):
               check1_all.append(i)
 
 
-              if price_days_before1>price_99 and price_days_before2>price_99 and price_days>price_buy:
+              if price_days_before1>price_99 and price_days_before2>price_99 and price_days_before3>price_99 and price_days_before4>price_99 and price_days>price_buy:
                   check1_up.append(i)
                  # price_dif1.append(price_change)
                   price1_win.append(price_change)
