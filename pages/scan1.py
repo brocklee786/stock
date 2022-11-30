@@ -418,7 +418,7 @@ if st.button('計算を行う'):
 
 
 
-          if ema30>ema35>ema40>ema45>ema50>ema60 and ema3_direction>0 and ema3_direction_yesterday<0 and ema30_direction>0 and ema3>ema8 and ema8_direction<0 and width2_yesterday<width2 and width1>width2 and slow_percentd>90:
+          if ema30>ema35>ema40>ema45>ema50>ema60 and ema3_direction>0 and ema3_direction_yesterday<0 and ema30_direction>0 and ema3>ema8 and ema8_direction<0 and width2_yesterday<width2 and width1>width2 and slow_percentd>70:
               check4_all.append(i)
 
 
