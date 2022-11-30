@@ -256,6 +256,10 @@ if st.button('計算を行う'):
           ema40_direction = source['EMA40'][i] - source['EMA40'][i-1]
           ema50_direction = source['EMA50'][i] - source['EMA50'][i-1]
           ema60_direction = source['EMA60'][i] - source['EMA60'][i-1]
+          ema30 = source['EMA30'][i]
+          ema40 = source['EMA40'][i]
+          ema50 = source['EMA50'][i]
+          ema60 = source['EMA60'][i]
           #均衡表の好転
           if conversion_line>=base_line and conversion_line_yesterday<base_line_yesterday and price>conversion_line and conversion_direction>0 and ema30>ema40>ema50>ema60 and ema30_direction>0 and ema40_direction>0 and ema50_direction>0 and ema60_direction>0:
               check1_all.append(i)
