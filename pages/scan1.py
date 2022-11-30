@@ -231,7 +231,7 @@ if st.button('計算を行う'):
           conversion_line_yesterday = source['conversion_line'][i-1]
           base_line = source['base_line'][i]
           base_line_yesterday = source['base_line'][i-1]
-          lagging_line = source['lagging'][i-25]
+          lagging_line = source['lagging_span'][i-25]
           price = source['Close'][i]
           price_lagging = source['Close'][i-25]
           price_buy = source['Close'][i+1]
