@@ -411,6 +411,7 @@ if st.button('計算を行う'):
           width2_yesterday = source['EMA30'][i-1] - source['EMA60'][i-1]
           ema3_direction = source['EMA3'][i] - source['EMA3'][i-1]
           ema8_direction = source['EMA8'][i-2] - source['EMA8'][i-3]
+          ema12_direction = source['EMA12'][i-2] - source['EMA12'][i-3]
           ema3_direction_yesterday = source['EMA3'][i-1] - source['EMA3'][i-2]
           slow_percentd = source['slow_sct_d_price'][i]
           slow_percentd_direction = source['slow_sct_d_price'][i] - source['slow_sct_d_price'][i-1]
@@ -419,7 +420,7 @@ if st.button('計算を行う'):
 
 
 
-          if ema30>ema35>ema40>ema45>ema50>ema60 and ema3_direction>0 and ema3_direction_yesterday<0 and ema30_direction>0 and ema3>ema8 and ema8_direction<0 and width2_yesterday<width2 and width1>width2 and slow_percentd_direction>0:
+          if ema30>ema35>ema40>ema45>ema50>ema60 and ema3_direction>0 and ema3_direction_yesterday<0 and ema30_direction>0 and ema3>ema8 and ema8_direction<0 and ema12_direction<0:
               check4_all.append(i)
 
 
