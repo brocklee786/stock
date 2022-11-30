@@ -251,7 +251,7 @@ if st.button('計算を行う'):
           adx_direction = source['ADX'][i] - source['ADX'][i-1]
           RSI_direction = source['RSI'][i] - source['RSI'][i-1]
           pdm = source['pDI'][i]
-          mdm = source['mDI'][i] + 10
+          mdm = source['mDI'][i] + 20
           #均衡表の好転
           if conversion_line>=base_line and conversion_line_yesterday<base_line_yesterday and price>conversion_line and conversion_direction>0 and pdm>mdm and adx_direction>0 and RSI_direction>0 and RSI_today>50 and price_lagging-lagging_line<15:
               check1_all.append(i)
