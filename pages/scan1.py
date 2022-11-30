@@ -231,7 +231,9 @@ if st.button('計算を行う'):
           conversion_line_yesterday = source['conversion_line'][i-1]
           base_line = source['base_line'][i]
           base_line_yesterday = source['base_line'][i-1]
+          lagging_line = source['lagging'][i-25]
           price = source['Close'][i]
+          price_lagging = source['Close'][i-25]
           price_buy = source['Close'][i+1]
           price_days = source['Close'][i+days+1]
           price_days_before1 = source['Low'][i+days]
@@ -251,7 +253,7 @@ if st.button('計算を行う'):
           pdm = source['pDI'][i]
           mdm = source['mDI'][i] + 25
           #均衡表の好転
-          if conversion_line>=base_line and conversion_line_yesterday<base_line_yesterday and price>conversion_line and conversion_direction>0 and pdm>mdm and adx_direction>0 and RSI_direction>0 and RSI_today>60:
+          if conversion_line>=base_line and conversion_line_yesterday<base_line_yesterday and price>conversion_line and conversion_direction>0 and pdm>mdm and adx_direction>0 and RSI_direction>0 and RSI_today>60 and price_lagging-lagging_line<15:
               check1_all.append(i)
 
 
