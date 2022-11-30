@@ -253,7 +253,7 @@ if st.button('計算を行う'):
           pdm = source['pDI'][i]
           mdm = source['mDI'][i] + 25
           #均衡表の好転
-          if conversion_line>=base_line and conversion_line_yesterday<base_line_yesterday and price>conversion_line and conversion_direction>0 and pdm>mdm and adx_direction>0 and RSI_direction>0 and RSI_today>60 and 0<price_lagging-lagging_line<50:
+          if conversion_line>=base_line and conversion_line_yesterday<base_line_yesterday and price>conversion_line and conversion_direction>0 and pdm>mdm and adx_direction>0 and RSI_direction>0 and RSI_today>60 and price_lagging-lagging_line<0:
               check1_all.append(i)
 
 
