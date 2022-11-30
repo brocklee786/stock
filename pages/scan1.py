@@ -383,7 +383,7 @@ if st.button('計算を行う'):
       price4_win = []
       
       for i in range(70,280):
-          price = source['Close'][i]
+          price1 = source['Close'][i]
           price_buy = source['Close'][i+1]
           price_days = source['Close'][i+days+1]
           price_days_before1 = source['Low'][i+days]
@@ -418,7 +418,7 @@ if st.button('計算を行う'):
 
 
 
-          if ema30>ema35>ema40>ema45>ema50>ema60 and ema3_direction>0 and ema3_direction_yesterday<0 and ema30_direction>0 and ema3>ema8 and ema8_direction<0 and width1>width2 and width2_yesterday<width2:
+          if ema30>ema35>ema40>ema45>ema50>ema60 and ema3_direction>0 and ema3_direction_yesterday<0 and ema30_direction>0 and ema3>ema8 and ema8_direction<0 and width1>width2 and width2_yesterday<width2 and price1>ema5:
               check4_all.append(i)
 
 
