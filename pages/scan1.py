@@ -224,7 +224,7 @@ if st.button('計算を行う'):
       check1_down = []
       price_dif1 = []
       price1_win = []
-      st.write(code)
+      
 
       for i in range(60,285):
           conversion_line = source['conversion_line'][i]
@@ -260,7 +260,7 @@ if st.button('計算を行う'):
           ema5 = source['EMA5'][i]
           ema8 = source['EMA8'][i]
           ema12 = source['EMA12'][i]
-          #均衡表の好転
+          #遅行スパンの好転
           if conversion_line>=base_line and conversion_line_yesterday<base_line_yesterday and price>conversion_line and conversion_direction>0 and pdm>mdm and adx_direction>0 and RSI_direction>0 and RSI_today>50 and ema3>ema5>ema8>ema12 and ema3_direction>0 and ema5_direction>0 and ema8_direction>0 and ema12_direction>0:
               check1_all.append(i)
 
@@ -289,8 +289,7 @@ if st.button('計算を行う'):
 
       win.append(len(check1_up))
       win_price.append(sum(price1_win))
-      if len(check1_up)==0 and len(check1_down)>0:
-       st.write(code,1,len(check1_down))
+
 
       #大循環MACD
       for i in range(60,285):
@@ -333,8 +332,7 @@ if st.button('計算を行う'):
 
       win2.append(len(check2_up))
       win_price2.append(sum(price2_win))
-      if len(check2_up)==0  and len(check2_down)>0:
-        st.write(code,2,len(check2_down))
+
 
 
       check3_all = []
@@ -382,8 +380,7 @@ if st.button('計算を行う'):
 
       win3.append(len(check3_up))
       win_price3.append(sum(price3_win))
-      if len(check3_up)==0 and len(check3_down)>0:
-        st.write(code,3,len(check3_down))
+
 
 
       check4_all = []
@@ -453,8 +450,7 @@ if st.button('計算を行う'):
 
       win4.append(len(check4_up))
       win_price4.append(sum(price4_win))
-      if len(check4_up)==0 and len(check4_down)>0:
-        st.write(code,4,len(check4_down))
+
         
             
 
