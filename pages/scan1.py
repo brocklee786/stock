@@ -283,7 +283,7 @@ if st.button('計算を行う'):
                 else:
                     check1_down.append(i)
                     price1_win.append(price_buy_percent3)
-                    st.write(code,price_buy,price_99,price_days_before1,price_days_before2,price_days_before3,price_days_before4,price_days)
+                    
 
 
 
