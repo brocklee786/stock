@@ -23,9 +23,9 @@ date = st.selectbox(
     ('平日','土日'))
 
 if date == '平日':
-    last = 499
+    last = 99
 else:
-    last = 498
+    last = 98
 
 days = 5
 
@@ -68,7 +68,7 @@ if st.button('計算を行う'):
         option = code
         ticker = str(option) + '.T'
         tkr = yf.Ticker(ticker)
-        hist = tkr.history(period='500d')
+        hist = tkr.history(period='100d')
         hist = hist.reset_index()
         hist = hist.set_index(['Date'])
         hist = hist.rename_axis('Date').reset_index()
@@ -258,10 +258,7 @@ if st.button('計算を行う'):
         #出来高を1.5倍にすると100%になる。10回。
         #遅行スパンの好転
         if all([price_lagging<=lagging_line,price_lagging_yesterday>lagging_line_yesterday,conversion_line>base_line,conversion_line_5daybefore<base_line_5daybefore,conversion_direction>0,price1>conversion_line,RSI_today>60,adx_direction>0,volume_difference>0]):
-            check1_all.append(code)
-
-
-        chance1_all.append(check1_all)
+            chance1_all.append(code)
 
 
 
@@ -273,7 +270,7 @@ if st.button('計算を行う'):
         option = code
         ticker = str(option) + '.T'
         tkr = yf.Ticker(ticker)
-        hist = tkr.history(period='500d')
+        hist = tkr.history(period='100d')
         hist = hist.reset_index()
         hist = hist.set_index(['Date'])
         hist = hist.rename_axis('Date').reset_index()
@@ -451,15 +448,8 @@ if st.button('計算を行う'):
         volume_difference = source['Volume'][last-1] - source['Volume'][last-2]*1.1
 
         if macd1>0 and macd2>0 and macd3>0 and macd3_yesterday<0 and macd1_direction>0 and macd2_direction>0 and difference1>difference2+5 and volume_difference>0:
-            check2_all.append(code)
 
-
-                
-
-
-        
-
-        chance2_all.append(check2_all)
+            chance2_all.append(code)
     
 
 
@@ -474,7 +464,7 @@ if st.button('計算を行う'):
         option = code
         ticker = str(option) + '.T'
         tkr = yf.Ticker(ticker)
-        hist = tkr.history(period='500d')
+        hist = tkr.history(period='100d')
         hist = hist.reset_index()
         hist = hist.set_index(['Date'])
         hist = hist.rename_axis('Date').reset_index()
@@ -647,15 +637,8 @@ if st.button('計算を行う'):
         volume_difference = source['Volume'][last] - source['Volume'][last-1]*1.1
 
         if slow_percentd_yesterday<20 and slow_percentd>20 and percentk>70 and slow_percentd_10day<30 and volume_difference>0:
-            check3_all.append(code)
 
-
-
-
-
-        
-
-        chance3_all.append(chance3_all)
+            chance3_all.append(code)
 
 
 
