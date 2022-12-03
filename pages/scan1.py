@@ -515,165 +515,6 @@ if st.button('計算を行う'):
 
 
 
-    for code in codes3:
-        option = code
-        ticker = str(option) + '.T'
-        tkr = yf.Ticker(ticker)
-        hist = tkr.history(period='300d')
-        hist = hist.reset_index()
-        hist = hist.set_index(['Date'])
-        hist = hist.rename_axis('Date').reset_index()
-        hist = hist.T
-        a = hist.to_dict()
-
-        for items in a.values():
-                time = items['Date']
-                items['Date'] = time.strftime("%Y/%m/%d")
-
-        b = [x for x in a.values()]
-
-        source = pd.DataFrame(b)
-
-        price = source['Close']
-
-        #DMIの計算
-        high = source['High']
-        low = source['Low']
-        close = source['Close']
-        pDM = (high - high.shift(1))
-        mDM = (low.shift(1) - low)
-        pDM.loc[pDM<0] = 0
-        pDM.loc[pDM-mDM < 0] = 0
-        mDM.loc[mDM<0] = 0
-        mDM.loc[mDM-pDM < 0] = 0
-        # trの計算
-        a = (high - low).abs()
-        b = (high - close.shift(1)).abs()
-        c = (low - close.shift(1)).abs()
-        tr = pd.concat([a, b, c], axis=1).max(axis=1)
-        source['pDI'] = pDM.rolling(14).sum()/tr.rolling(14).sum() * 100
-        source['mDI'] = mDM.rolling(14).sum()/tr.rolling(14).sum() * 100
-        # ADXの計算
-        DX = (source['pDI']-source['mDI']).abs()/(source['pDI']+source['mDI']) * 100
-        DX = DX.fillna(0)
-        source['ADX'] = DX.rolling(14).mean()
-
-        #移動平均
-        span01=5
-        span02=25
-        span03=50
-
-        source['sma01'] = price.rolling(window=span01).mean()
-        source['sma02'] = price.rolling(window=span02).mean()
-        source['sma03'] = price.rolling(window=span03).mean()
-
-
-        # 基準線
-        high26 = source["High"].rolling(window=26).max()
-        low26 = source["Low"].rolling(window=26).min()
-        source["base_line"] = (high26 + low26) / 2
-
-        # 転換線
-        high9 = source["High"].rolling(window=9).max()
-        low9 = source["Low"].rolling(window=9).min()
-        source["conversion_line"] = (high9 + low9) / 2
-
-        # 先行スパン1
-        leading_span1 = (source["base_line"] + source["conversion_line"]) / 2
-        source["leading_span1"] = leading_span1.shift(25)
-
-        # 先行スパン2
-        high52 = source["High"].rolling(window=52).max()
-        low52 = source["Low"].rolling(window=52).min()
-        leading_span2 = (high52 + low52) / 2
-        source["leading_span2"] = leading_span2.shift(25)
-
-        # 遅行スパン
-        source["lagging_span"] = source["Close"].shift(-25)
-
-        #RSI
-        # 前日との差分を計算
-        df_diff = source["Close"].diff(1)
-
-        # 計算用のDataFrameを定義
-        df_up, df_down = df_diff.copy(), df_diff.copy()
-
-        # df_upはマイナス値を0に変換
-        # df_downはプラス値を0に変換して正負反転
-        df_up[df_up < 0] = 0
-        df_down[df_down > 0] = 0
-        df_down = df_down * -1
-
-
-        # 期間14でそれぞれの平均を算出
-        df_up_sma14 = df_up.rolling(window=14, center=False).mean()
-        df_down_sma14 = df_down.rolling(window=14, center=False).mean()
-
-
-
-        # RSIを算出
-        source["RSI"] = 100.0 * (df_up_sma14 / (df_up_sma14 + df_down_sma14))
-
-        #大循環macd
-        exp5 = source['Close'].ewm(span=5, adjust=False).mean()
-        exp20 = source['Close'].ewm(span=20, adjust=False).mean()
-        source['MACD1'] = exp5 - exp20
-
-
-        exp40 = source['Close'].ewm(span=40, adjust=False).mean()
-        source['MACD2'] = exp5 - exp40
-
-        source['MACD3'] = exp20 - exp40
-
-        KDAY = 20  # K算定用期間
-        MDAY = 3  # D算定用期間
-
-        # stochasticks K
-        source["sct_k_price"] = (
-            100*
-            (source["Close"] - source["Low"].rolling(window=KDAY, min_periods=KDAY).min())/
-            (source["High"].rolling(window=KDAY, min_periods=KDAY).max() - source["Low"].rolling(window=KDAY, min_periods=KDAY).min())
-        )
-
-        # stochasticks D
-        source["sct_d_price"] = (
-            100*
-            (source["Close"] - source["Low"].rolling(window=KDAY, min_periods=KDAY).min())
-            .rolling(window=MDAY, min_periods=MDAY).sum()/
-            (source["High"].rolling(window=KDAY, min_periods=KDAY).max() - source["Low"].rolling(window=KDAY, min_periods=KDAY).min())
-            .rolling(window=MDAY, min_periods=MDAY).sum()
-        )
-
-        # slow stochasticks
-        source["slow_sct_d_price"] = source["sct_d_price"].rolling(window=MDAY, min_periods=MDAY).mean()
-
-        #GMMA
-        exp3 = source['Close'].ewm(span=3, adjust=False).mean()
-        exp8 = source['Close'].ewm(span=8, adjust=False).mean()
-        exp10 = source['Close'].ewm(span=10, adjust=False).mean()
-        exp12 = source['Close'].ewm(span=12, adjust=False).mean()
-        exp15 = source['Close'].ewm(span=15, adjust=False).mean()
-        source['EMA3'] = exp3
-        source['EMA5'] = exp5
-        source['EMA8'] = exp8
-        source['EMA10'] = exp10
-        source['EMA12'] = exp12
-        source['EMA15'] = exp15
-
-
-        exp30 = source['Close'].ewm(span=30, adjust=False).mean()
-        exp35 = source['Close'].ewm(span=35, adjust=False).mean()
-        exp40 = source['Close'].ewm(span=40, adjust=False).mean()
-        exp45 = source['Close'].ewm(span=45, adjust=False).mean()
-        exp50 = source['Close'].ewm(span=50, adjust=False).mean()
-        exp60 = source['Close'].ewm(span=60, adjust=False).mean()
-        source['EMA30'] = exp30
-        source['EMA35'] = exp35
-        source['EMA40'] = exp40
-        source['EMA45'] = exp45
-        source['EMA50'] = exp50
-        source['EMA60'] = exp60
-
 
 
     for code in codes3:
@@ -886,15 +727,8 @@ if st.button('計算を行う'):
 
         win3.append(len(check3_up))
         win_price3.append(sum(price3_win))
-
-
-
-
-
-
-
-
-    for code in codes4:
+        
+    for code in codes:
         option = code
         ticker = str(option) + '.T'
         tkr = yf.Ticker(ticker)
@@ -948,8 +782,8 @@ if st.button('計算を行う'):
 
 
         # 基準線
-        high26 = source["High"].rolling(window=26).max()
-        low26 = source["Low"].rolling(window=26).min()
+        high26 = source["High"].rolling(window=10).max()
+        low26 = source["Low"].rolling(window=10).min()
         source["base_line"] = (high26 + low26) / 2
 
         # 転換線
@@ -964,6 +798,7 @@ if st.button('計算を行う'):
         # 先行スパン2
         high52 = source["High"].rolling(window=52).max()
         low52 = source["Low"].rolling(window=52).min()
+
         leading_span2 = (high52 + low52) / 2
         source["leading_span2"] = leading_span2.shift(25)
 
@@ -985,8 +820,8 @@ if st.button('計算を行う'):
 
 
         # 期間14でそれぞれの平均を算出
-        df_up_sma14 = df_up.rolling(window=14, center=False).mean()
-        df_down_sma14 = df_down.rolling(window=14, center=False).mean()
+        df_up_sma14 = df_up.rolling(window=30, center=False).mean()
+        df_down_sma14 = df_down.rolling(window=30, center=False).mean()
 
 
 
@@ -1004,7 +839,7 @@ if st.button('計算を行う'):
 
         source['MACD3'] = exp20 - exp40
 
-        KDAY = 20  # K算定用期間
+        KDAY = 26  # K算定用期間
         MDAY = 3  # D算定用期間
 
         # stochasticks K
@@ -1054,64 +889,77 @@ if st.button('計算を行う'):
         source['EMA60'] = exp60
 
 
+        minimum20 = source["Low"].rolling(window=30).min()
+        source["minimum"] = minimum20
+
+
+
+
+
+
+
+
+
+
+
         check4_all = []
         check4_up = []
         check4_down = []
         price_dif4 = []
         price4_win = []
-      
-        for i in range(70,280):
+
+
+        for i in range(70,285):
+            conversion_line = source['conversion_line'][i]
+            conversion_line_5daybefore = source['conversion_line'][i-3]
+            base_line = source['base_line'][i]
+            base_line_5daybefore = source['base_line'][i-3]
+            lagging_line = source['lagging_span'][i-25]
+            lagging_line_yesterday = source['lagging_span'][i-26]
             price1 = source['Close'][i]
+            price_lagging = source['Close'][i-25]
+            price_lagging_yesterday = source['Close'][i-26]
             price_buy = source['Close'][i+1]
             price_days = source['Close'][i+days+1]
             price_days_before1 = source['Low'][i+days]
             price_days_before2 = source['Low'][i+days-1]
             price_days_before3 = source['Low'][i+days-2]
             price_days_before4 = source['Low'][i+days-3]
+            price_change = price_days - price_buy
+            price_26before = source['Close'][i-26]
+            price_9before = source['Close'][i-9]
+            conversion_direction = source['conversion_line'][i] - source['conversion_line'][i-3]
+            baseline_direction = source['base_line'][i] - source['base_line'][i-1]
+            RSI_today = source['RSI'][i]
             price_buy_percent3 = source['Close'][i+1] * 0.03 * -1
             price_99 = source['Close'][i+1] * 0.97
-            price_change = price_days - price_buy
-            ema3 = source['EMA3'][i]
-            ema5 = source['EMA5'][i]
-            ema8 = source['EMA8'][i]
-            ema12 = source['EMA12'][i]
-            ema15 = source['EMA15'][i]
-            ema30 = source['EMA30'][i]
-            ema35 = source['EMA35'][i]
-            ema40 = source['EMA40'][i]
-            ema45 = source['EMA45'][i]
-            ema50 = source['EMA50'][i]
-            ema60 = source['EMA60'][i]
-            ema10 = source['EMA10'][i]
-            ema15_yesterday = source['EMA15'][i-1]
-            width1 = ema3 - ema15
-            width2 = ema30 - ema60
-            width2_yesterday = source['EMA30'][i-1] - source['EMA60'][i-1]
-            ema3_direction = source['EMA3'][i] - source['EMA3'][i-1]
-            ema8_direction = source['EMA8'][i-2] - source['EMA8'][i-3]
-            ema12_direction = source['EMA12'][i-2] - source['EMA12'][i-3]
-            ema3_direction_yesterday = source['EMA3'][i-1] - source['EMA3'][i-2]
-            slow_percentd = source['slow_sct_d_price'][i]
-            slow_percentd_direction = source['slow_sct_d_price'][i] - source['slow_sct_d_price'][i-1]
-            percentk = source['sct_k_price'][i]
-            ema30_direction = ema30 - source['EMA30'][i-1]
-            volume_difference = source['Volume'][i] - source['Volume'][i-1]*1.5
-            pdm = source['pDI'][i]
-            mdm = source['mDI'][i] + 25
-            rsi = source['RSI'][i]
             adx_direction = source['ADX'][i] - source['ADX'][i-1]
+            RSI_direction = source['RSI'][i] - source['RSI'][i-1]
+            pdm = source['pDI'][i]
+            mdm = source['mDI'][i] + 10
+            ema3_direction = source['EMA3'][i] - source['EMA3'][i-1]
+            ema5_direction = source['EMA5'][i] - source['EMA5'][i-1]
+            ema8_direction = source['EMA8'][i] - source['EMA8'][i-1]
+            ema12_direction = source['EMA12'][i] - source['EMA12'][i-1]
+            ema5 = source['EMA5'][i]
+            ema30 = source['EMA30'][i]
+            ema60 = source['EMA60'][i]
+            ema12 = source['EMA12'][i]
+            volume_difference = source['Volume'][i-1] - source['Volume'][i-2]
+            base_line = source['base_line'][i]
+            base_line_yesterday = source['base_line'][i-11]
+            base_line_yesterday2 = source['base_line'][i-22]
+            minimum = source['minimum'][i]
 
-
-
-            if ema3>ema5>ema8>ema12>ema15>ema30>ema35>ema40>ema45>ema50>ema60 and width2_yesterday<width2 and width1>width2 and volume_difference>0 and rsi<90 and adx_direction>0 and pdm>mdm:
+            if -15<base_line-base_line_yesterday<15 and -15<base_line-base_line_yesterday2<15 and -5<price1-minimum<5 and 45<RSI_today<55 and volume_difference>0:
                 check4_all.append(i)
 
 
-
-                if price_days_before1>price_99 and price_days_before2>price_99 and price_days_before3>price_99 and price_days_before4>price_99  and price_days>price_buy:
+                if all([price_days_before1>price_99,price_days_before2>price_99,price_days_before3>price_99,price_days_before4>price_99,price_days>price_buy]):
                     check4_up.append(i)
                     # price_dif1.append(price_change)
                     price4_win.append(price_change)
+
 
 
                 else:
@@ -1119,14 +967,29 @@ if st.button('計算を行う'):
                     price4_win.append(price_buy_percent3)
 
 
-        
-        
+
+
+
+
+
+
         chance4 = len(check4_up) + len(check4_down)
-        chance4_all.append(len(check4_all))
+        chance4_all.append(chance4)
 
         win4.append(len(check4_up))
         win_price4.append(sum(price4_win))
 
+
+
+
+
+
+
+
+
+
+
+    
         
             
 
@@ -1160,12 +1023,13 @@ if st.button('計算を行う'):
     st.subheader('勝率は:' + str(win_probability3))
     st.subheader('起きた回数:' + str(sum(chance3_all)))
     st.subheader('儲け:' + str(win3_1))
-
-
+    
+    
     win_probability4 = sum(win4) *100 / sum(chance4_all)
-    win4_1 = sum(win_price4) * 100
-    st.title('GMMA順張り')
-
+    win4 = sum(win_price4) * 100
+    st.title('もみ合い相場(底取り)')
     st.subheader('勝率は:' + str(win_probability4))
     st.subheader('起きた回数:' + str(sum(chance4_all)))
-    st.subheader('儲け:' + str(win4_1))
+    st.subheader('儲け:' + str(win4))
+
+
