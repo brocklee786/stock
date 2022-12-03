@@ -18,16 +18,17 @@ import subprocess
 st.set_page_config(layout="wide")
  
 st.title('銘柄スキャン')
-date = st.selectbox(
-    '今日は平日ですか。土日ですか。',
-    ('平日','土日'))
+# date = st.selectbox(
+#     '今日は平日ですか。土日ですか。',
+#     ('平日','土日'))
 
-if date == '平日':
-    last = 99
-else:
-    last = 98
+# if date == '平日':
+#     last = 99
+# else:
+#     last = 98
 
 days = 5
+last = 99
 
 
 chance1_all = []
