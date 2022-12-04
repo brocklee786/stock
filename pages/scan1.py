@@ -61,7 +61,7 @@ if st.button('計算を行う'):
         option = code
         ticker = str(option) + '.T'
         tkr = yf.Ticker(ticker)
-        hist = tkr.history(period='300d')
+        hist = tkr.history(period='1200d')
         hist = hist.reset_index()
         hist = hist.set_index(['Date'])
         hist = hist.rename_axis('Date').reset_index()
@@ -231,7 +231,7 @@ if st.button('計算を行う'):
         price1_win = []
       
 
-        for i in range(60,285):
+        for i in range(60,1185):
             conversion_line = source['conversion_line'][i]
             conversion_line_5daybefore = source['conversion_line'][i-3]
             base_line = source['base_line'][i]
@@ -301,7 +301,7 @@ if st.button('計算を行う'):
         option = code
         ticker = str(option) + '.T'
         tkr = yf.Ticker(ticker)
-        hist = tkr.history(period='300d')
+        hist = tkr.history(period='1200d')
         hist = hist.reset_index()
         hist = hist.set_index(['Date'])
         hist = hist.rename_axis('Date').reset_index()
@@ -465,7 +465,7 @@ if st.button('計算を行う'):
 
 
         #大循環MACD
-        for i in range(60,285):
+        for i in range(60,1185):
             macd1 = source['MACD1'][i]
             macd1_direction = source['MACD1'][i] - source['MACD1'][i-3]
             macd2 = source['MACD2'][i]
@@ -521,7 +521,7 @@ if st.button('計算を行う'):
         option = code
         ticker = str(option) + '.T'
         tkr = yf.Ticker(ticker)
-        hist = tkr.history(period='300d')
+        hist = tkr.history(period='1200d')
         hist = hist.reset_index()
         hist = hist.set_index(['Date'])
         hist = hist.rename_axis('Date').reset_index()
@@ -686,7 +686,7 @@ if st.button('計算を行う'):
 
 
 
-        for i in range(60,285):
+        for i in range(60,1185):
             percentk = source['sct_k_price'][i]
             percentk_direction = source['sct_k_price'][i] - source['sct_k_price'][i-1]
             slow_percentd = source['slow_sct_d_price'][i]
@@ -732,7 +732,7 @@ if st.button('計算を行う'):
         option = code
         ticker = str(option) + '.T'
         tkr = yf.Ticker(ticker)
-        hist = tkr.history(period='300d')
+        hist = tkr.history(period='1200d')
         hist = hist.reset_index()
         hist = hist.set_index(['Date'])
         hist = hist.rename_axis('Date').reset_index()
@@ -909,7 +909,7 @@ if st.button('計算を行う'):
         price4_win = []
 
 
-        for i in range(70,285):
+        for i in range(70,1185):
             conversion_line = source['conversion_line'][i]
             conversion_line_5daybefore = source['conversion_line'][i-3]
             base_line = source['base_line'][i]
