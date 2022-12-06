@@ -28,7 +28,7 @@ st.title('銘柄スキャン')
 #     last = 98
 
 days = 5
-last = 98
+last = 99
 
 
 chance1_all = []
