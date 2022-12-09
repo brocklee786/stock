@@ -836,6 +836,10 @@ if st.button('計算を行う'):
 
         if -15<base_line-base_line_yesterday<15 and -15<base_line-base_line_yesterday2<15 and -5<price1-minimum<5 and 45<RSI_today<55 and volume_difference>0:
             chance4_all.append(code)
+          
+          
+          
+   
 
           
           
@@ -1228,6 +1232,41 @@ if st.button('エラーの場合'):
 
 
             chance2_all.append(code)
+          
+    st.title('一目×ADX×RSI')
+    if len(chance1_all):
+        st.table(chance1_all)
+    else:
+        st.subheader('該当なし')
+    expander1 = st.expander('確率計算1')
+    expander1.write('勝率:67.5%,回数:40回,1回あたりの勝ち額:2140円')
+
+
+    st.title('大循環MACD×ADX')
+    if len(chance2_all):
+        st.table(chance2_all)
+    else:
+        st.subheader('該当なし')
+    expander2 = st.expander('確率計算2')
+    expander2.write('勝率:72%,回数:22回,1回あたりの勝ち額:5467円')
+
+    st.title('ストキャスティクス')
+    if len(chance3_all):
+        st.table(chance3_all)
+    else:
+        st.subheader('該当なし')
+    expander3 = st.expander('確率計算3')
+    expander3.write('勝率:71%,回数:14回,1回あたりの勝ち額:6357円')
+
+
+    st.title('もみ合い相場(底取り)')
+    if len(chance4_all):
+        st.table(chance4_all)
+    else:
+        st.subheader('該当なし')
+    expander3 = st.expander('確率計算4')
+    expander3.write('勝率:88%,回数:18回,1回あたりの勝ち額:3571円')
+
     
 
 
@@ -1694,36 +1733,3 @@ if st.button('エラーの場合'):
 
 
 
-    st.title('一目×ADX×RSI')
-    if len(chance1_all):
-        st.table(chance1_all)
-    else:
-        st.subheader('該当なし')
-    expander1 = st.expander('確率計算1')
-    expander1.write('勝率:67.5%,回数:40回,1回あたりの勝ち額:2140円')
-
-
-    st.title('大循環MACD×ADX')
-    if len(chance2_all):
-        st.table(chance2_all)
-    else:
-        st.subheader('該当なし')
-    expander2 = st.expander('確率計算2')
-    expander2.write('勝率:72%,回数:22回,1回あたりの勝ち額:5467円')
-
-    st.title('ストキャスティクス')
-    if len(chance3_all):
-        st.table(chance3_all)
-    else:
-        st.subheader('該当なし')
-    expander3 = st.expander('確率計算3')
-    expander3.write('勝率:71%,回数:14回,1回あたりの勝ち額:6357円')
-
-
-    st.title('もみ合い相場(底取り)')
-    if len(chance4_all):
-        st.table(chance4_all)
-    else:
-        st.subheader('該当なし')
-    expander3 = st.expander('確率計算4')
-    expander3.write('勝率:88%,回数:18回,1回あたりの勝ち額:3571円')
