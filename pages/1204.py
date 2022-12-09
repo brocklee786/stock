@@ -837,6 +837,839 @@ if st.button('計算を行う'):
         if -15<base_line-base_line_yesterday<15 and -15<base_line-base_line_yesterday2<15 and -5<price1-minimum<5 and 45<RSI_today<55 and volume_difference>0:
             chance4_all.append(code)
 
+          
+          
+if st.button('エラーの場合'):
+    last = 98
+    for code in codes1_3:
+        option = code
+        ticker = str(option) + '.T'
+        tkr = yf.Ticker(ticker)
+        hist = tkr.history(period='100d')
+        hist = hist.reset_index()
+        hist = hist.set_index(['Date'])
+        hist = hist.rename_axis('Date').reset_index()
+        hist = hist.T
+        a = hist.to_dict()
+
+        for items in a.values():
+                time = items['Date']
+                items['Date'] = time.strftime("%Y/%m/%d")
+
+        b = [x for x in a.values()]
+
+        source = pd.DataFrame(b)
+
+        price = source['Close']
+
+        #DMIの計算
+        high = source['High']
+        low = source['Low']
+        close = source['Close']
+        pDM = (high - high.shift(1))
+        mDM = (low.shift(1) - low)
+        pDM.loc[pDM<0] = 0
+        pDM.loc[pDM-mDM < 0] = 0
+        mDM.loc[mDM<0] = 0
+        mDM.loc[mDM-pDM < 0] = 0
+        # trの計算
+        a = (high - low).abs()
+        b = (high - close.shift(1)).abs()
+        c = (low - close.shift(1)).abs()
+        tr = pd.concat([a, b, c], axis=1).max(axis=1)
+        source['pDI'] = pDM.rolling(14).sum()/tr.rolling(14).sum() * 100
+        source['mDI'] = mDM.rolling(14).sum()/tr.rolling(14).sum() * 100
+        # ADXの計算
+        DX = (source['pDI']-source['mDI']).abs()/(source['pDI']+source['mDI']) * 100
+        DX = DX.fillna(0)
+        source['ADX'] = DX.rolling(14).mean()
+
+        #移動平均
+        span01=5
+        span02=25
+        span03=50
+
+        source['sma01'] = price.rolling(window=span01).mean()
+        source['sma02'] = price.rolling(window=span02).mean()
+        source['sma03'] = price.rolling(window=span03).mean()
+
+
+        # 基準線
+        high26 = source["High"].rolling(window=26).max()
+        low26 = source["Low"].rolling(window=26).min()
+        source["base_line"] = (high26 + low26) / 2
+
+        # 転換線
+        high9 = source["High"].rolling(window=9).max()
+        low9 = source["Low"].rolling(window=9).min()
+        source["conversion_line"] = (high9 + low9) / 2
+
+        # 先行スパン1
+        leading_span1 = (source["base_line"] + source["conversion_line"]) / 2
+        source["leading_span1"] = leading_span1.shift(25)
+
+        # 先行スパン2
+        high52 = source["High"].rolling(window=52).max()
+        low52 = source["Low"].rolling(window=52).min()
+        leading_span2 = (high52 + low52) / 2
+        source["leading_span2"] = leading_span2.shift(25)
+
+        # 遅行スパン
+        source["lagging_span"] = source["Close"].shift(-25)
+
+        #RSI
+        # 前日との差分を計算
+        df_diff = source["Close"].diff(1)
+
+        # 計算用のDataFrameを定義
+        df_up, df_down = df_diff.copy(), df_diff.copy()
+
+        # df_upはマイナス値を0に変換
+        # df_downはプラス値を0に変換して正負反転
+        df_up[df_up < 0] = 0
+        df_down[df_down > 0] = 0
+        df_down = df_down * -1
+
+
+        # 期間14でそれぞれの平均を算出
+        df_up_sma14 = df_up.rolling(window=14, center=False).mean()
+        df_down_sma14 = df_down.rolling(window=14, center=False).mean()
+
+
+
+        # RSIを算出
+        source["RSI"] = 100.0 * (df_up_sma14 / (df_up_sma14 + df_down_sma14))
+
+        #大循環macd
+        exp5 = source['Close'].ewm(span=5, adjust=False).mean()
+        exp20 = source['Close'].ewm(span=20, adjust=False).mean()
+        source['MACD1'] = exp5 - exp20
+
+
+        exp40 = source['Close'].ewm(span=40, adjust=False).mean()
+        source['MACD2'] = exp5 - exp40
+
+        source['MACD3'] = exp20 - exp40
+
+        KDAY = 26  # K算定用期間
+        MDAY = 3  # D算定用期間
+
+        # stochasticks K
+        source["sct_k_price"] = (
+            100*
+            (source["Close"] - source["Low"].rolling(window=KDAY, min_periods=KDAY).min())/
+            (source["High"].rolling(window=KDAY, min_periods=KDAY).max() - source["Low"].rolling(window=KDAY, min_periods=KDAY).min())
+        )
+
+        # stochasticks D
+        source["sct_d_price"] = (
+            100*
+            (source["Close"] - source["Low"].rolling(window=KDAY, min_periods=KDAY).min())
+            .rolling(window=MDAY, min_periods=MDAY).sum()/
+            (source["High"].rolling(window=KDAY, min_periods=KDAY).max() - source["Low"].rolling(window=KDAY, min_periods=KDAY).min())
+            .rolling(window=MDAY, min_periods=MDAY).sum()
+        )
+
+        # slow stochasticks
+        source["slow_sct_d_price"] = source["sct_d_price"].rolling(window=MDAY, min_periods=MDAY).mean()
+
+        #GMMA
+        exp3 = source['Close'].ewm(span=3, adjust=False).mean()
+        exp8 = source['Close'].ewm(span=8, adjust=False).mean()
+        exp10 = source['Close'].ewm(span=10, adjust=False).mean()
+        exp12 = source['Close'].ewm(span=12, adjust=False).mean()
+        exp15 = source['Close'].ewm(span=15, adjust=False).mean()
+        source['EMA3'] = exp3
+        source['EMA5'] = exp5
+        source['EMA8'] = exp8
+        source['EMA10'] = exp10
+        source['EMA12'] = exp12
+        source['EMA15'] = exp15
+
+
+        exp30 = source['Close'].ewm(span=30, adjust=False).mean()
+        exp35 = source['Close'].ewm(span=35, adjust=False).mean()
+        exp40 = source['Close'].ewm(span=40, adjust=False).mean()
+        exp45 = source['Close'].ewm(span=45, adjust=False).mean()
+        exp50 = source['Close'].ewm(span=50, adjust=False).mean()
+        exp60 = source['Close'].ewm(span=60, adjust=False).mean()
+        source['EMA30'] = exp30
+        source['EMA35'] = exp35
+        source['EMA40'] = exp40
+        source['EMA45'] = exp45
+        source['EMA50'] = exp50
+        source['EMA60'] = exp60
+        
+
+
+
+    
+
+
+
+        check1_all = []
+        check1_up = []
+        check1_down = []
+        price_dif1 = []
+        price1_win = []
+
+   
+        
+
+
+        
+        
+        base_line = source['base_line'][last]
+        conversion_line = source['conversion_line'][last]
+        conversion_line_5daybefore = source['conversion_line'][last-3]
+        base_line_5daybefore = source['base_line'][last-3]
+        lagging_line = source['lagging_span'][last-25]
+        lagging_line_yesterday = source['lagging_span'][last-26]
+        price1 = source['Close'][last]
+        price_lagging = source['Close'][last-25]
+        price_lagging_yesterday = source['Close'][last-26]
+        conversion_direction = source['conversion_line'][last] - source['conversion_line'][last-3:]
+        RSI_today = source['RSI'][last]
+        adx_direction = source['ADX'][last] - source['ADX'][last-1]
+        volume_difference = source['Volume'][last-1] - source['Volume'][last-2]
+        #出来高を1.5倍にすると100%になる。10回。
+        #遅行スパンの好転
+        if all([price_lagging<=lagging_line,price_lagging_yesterday>lagging_line_yesterday,conversion_line>base_line,conversion_line_5daybefore<base_line_5daybefore,conversion_direction>0,price1>conversion_line,RSI_today>60,adx_direction>0,volume_difference>0]):
+            chance1_all.append(code)
+
+
+
+
+
+
+
+    for code in codes2:
+        option = code
+        ticker = str(option) + '.T'
+        tkr = yf.Ticker(ticker)
+        hist = tkr.history(period='100d')
+        hist = hist.reset_index()
+        hist = hist.set_index(['Date'])
+        hist = hist.rename_axis('Date').reset_index()
+        hist = hist.T
+        a = hist.to_dict()
+
+        for items in a.values():
+                time = items['Date']
+                items['Date'] = time.strftime("%Y/%m/%d")
+
+        b = [x for x in a.values()]
+
+        source = pd.DataFrame(b)
+
+        price = source['Close']
+
+        #DMIの計算
+        high = source['High']
+        low = source['Low']
+        close = source['Close']
+        pDM = (high - high.shift(1))
+        mDM = (low.shift(1) - low)
+        pDM.loc[pDM<0] = 0
+        pDM.loc[pDM-mDM < 0] = 0
+        mDM.loc[mDM<0] = 0
+        mDM.loc[mDM-pDM < 0] = 0
+        # trの計算
+        a = (high - low).abs()
+        b = (high - close.shift(1)).abs()
+        c = (low - close.shift(1)).abs()
+        tr = pd.concat([a, b, c], axis=1).max(axis=1)
+        source['pDI'] = pDM.rolling(14).sum()/tr.rolling(14).sum() * 100
+        source['mDI'] = mDM.rolling(14).sum()/tr.rolling(14).sum() * 100
+        # ADXの計算
+        DX = (source['pDI']-source['mDI']).abs()/(source['pDI']+source['mDI']) * 100
+        DX = DX.fillna(0)
+        source['ADX'] = DX.rolling(14).mean()
+
+        #移動平均
+        span01=5
+        span02=25
+        span03=50
+
+        source['sma01'] = price.rolling(window=span01).mean()
+        source['sma02'] = price.rolling(window=span02).mean()
+        source['sma03'] = price.rolling(window=span03).mean()
+
+
+        # 基準線
+        high26 = source["High"].rolling(window=26).max()
+        low26 = source["Low"].rolling(window=26).min()
+        source["base_line"] = (high26 + low26) / 2
+
+        # 転換線
+        high9 = source["High"].rolling(window=9).max()
+        low9 = source["Low"].rolling(window=9).min()
+        source["conversion_line"] = (high9 + low9) / 2
+
+        # 先行スパン1
+        leading_span1 = (source["base_line"] + source["conversion_line"]) / 2
+        source["leading_span1"] = leading_span1.shift(25)
+
+        # 先行スパン2
+        high52 = source["High"].rolling(window=52).max()
+        low52 = source["Low"].rolling(window=52).min()
+        leading_span2 = (high52 + low52) / 2
+        source["leading_span2"] = leading_span2.shift(25)
+
+        # 遅行スパン
+        source["lagging_span"] = source["Close"].shift(-25)
+
+        #RSI
+        # 前日との差分を計算
+        df_diff = source["Close"].diff(1)
+
+        # 計算用のDataFrameを定義
+        df_up, df_down = df_diff.copy(), df_diff.copy()
+
+        # df_upはマイナス値を0に変換
+        # df_downはプラス値を0に変換して正負反転
+        df_up[df_up < 0] = 0
+        df_down[df_down > 0] = 0
+        df_down = df_down * -1
+
+
+        # 期間14でそれぞれの平均を算出
+        df_up_sma14 = df_up.rolling(window=14, center=False).mean()
+        df_down_sma14 = df_down.rolling(window=14, center=False).mean()
+
+
+
+        # RSIを算出
+        source["RSI"] = 100.0 * (df_up_sma14 / (df_up_sma14 + df_down_sma14))
+
+        #大循環macd
+        exp5 = source['Close'].ewm(span=5, adjust=False).mean()
+        exp20 = source['Close'].ewm(span=20, adjust=False).mean()
+        source['MACD1'] = exp5 - exp20
+
+
+        exp40 = source['Close'].ewm(span=40, adjust=False).mean()
+        source['MACD2'] = exp5 - exp40
+
+        source['MACD3'] = exp20 - exp40
+
+        KDAY = 26  # K算定用期間
+        MDAY = 3  # D算定用期間
+
+        # stochasticks K
+        source["sct_k_price"] = (
+            100*
+            (source["Close"] - source["Low"].rolling(window=KDAY, min_periods=KDAY).min())/
+            (source["High"].rolling(window=KDAY, min_periods=KDAY).max() - source["Low"].rolling(window=KDAY, min_periods=KDAY).min())
+        )
+
+        # stochasticks D
+        source["sct_d_price"] = (
+            100*
+            (source["Close"] - source["Low"].rolling(window=KDAY, min_periods=KDAY).min())
+            .rolling(window=MDAY, min_periods=MDAY).sum()/
+            (source["High"].rolling(window=KDAY, min_periods=KDAY).max() - source["Low"].rolling(window=KDAY, min_periods=KDAY).min())
+            .rolling(window=MDAY, min_periods=MDAY).sum()
+        )
+
+        # slow stochasticks
+        source["slow_sct_d_price"] = source["sct_d_price"].rolling(window=MDAY, min_periods=MDAY).mean()
+
+        #GMMA
+        exp3 = source['Close'].ewm(span=3, adjust=False).mean()
+        exp8 = source['Close'].ewm(span=8, adjust=False).mean()
+        exp10 = source['Close'].ewm(span=10, adjust=False).mean()
+        exp12 = source['Close'].ewm(span=12, adjust=False).mean()
+        exp15 = source['Close'].ewm(span=15, adjust=False).mean()
+        source['EMA3'] = exp3
+        source['EMA5'] = exp5
+        source['EMA8'] = exp8
+        source['EMA10'] = exp10
+        source['EMA12'] = exp12
+        source['EMA15'] = exp15
+
+
+        exp30 = source['Close'].ewm(span=30, adjust=False).mean()
+        exp35 = source['Close'].ewm(span=35, adjust=False).mean()
+        exp40 = source['Close'].ewm(span=40, adjust=False).mean()
+        exp45 = source['Close'].ewm(span=45, adjust=False).mean()
+        exp50 = source['Close'].ewm(span=50, adjust=False).mean()
+        exp60 = source['Close'].ewm(span=60, adjust=False).mean()
+        source['EMA30'] = exp30
+        source['EMA35'] = exp35
+        source['EMA40'] = exp40
+        source['EMA45'] = exp45
+        source['EMA50'] = exp50
+        source['EMA60'] = exp60
+
+
+        check2_all = []
+        check2_up = []
+        check2_down = []
+        price_dif2 = []
+        price2_win = []
+
+
+        #大循環MACD
+
+        macd1 = source['MACD1'][last]
+        macd1_direction = source['MACD1'][last] - source['MACD1'][last-3]
+        macd2 = source['MACD2'][last]
+        macd2_direction = source['MACD2'][last] - source['MACD2'][last-3]
+        macd3 = source['MACD3'][last]
+        macd3_yesterday = source['MACD3'][last-1]
+        macd3_direction = source['MACD3'][last] - source['MACD3'][last-3]
+        difference1 = source['MACD2'][last] - source['MACD1'][last]
+        difference2 = source['MACD2'][last-1] - source['MACD1'][last-1]
+
+        volume_difference = source['Volume'][last-1] - source['Volume'][last-2]*1.1
+
+        if macd1>0 and macd2>0 and macd3>0 and macd3_yesterday<0 and macd1_direction>0 and macd2_direction>0 and difference1>difference2+5 and volume_difference>0:
+
+
+            chance2_all.append(code)
+    
+
+
+
+
+
+
+
+
+
+    for code in codes3:
+        option = code
+        ticker = str(option) + '.T'
+        tkr = yf.Ticker(ticker)
+        hist = tkr.history(period='100d')
+        hist = hist.reset_index()
+        hist = hist.set_index(['Date'])
+        hist = hist.rename_axis('Date').reset_index()
+        hist = hist.T
+        a = hist.to_dict()
+
+        for items in a.values():
+                time = items['Date']
+                items['Date'] = time.strftime("%Y/%m/%d")
+
+        b = [x for x in a.values()]
+
+        source = pd.DataFrame(b)
+
+        price = source['Close']
+
+        #DMIの計算
+        high = source['High']
+        low = source['Low']
+        close = source['Close']
+        pDM = (high - high.shift(1))
+        mDM = (low.shift(1) - low)
+        pDM.loc[pDM<0] = 0
+        pDM.loc[pDM-mDM < 0] = 0
+        mDM.loc[mDM<0] = 0
+        mDM.loc[mDM-pDM < 0] = 0
+        # trの計算
+        a = (high - low).abs()
+        b = (high - close.shift(1)).abs()
+        c = (low - close.shift(1)).abs()
+        tr = pd.concat([a, b, c], axis=1).max(axis=1)
+        source['pDI'] = pDM.rolling(14).sum()/tr.rolling(14).sum() * 100
+        source['mDI'] = mDM.rolling(14).sum()/tr.rolling(14).sum() * 100
+        # ADXの計算
+        DX = (source['pDI']-source['mDI']).abs()/(source['pDI']+source['mDI']) * 100
+        DX = DX.fillna(0)
+        source['ADX'] = DX.rolling(14).mean()
+
+        #移動平均
+        span01=5
+        span02=25
+        span03=50
+
+        source['sma01'] = price.rolling(window=span01).mean()
+        source['sma02'] = price.rolling(window=span02).mean()
+        source['sma03'] = price.rolling(window=span03).mean()
+
+
+        # 基準線
+        high26 = source["High"].rolling(window=26).max()
+        low26 = source["Low"].rolling(window=26).min()
+        source["base_line"] = (high26 + low26) / 2
+
+        # 転換線
+        high9 = source["High"].rolling(window=9).max()
+        low9 = source["Low"].rolling(window=9).min()
+        source["conversion_line"] = (high9 + low9) / 2
+
+        # 先行スパン1
+        leading_span1 = (source["base_line"] + source["conversion_line"]) / 2
+        source["leading_span1"] = leading_span1.shift(25)
+
+        # 先行スパン2
+        high52 = source["High"].rolling(window=52).max()
+        low52 = source["Low"].rolling(window=52).min()
+        leading_span2 = (high52 + low52) / 2
+        source["leading_span2"] = leading_span2.shift(25)
+
+        # 遅行スパン
+        source["lagging_span"] = source["Close"].shift(-25)
+
+        #RSI
+        # 前日との差分を計算
+        df_diff = source["Close"].diff(1)
+
+        # 計算用のDataFrameを定義
+        df_up, df_down = df_diff.copy(), df_diff.copy()
+
+        # df_upはマイナス値を0に変換
+        # df_downはプラス値を0に変換して正負反転
+        df_up[df_up < 0] = 0
+        df_down[df_down > 0] = 0
+        df_down = df_down * -1
+
+
+        # 期間14でそれぞれの平均を算出
+        df_up_sma14 = df_up.rolling(window=14, center=False).mean()
+        df_down_sma14 = df_down.rolling(window=14, center=False).mean()
+
+
+
+        # RSIを算出
+        source["RSI"] = 100.0 * (df_up_sma14 / (df_up_sma14 + df_down_sma14))
+
+        #大循環macd
+        exp5 = source['Close'].ewm(span=5, adjust=False).mean()
+        exp20 = source['Close'].ewm(span=20, adjust=False).mean()
+        source['MACD1'] = exp5 - exp20
+
+
+        exp40 = source['Close'].ewm(span=40, adjust=False).mean()
+        source['MACD2'] = exp5 - exp40
+
+        source['MACD3'] = exp20 - exp40
+
+        KDAY = 20  # K算定用期間
+        MDAY = 3  # D算定用期間
+
+        # stochasticks K
+        source["sct_k_price"] = (
+            100*
+            (source["Close"] - source["Low"].rolling(window=KDAY, min_periods=KDAY).min())/
+            (source["High"].rolling(window=KDAY, min_periods=KDAY).max() - source["Low"].rolling(window=KDAY, min_periods=KDAY).min())
+        )
+
+        # stochasticks D
+        source["sct_d_price"] = (
+            100*
+            (source["Close"] - source["Low"].rolling(window=KDAY, min_periods=KDAY).min())
+            .rolling(window=MDAY, min_periods=MDAY).sum()/
+            (source["High"].rolling(window=KDAY, min_periods=KDAY).max() - source["Low"].rolling(window=KDAY, min_periods=KDAY).min())
+            .rolling(window=MDAY, min_periods=MDAY).sum()
+        )
+
+        # slow stochasticks
+        source["slow_sct_d_price"] = source["sct_d_price"].rolling(window=MDAY, min_periods=MDAY).mean()
+
+        #GMMA
+        exp3 = source['Close'].ewm(span=3, adjust=False).mean()
+        exp8 = source['Close'].ewm(span=8, adjust=False).mean()
+        exp10 = source['Close'].ewm(span=10, adjust=False).mean()
+        exp12 = source['Close'].ewm(span=12, adjust=False).mean()
+        exp15 = source['Close'].ewm(span=15, adjust=False).mean()
+        source['EMA3'] = exp3
+        source['EMA5'] = exp5
+        source['EMA8'] = exp8
+        source['EMA10'] = exp10
+        source['EMA12'] = exp12
+        source['EMA15'] = exp15
+
+
+        exp30 = source['Close'].ewm(span=30, adjust=False).mean()
+        exp35 = source['Close'].ewm(span=35, adjust=False).mean()
+        exp40 = source['Close'].ewm(span=40, adjust=False).mean()
+        exp45 = source['Close'].ewm(span=45, adjust=False).mean()
+        exp50 = source['Close'].ewm(span=50, adjust=False).mean()
+        exp60 = source['Close'].ewm(span=60, adjust=False).mean()
+        source['EMA30'] = exp30
+        source['EMA35'] = exp35
+        source['EMA40'] = exp40
+        source['EMA45'] = exp45
+        source['EMA50'] = exp50
+        source['EMA60'] = exp60
+
+        check3_all = []
+        check3_up = []
+        check3_down = []
+        price_dif3 = []
+        price3_win = []
+
+
+
+
+
+        percentk = source['sct_k_price'][last]
+        percentk_direction = source['sct_k_price'][last] - source['sct_k_price'][last-1]
+        slow_percentd = source['slow_sct_d_price'][last]
+        slow_percentd_yesterday = source['slow_sct_d_price'][last-1]
+        slow_percentd_10day = source['slow_sct_d_price'][last-10]
+        volume_difference = source['Volume'][last] - source['Volume'][last-1]*1.1
+
+        if slow_percentd_yesterday<20 and slow_percentd>20 and percentk>70 and slow_percentd_10day<30 and volume_difference>0:
+
+            chance3_all.append(code)
+
+
+    for code in codes:
+        option = code
+        ticker = str(option) + '.T'
+        tkr = yf.Ticker(ticker)
+        hist = tkr.history(period='100d')
+        hist = hist.reset_index()
+        hist = hist.set_index(['Date'])
+        hist = hist.rename_axis('Date').reset_index()
+        hist = hist.T
+        a = hist.to_dict()
+
+        for items in a.values():
+                time = items['Date']
+                items['Date'] = time.strftime("%Y/%m/%d")
+
+        b = [x for x in a.values()]
+
+        source = pd.DataFrame(b)
+
+        price = source['Close']
+
+        #DMIの計算
+        high = source['High']
+        low = source['Low']
+        close = source['Close']
+        pDM = (high - high.shift(1))
+        mDM = (low.shift(1) - low)
+        pDM.loc[pDM<0] = 0
+        pDM.loc[pDM-mDM < 0] = 0
+        mDM.loc[mDM<0] = 0
+        mDM.loc[mDM-pDM < 0] = 0
+        # trの計算
+        a = (high - low).abs()
+        b = (high - close.shift(1)).abs()
+        c = (low - close.shift(1)).abs()
+        tr = pd.concat([a, b, c], axis=1).max(axis=1)
+        source['pDI'] = pDM.rolling(14).sum()/tr.rolling(14).sum() * 100
+        source['mDI'] = mDM.rolling(14).sum()/tr.rolling(14).sum() * 100
+        # ADXの計算
+        DX = (source['pDI']-source['mDI']).abs()/(source['pDI']+source['mDI']) * 100
+        DX = DX.fillna(0)
+        source['ADX'] = DX.rolling(14).mean()
+
+        #移動平均
+        span01=5
+        span02=25
+        span03=50
+
+        source['sma01'] = price.rolling(window=span01).mean()
+        source['sma02'] = price.rolling(window=span02).mean()
+        source['sma03'] = price.rolling(window=span03).mean()
+
+
+        # 基準線
+        high26 = source["High"].rolling(window=10).max()
+        low26 = source["Low"].rolling(window=10).min()
+        source["base_line"] = (high26 + low26) / 2
+
+        # 転換線
+        high9 = source["High"].rolling(window=9).max()
+        low9 = source["Low"].rolling(window=9).min()
+        source["conversion_line"] = (high9 + low9) / 2
+
+        # 先行スパン1
+        leading_span1 = (source["base_line"] + source["conversion_line"]) / 2
+        source["leading_span1"] = leading_span1.shift(25)
+
+        # 先行スパン2
+        high52 = source["High"].rolling(window=52).max()
+        low52 = source["Low"].rolling(window=52).min()
+        
+        leading_span2 = (high52 + low52) / 2
+        source["leading_span2"] = leading_span2.shift(25)
+
+        # 遅行スパン
+        source["lagging_span"] = source["Close"].shift(-25)
+
+        #RSI
+        # 前日との差分を計算
+        df_diff = source["Close"].diff(1)
+
+        # 計算用のDataFrameを定義
+        df_up, df_down = df_diff.copy(), df_diff.copy()
+
+        # df_upはマイナス値を0に変換
+        # df_downはプラス値を0に変換して正負反転
+        df_up[df_up < 0] = 0
+        df_down[df_down > 0] = 0
+        df_down = df_down * -1
+
+
+        # 期間14でそれぞれの平均を算出
+        df_up_sma14 = df_up.rolling(window=30, center=False).mean()
+        df_down_sma14 = df_down.rolling(window=30, center=False).mean()
+
+
+
+        # RSIを算出
+        source["RSI"] = 100.0 * (df_up_sma14 / (df_up_sma14 + df_down_sma14))
+
+        #大循環macd
+        exp5 = source['Close'].ewm(span=5, adjust=False).mean()
+        exp20 = source['Close'].ewm(span=20, adjust=False).mean()
+        source['MACD1'] = exp5 - exp20
+
+
+        exp40 = source['Close'].ewm(span=40, adjust=False).mean()
+        source['MACD2'] = exp5 - exp40
+
+        source['MACD3'] = exp20 - exp40
+
+        KDAY = 26  # K算定用期間
+        MDAY = 3  # D算定用期間
+
+        # stochasticks K
+        source["sct_k_price"] = (
+            100*
+            (source["Close"] - source["Low"].rolling(window=KDAY, min_periods=KDAY).min())/
+            (source["High"].rolling(window=KDAY, min_periods=KDAY).max() - source["Low"].rolling(window=KDAY, min_periods=KDAY).min())
+        )
+
+        # stochasticks D
+        source["sct_d_price"] = (
+            100*
+            (source["Close"] - source["Low"].rolling(window=KDAY, min_periods=KDAY).min())
+            .rolling(window=MDAY, min_periods=MDAY).sum()/
+            (source["High"].rolling(window=KDAY, min_periods=KDAY).max() - source["Low"].rolling(window=KDAY, min_periods=KDAY).min())
+            .rolling(window=MDAY, min_periods=MDAY).sum()
+        )
+
+        # slow stochasticks
+        source["slow_sct_d_price"] = source["sct_d_price"].rolling(window=MDAY, min_periods=MDAY).mean()
+
+        #GMMA
+        exp3 = source['Close'].ewm(span=3, adjust=False).mean()
+        exp8 = source['Close'].ewm(span=8, adjust=False).mean()
+        exp10 = source['Close'].ewm(span=10, adjust=False).mean()
+        exp12 = source['Close'].ewm(span=12, adjust=False).mean()
+        exp15 = source['Close'].ewm(span=15, adjust=False).mean()
+        source['EMA3'] = exp3
+        source['EMA5'] = exp5
+        source['EMA8'] = exp8
+        source['EMA10'] = exp10
+        source['EMA12'] = exp12
+        source['EMA15'] = exp15
+
+
+        exp30 = source['Close'].ewm(span=30, adjust=False).mean()
+        exp35 = source['Close'].ewm(span=35, adjust=False).mean()
+        exp40 = source['Close'].ewm(span=40, adjust=False).mean()
+        exp45 = source['Close'].ewm(span=45, adjust=False).mean()
+        exp50 = source['Close'].ewm(span=50, adjust=False).mean()
+        exp60 = source['Close'].ewm(span=60, adjust=False).mean()
+        source['EMA30'] = exp30
+        source['EMA35'] = exp35
+        source['EMA40'] = exp40
+        source['EMA45'] = exp45
+        source['EMA50'] = exp50
+        source['EMA60'] = exp60
+
+
+        minimum20 = source["Low"].rolling(window=30).min()
+        source["minimum"] = minimum20
+
+
+      
+      
+
+
+
+    
+
+
+
+        check4_all = []
+        check4_up = []
+        check4_down = []
+        price_dif4 = []
+        price4_win = []
+      
+
+
+
+        price1 = source['Close'][last]
+        RSI_today = source['RSI'][last]
+        volume_difference = source['Volume'][last-1] - source['Volume'][last-2]
+        base_line = source['base_line'][last]
+        base_line_yesterday = source['base_line'][last-11]
+        base_line_yesterday2 = source['base_line'][last-22]
+        minimum = source['minimum'][last]
+
+        if -15<base_line-base_line_yesterday<15 and -15<base_line-base_line_yesterday2<15 and -5<price1-minimum<5 and 45<RSI_today<55 and volume_difference>0:
+            chance4_all.append(code)
+
+                
+                
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    st.title('一目×ADX×RSI')
+    if len(chance1_all):
+        st.table(chance1_all)
+    else:
+        st.subheader('該当なし')
+    expander1 = st.expander('確率計算1')
+    expander1.write('勝率:67.5%,回数:40回,1回あたりの勝ち額:2140円')
+
+
+    st.title('大循環MACD×ADX')
+    if len(chance2_all):
+        st.table(chance2_all)
+    else:
+        st.subheader('該当なし')
+    expander2 = st.expander('確率計算2')
+    expander2.write('勝率:72%,回数:22回,1回あたりの勝ち額:5467円')
+
+    st.title('ストキャスティクス')
+    if len(chance3_all):
+        st.table(chance3_all)
+    else:
+        st.subheader('該当なし')
+    expander3 = st.expander('確率計算3')
+    expander3.write('勝率:71%,回数:14回,1回あたりの勝ち額:6357円')
+
+
+    st.title('もみ合い相場(底取り)')
+    if len(chance4_all):
+        st.table(chance4_all)
+    else:
+        st.subheader('該当なし')
+    expander3 = st.expander('確率計算4')
+    expander3.write('勝率:88%,回数:18回,1回あたりの勝ち額:3571円')
                 
                 
 
