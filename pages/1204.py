@@ -53,6 +53,25 @@ win4 = []
 win_price4 = []
 day4 = []
 
+chance5_all = []
+percent_list5 = []
+win5 = []
+win_price5 = []
+day5 = []
+
+chance6_all = []
+percent_list6 = []
+win6 = []
+win_price6 = []
+day5 = []
+
+chance7_all = []
+percent_list7 = []
+win7 = []
+win_price7 = []
+day7 = []
+
+
 
 codes = ['5901','6810','6807','6804','6779','6770','6754','6753','6752','6750','6724','6723','5727','5802','5805','5929','5943','6013','6055','6058','6062','6070','6101','6113','6136','6141','6208','6250','6269','6287','6298','6338','6395','6407','6412','6463','6503','6513','6630','6641','6666','6871','6925','6937','6941','6952','6962','6995','6997','6999','7202','7240','7261','7270','7278','7296','7313','7254','7414','7421','7453','7483','7532','7545','7575','7606','7613','7616','7718','7730','7732','7731','7752','7760','7864','7867','7906','7915','7965','7970','7981','7984','7994','8012','8020','8086','8129','8130','8133','8174','8233','8253','8282','8341','8411','8570','8595','8699','8795','8802','8804','8876','8905','8909','8920','8923','8929','8934','9005','9006','9007','9076','9308','9401','9409','9502','9503','9511','9513','9625','9692','9832','1518','1712','1808','1812','1826','1944','1963','1969','2001','2002','2127','2154','2158','2160','2212','2301','2309','2389','2395','2427','2432','2433','2438','2471','2503','2531','2579','2607','2613','2678','2681','2685','2730','2784','2792','2910','2929','3003','3031','3048','3076','3086','3099','3101','3103','3105','3107','3167','3161','3254','3319','3360','3377','3405','3407','3433','3436','3591','3604','3632','3657','3661','3675','4028','4042','4043','4045','4080','4088','4095','4204','4272','4331']
 codes1 = ['5901','6810','6804','6779','6770','6754','6753','6752','6750','6724','6723','5727','5802','5805','5929','5943','6013','6055','6058','6062','6070','6101','6113','6141','6208','6250','6269','6287','6298','6338','6395','6407','6463','6513','6630','6641','6666','6871','6925','6937','6941','6952','6962','6995','6999','7202','7261','7270','7296','7313','7254','7414','7421','7453','7532','7545','7575','7606','7613','7616','7718','7730','7732','7731','7752','7760','7867','7906','7915','7965','7970','7981','7984','7994','8020','8086','8129','8130','8133','8174','8233','8253','8282','8341','8411','8699','8795','8802','8804','8909','8920','8923','8929','8934','9005','9007','9076','9308','9401','9409','9503','9511','9513','9625','9692','9832','1712','1808','1826','1944','1969','2002','2154','2158','2160','2301','2309','2389','2395','2427','2432','2433','2438','2471','2503','2531','2579','2607','2613','2678','2681','2685','2730','2784','2792','2910','2929','3003','3048','3076','3086','3099','3105','3107','3161','3254','3319','3377','3405','3407','3433','3436','3591','3604','3632','3657','3661','3675','4028','4042','4045','4080','4095','4204','4331']
@@ -64,6 +83,7 @@ codes1_3 = ['6810','6807','6804','6779','6752','6750','6724','6723','5805','5929
 codes2 = ['5901','6810','6804','6779','6770','6754','6753','6750','6724','6723','5727','5802','5929','5943','6055','6058','6062','6101','6113','6141','6208','6250','6269','6287','6298','6338','6395','6407','6463','6513','6630','6871','6925','6941','6952','6962','6999','7202','7261','7270','7296','7414','7421','7453','7532','7545','7575','7606','7613','7616','7718','7730','7732','7752','7760','7867','7906','7915','7970','7981','7984','7994','8020','8086','8129','8130','8133','8174','8233','8253','8282','8341','8411','8699','8795','8802','8804','8909','8923','8929','8934','9005','9007','9076','9401','9409','9503','9513','9692','9832','1712','1808','1826','2002','2154','2160','2301','2309','2389','2395','2427','2432','2433','2471','2503','2531','2579','2607','2678','2681','2685','2730','2784','2792','2910','2929','3003','3048','3076','3086','3099','3105','3107','3254','3319','3405','3407','3436','3591','3604','3632','3661','4028','4042','4045','4080','4095','4204','4331']
 codes3 = ['5901','6810','6804','6770','6754','6753','6752','6750','6724','6723','5727','5802','5929','5943','6013','6055','6058','6062','6070','6101','6113','6208','6269','6298','6338','6395','6407','6513','6630','6641','6666','6871','6925','6941','6952','6962','6995','7270','7296','7313','7254','7414','7421','7453','7532','7545','7606','7616','7718','7730','7732','7731','7752','7867','7965','7970','7981','7984','7994','8129','8130','8133','8233','8253','8282','8411','8699','8795','8802','8909','8920','9005','9007','9076','9308','9401','9409','9511','9513','9625','9692','1712','1808','1826','1944','1969','2154','2158','2160','2301','2389','2395','2427','2432','2433','2438','2471','2531','2607','2678','2685','2730','2784','2792','2910','2929','3003','3048','3076','3086','3099','3105','3107','3254','3319','3377','3405','3407','3436','3591','3604','3632','3657','3661','3675','4028','4042','4045','4331']
 codes4 = ['6804','6779','6770','6754','6753','6750','6724','6723','5802','5943','6013','6055','6062','6070','6101','6141','6208','6250','6338','6395','6407','6463','6513','6630','6641','6666','6925','6937','6941','6962','6995','7202','7261','7313','7254','7453','7532','7545','7575','7606','7613','7616','7718','7731','7752','7760','7867','7906','7915','7965','7970','7981','7994','8020','8086','8129','8130','8133','8174','8233','8253','8282','8341','8411','8795','8804','8909','8920','8923','8934','9005','9007','9076','9308','9401','9503','9511','9513','9625','9692','9832','1712','1808','1944','1969','2002','2154','2158','2160','2427','2432','2433','2438','2471','2503','2607','2613','2681','2730','2784','2910','2929','3003','3048','3076','3086','3099','3107','3161','3254','3319','3405','3407','3433','3436','3604','3632','3661','3675','4042','4080','4204']
+codes5 = ['5901','6810','6804','6779','6770','6754','6753','6752','6750','6724','6723','5727','5802','5805','5929','5943','6013','6055','6058','6062','6070','6101','6113','6141','6208','6250','6269','6287','6298','6338','6395','6407','6513','6630','6641','6666','6871','6925','6937','6941','6952','6995','6999','7202','7261','7270','7296','7313','7414','7421','7453','7532','7545','7606','7613','7616','7718','7730','7732','7731','7752','7760','7867','7906','7915','7965','7981','7984','7994','8020','8129','8130','8133','8174','8233','8253','8282','8341','8411','8699','8795','8802','8804','8909','8920','8923','8929','8934','9005','9007','9076','9308','9401','9409','9503','9511','9513','9625','9692','9832','1712','1808','1826','1944','1969','2002','2154','2160','2301','2309','2389','2395','2427','2432','2433','2438','2471','2503','2531','2579','2607','2613','2678','2685','2730','2784','2792','2910','2929','3003','3048','3076','3086','3099','3105','3107','3161','3254','3319','3377','3405','3407','3433','3436','3591','3604','3632','3657','3661','3675','4028','4042','4045','4095','4204','4331']
 if st.button('計算を行う'):
     for code in codes1_3:
         option = code
@@ -836,6 +856,485 @@ if st.button('計算を行う'):
 
         if -15<base_line-base_line_yesterday<15 and -15<base_line-base_line_yesterday2<15 and -5<price1-minimum<5 and 45<RSI_today<55 and volume_difference>0:
             chance4_all.append(code)
+
+    for code in codes5:
+        option = code
+        ticker = str(option) + '.T'
+        tkr = yf.Ticker(ticker)
+        hist = tkr.history(period='100d')
+        hist = hist.reset_index()
+        hist = hist.set_index(['Date'])
+        hist = hist.rename_axis('Date').reset_index()
+        hist = hist.T
+        a = hist.to_dict()
+ 
+        for items in a.values():
+                time = items['Date']
+                items['Date'] = time.strftime("%Y/%m/%d")
+ 
+        b = [x for x in a.values()]
+ 
+        source = pd.DataFrame(b)
+ 
+        price = source['Close']
+ 
+        #DMIの計算
+        high = source['High']
+        low = source['Low']
+        close = source['Close']
+        pDM = (high - high.shift(1))
+        mDM = (low.shift(1) - low)
+        pDM.loc[pDM<0] = 0
+        pDM.loc[pDM-mDM < 0] = 0
+        mDM.loc[mDM<0] = 0
+        mDM.loc[mDM-pDM < 0] = 0
+        # trの計算
+        a = (high - low).abs()
+        b = (high - close.shift(1)).abs()
+        c = (low - close.shift(1)).abs()
+        tr = pd.concat([a, b, c], axis=1).max(axis=1)
+        source['pDI'] = pDM.rolling(14).sum()/tr.rolling(14).sum() * 100
+        source['mDI'] = mDM.rolling(14).sum()/tr.rolling(14).sum() * 100
+        # ADXの計算
+        DX = (source['pDI']-source['mDI']).abs()/(source['pDI']+source['mDI']) * 100
+        DX = DX.fillna(0)
+        source['ADX'] = DX.rolling(14).mean()
+ 
+        #移動平均
+        span01=5
+        span02=25
+        span03=75
+ 
+        source['sma01'] = price.rolling(window=span01).mean()
+        source['sma02'] = price.rolling(window=span02).mean()
+        source['sma03'] = price.rolling(window=span03).mean()
+ 
+ 
+        # 基準線
+        high26 = source["High"].rolling(window=26).max()
+        low26 = source["Low"].rolling(window=26).min()
+        source["base_line"] = (high26 + low26) / 2
+ 
+        # 転換線
+        high9 = source["High"].rolling(window=9).max()
+        low9 = source["Low"].rolling(window=9).min()
+        source["conversion_line"] = (high9 + low9) / 2
+ 
+        # 先行スパン1
+        leading_span1 = (source["base_line"] + source["conversion_line"]) / 2
+        source["leading_span1"] = leading_span1.shift(25)
+ 
+        # 先行スパン2
+        high52 = source["High"].rolling(window=52).max()
+        low52 = source["Low"].rolling(window=52).min()
+        leading_span2 = (high52 + low52) / 2
+        source["leading_span2"] = leading_span2.shift(25)
+ 
+        # 遅行スパン
+        source["lagging_span"] = source["Close"].shift(-25)
+ 
+        #RSI
+        # 前日との差分を計算
+        df_diff = source["Close"].diff(1)
+ 
+        # 計算用のDataFrameを定義
+        df_up, df_down = df_diff.copy(), df_diff.copy()
+ 
+        # df_upはマイナス値を0に変換
+        # df_downはプラス値を0に変換して正負反転
+        df_up[df_up < 0] = 0
+        df_down[df_down > 0] = 0
+        df_down = df_down * -1
+ 
+ 
+        # 期間14でそれぞれの平均を算出
+        df_up_sma14 = df_up.rolling(window=14, center=False).mean()
+        df_down_sma14 = df_down.rolling(window=14, center=False).mean()
+ 
+ 
+ 
+        # RSIを算出
+        source["RSI"] = 100.0 * (df_up_sma14 / (df_up_sma14 + df_down_sma14))
+ 
+        #大循環macd
+        exp5 = source['Close'].ewm(span=5, adjust=False).mean()
+        exp20 = source['Close'].ewm(span=20, adjust=False).mean()
+        source['MACD1'] = exp5 - exp20
+ 
+ 
+        exp40 = source['Close'].ewm(span=40, adjust=False).mean()
+        source['MACD2'] = exp5 - exp40
+ 
+        source['MACD3'] = exp20 - exp40
+ 
+        KDAY = 26  # K算定用期間
+        MDAY = 3  # D算定用期間
+ 
+        # stochasticks K
+        source["sct_k_price"] = (
+            100*
+            (source["Close"] - source["Low"].rolling(window=KDAY, min_periods=KDAY).min())/
+            (source["High"].rolling(window=KDAY, min_periods=KDAY).max() - source["Low"].rolling(window=KDAY, min_periods=KDAY).min())
+        )
+ 
+        # stochasticks D
+        source["sct_d_price"] = (
+            100*
+            (source["Close"] - source["Low"].rolling(window=KDAY, min_periods=KDAY).min())
+            .rolling(window=MDAY, min_periods=MDAY).sum()/
+            (source["High"].rolling(window=KDAY, min_periods=KDAY).max() - source["Low"].rolling(window=KDAY, min_periods=KDAY).min())
+            .rolling(window=MDAY, min_periods=MDAY).sum()
+        )
+ 
+        # slow stochasticks
+        source["slow_sct_d_price"] = source["sct_d_price"].rolling(window=MDAY, min_periods=MDAY).mean()
+ 
+        #GMMA
+        exp3 = source['Close'].ewm(span=3, adjust=False).mean()
+        exp8 = source['Close'].ewm(span=8, adjust=False).mean()
+        exp10 = source['Close'].ewm(span=10, adjust=False).mean()
+        exp12 = source['Close'].ewm(span=12, adjust=False).mean()
+        exp15 = source['Close'].ewm(span=15, adjust=False).mean()
+        source['EMA3'] = exp3
+        source['EMA5'] = exp5
+        source['EMA8'] = exp8
+        source['EMA10'] = exp10
+        source['EMA12'] = exp12
+        source['EMA15'] = exp15
+        exp20 = source['Close'].ewm(span=20, adjust=False).mean()
+        source['EMA20'] = exp20
+ 
+ 
+        exp30 = source['Close'].ewm(span=30, adjust=False).mean()
+        exp35 = source['Close'].ewm(span=35, adjust=False).mean()
+        exp40 = source['Close'].ewm(span=40, adjust=False).mean()
+        exp45 = source['Close'].ewm(span=45, adjust=False).mean()
+        exp50 = source['Close'].ewm(span=50, adjust=False).mean()
+        exp60 = source['Close'].ewm(span=60, adjust=False).mean()
+        source['EMA30'] = exp30
+        source['EMA35'] = exp35
+        source['EMA40'] = exp40
+        source['EMA45'] = exp45
+        source['EMA50'] = exp50
+        source['EMA60'] = exp60
+ 
+        #ボリンジャーバンド
+        # 移動平均線
+        source["SMA20"] = source["Close"].rolling(window=20,min_periods=20).mean()
+        # 標準偏差
+        source["std"] = source["Close"].rolling(window=20,min_periods=20).std()
+        # ボリンジャーバンド
+        source["2upper"] = source["SMA20"] + (2 * source["std"])
+        source["2lower"] = source["SMA20"] - (2 * source["std"])
+        source["3upper"] = source["SMA20"] + (3 * source["std"])
+        source["3lower"] = source["SMA20"] - (3 * source["std"])
+        source['bandwidth'] = (source['2upper'] - source['2lower']) / source['SMA20']
+        source['percent_b'] = (source['Close'] - source['2lower']) / (source['2upper'] - source['2lower'])
+ 
+        minimum_band = source["bandwidth"].rolling(window=120).min()
+        source["minimum_band"] = minimum_band
+       
+ 
+       
+ 
+ 
+        check5_all = []
+        check5_up = []
+        check5_down = []
+        price_dif5 = []
+        price5_win = []
+ 
+ 
+ 
+ 
+ 
+
+        bandwidth = source['bandwidth'][last]
+        bandwidth_yesterday = source['bandwidth'][last-1]
+        percent_b = source['percent_b'][last]
+        percent_b_yesterday = source['percent_b'][last-1]
+        volume_difference = source['Volume'][last] - source['Volume'][last-1]*1.5
+        midband = source['SMA20'][last]
+        midband_yesterday = source['SMA20'][last-1]
+
+
+        if percent_b>1 and percent_b_yesterday<1 and bandwidth_yesterday<bandwidth and volume_difference>0 and midband>midband_yesterday:
+            for k in range(-5,0):
+                bandwidth = source['bandwidth'][last+k]
+                bandwidth_yesterday = source['bandwidth'][last-1+k]
+                minimum_bandwidth = source['minimum_band'][last+k]
+                minimum_bandwidth_yesterday = source['minimum_band'][last-1+k]
+                percent_b2 = source['percent_b'][last+k]
+                ema20 = source['EMA20'][last+k]
+                ema50 = source['EMA50'][last+k]
+                if bandwidth == minimum_bandwidth and 0.45<percent_b2<0.55:
+                    chance5_all.append(code)
+
+ 
+ 
+
+
+               
+    for code in codes1:
+        option = code
+        ticker = str(option) + '.T'
+        tkr = yf.Ticker(ticker)
+        hist = tkr.history(period='100d')
+        hist = hist.reset_index()
+        hist = hist.set_index(['Date'])
+        hist = hist.rename_axis('Date').reset_index()
+        hist = hist.T
+        a = hist.to_dict()
+
+        for items in a.values():
+                time = items['Date']
+                items['Date'] = time.strftime("%Y/%m/%d")
+
+        b = [x for x in a.values()]
+
+        source = pd.DataFrame(b)
+
+        price = source['Close']
+
+        #DMIの計算
+        high = source['High']
+        low = source['Low']
+        close = source['Close']
+        pDM = (high - high.shift(1))
+        mDM = (low.shift(1) - low)
+        pDM.loc[pDM<0] = 0
+        pDM.loc[pDM-mDM < 0] = 0
+        mDM.loc[mDM<0] = 0
+        mDM.loc[mDM-pDM < 0] = 0
+        # trの計算
+        a = (high - low).abs()
+        b = (high - close.shift(1)).abs()
+        c = (low - close.shift(1)).abs()
+        tr = pd.concat([a, b, c], axis=1).max(axis=1)
+        source['pDI'] = pDM.rolling(14).sum()/tr.rolling(14).sum() * 100
+        source['mDI'] = mDM.rolling(14).sum()/tr.rolling(14).sum() * 100
+        # ADXの計算
+        DX = (source['pDI']-source['mDI']).abs()/(source['pDI']+source['mDI']) * 100
+        DX = DX.fillna(0)
+        source['ADX'] = DX.rolling(14).mean()
+
+        #移動平均
+        span01=5
+        span02=25
+        span03=75
+
+        source['sma01'] = price.rolling(window=span01).mean()
+        source['sma02'] = price.rolling(window=span02).mean()
+        source['sma03'] = price.rolling(window=span03).mean()
+
+
+        # 基準線
+        high26 = source["High"].rolling(window=26).max()
+        low26 = source["Low"].rolling(window=26).min()
+        source["base_line"] = (high26 + low26) / 2
+
+        # 転換線
+        high9 = source["High"].rolling(window=9).max()
+        low9 = source["Low"].rolling(window=9).min()
+        source["conversion_line"] = (high9 + low9) / 2
+
+        # 先行スパン1
+        leading_span1 = (source["base_line"] + source["conversion_line"]) / 2
+        source["leading_span1"] = leading_span1.shift(25)
+
+        # 先行スパン2
+        high52 = source["High"].rolling(window=52).max()
+        low52 = source["Low"].rolling(window=52).min()
+        leading_span2 = (high52 + low52) / 2
+        source["leading_span2"] = leading_span2.shift(25)
+
+        # 遅行スパン
+        source["lagging_span"] = source["Close"].shift(-25)
+
+        #RSI
+        # 前日との差分を計算
+        df_diff = source["Close"].diff(1)
+
+        # 計算用のDataFrameを定義
+        df_up, df_down = df_diff.copy(), df_diff.copy()
+
+        # df_upはマイナス値を0に変換
+        # df_downはプラス値を0に変換して正負反転
+        df_up[df_up < 0] = 0
+        df_down[df_down > 0] = 0
+        df_down = df_down * -1
+
+
+        # 期間14でそれぞれの平均を算出
+        df_up_sma14 = df_up.rolling(window=14, center=False).mean()
+        df_down_sma14 = df_down.rolling(window=14, center=False).mean()
+
+
+
+        # RSIを算出
+        source["RSI"] = 100.0 * (df_up_sma14 / (df_up_sma14 + df_down_sma14))
+
+        #大循環macd
+        exp5 = source['Close'].ewm(span=5, adjust=False).mean()
+        exp20 = source['Close'].ewm(span=20, adjust=False).mean()
+        source['MACD1'] = exp5 - exp20
+
+
+        exp40 = source['Close'].ewm(span=40, adjust=False).mean()
+        source['MACD2'] = exp5 - exp40
+
+        source['MACD3'] = exp20 - exp40
+
+        KDAY = 26  # K算定用期間
+        MDAY = 3  # D算定用期間
+
+        # stochasticks K
+        source["sct_k_price"] = (
+            100*
+            (source["Close"] - source["Low"].rolling(window=KDAY, min_periods=KDAY).min())/
+            (source["High"].rolling(window=KDAY, min_periods=KDAY).max() - source["Low"].rolling(window=KDAY, min_periods=KDAY).min())
+        )
+
+        # stochasticks D
+        source["sct_d_price"] = (
+            100*
+            (source["Close"] - source["Low"].rolling(window=KDAY, min_periods=KDAY).min())
+            .rolling(window=MDAY, min_periods=MDAY).sum()/
+            (source["High"].rolling(window=KDAY, min_periods=KDAY).max() - source["Low"].rolling(window=KDAY, min_periods=KDAY).min())
+            .rolling(window=MDAY, min_periods=MDAY).sum()
+        )
+
+        # slow stochasticks
+        source["slow_sct_d_price"] = source["sct_d_price"].rolling(window=MDAY, min_periods=MDAY).mean()
+
+        #GMMA
+        exp3 = source['Close'].ewm(span=3, adjust=False).mean()
+        exp8 = source['Close'].ewm(span=8, adjust=False).mean()
+        exp10 = source['Close'].ewm(span=10, adjust=False).mean()
+        exp12 = source['Close'].ewm(span=12, adjust=False).mean()
+        exp15 = source['Close'].ewm(span=15, adjust=False).mean()
+        source['EMA3'] = exp3
+        source['EMA5'] = exp5
+        source['EMA8'] = exp8
+        source['EMA10'] = exp10
+        source['EMA12'] = exp12
+        source['EMA15'] = exp15
+        exp20 = source['Close'].ewm(span=20, adjust=False).mean()
+        source['EMA20'] = exp20
+
+
+        exp30 = source['Close'].ewm(span=30, adjust=False).mean()
+        exp35 = source['Close'].ewm(span=35, adjust=False).mean()
+        exp40 = source['Close'].ewm(span=40, adjust=False).mean()
+        exp45 = source['Close'].ewm(span=45, adjust=False).mean()
+        exp50 = source['Close'].ewm(span=50, adjust=False).mean()
+        exp60 = source['Close'].ewm(span=60, adjust=False).mean()
+        source['EMA30'] = exp30
+        source['EMA35'] = exp35
+        source['EMA40'] = exp40
+        source['EMA45'] = exp45
+        source['EMA50'] = exp50
+        source['EMA60'] = exp60
+
+        #ボリンジャーバンド
+        # 移動平均線
+        source["SMA20"] = source["Close"].rolling(window=20,min_periods=20).mean()
+        # 標準偏差
+        source["std"] = source["Close"].rolling(window=20,min_periods=20).std()
+        # ボリンジャーバンド
+        source["2upper"] = source["SMA20"] + (2 * source["std"])
+        source["2lower"] = source["SMA20"] - (2 * source["std"])
+        source["3upper"] = source["SMA20"] + (3 * source["std"])
+        source["3lower"] = source["SMA20"] - (3 * source["std"])
+        source['bandwidth'] = (source['2upper'] - source['2lower']) / source['SMA20']
+        source['percent_b'] = (source['Close'] - source['2lower']) / (source['2upper'] - source['2lower'])
+
+        minimum_band = source["bandwidth"].rolling(window=120).min()
+        source["minimum_band"] = minimum_band
+        
+
+        
+
+
+        check6_all = []
+        check6_up = []
+        check6_down = []
+        price_dif6 = []
+        price6_win = []
+
+
+
+
+
+
+        price = source['Close'][last]
+        open = source['Open'][last]
+        volume_difference = source['Volume'][last] - source['Volume'][last-1]*6
+
+
+        if volume_difference>0 and price>open:
+            chance6_all.append(code)
+
+
+
+
+    
+
+
+
+
+    st.title('一目×ADX×RSI')
+    if len(chance1_all):
+        st.table(chance1_all)
+    else:
+        st.subheader('該当なし')
+    expander1 = st.expander('確率計算1')
+    expander1.write('勝率:67.5%,回数:40回,1回あたりの勝ち額:2140円')
+
+
+    st.title('大循環MACD×ADX')
+    if len(chance2_all):
+        st.table(chance2_all)
+    else:
+        st.subheader('該当なし')
+    expander2 = st.expander('確率計算2')
+    expander2.write('勝率:72%,回数:22回,1回あたりの勝ち額:5467円')
+
+    st.title('ストキャスティクス')
+    if len(chance3_all):
+        st.table(chance3_all)
+    else:
+        st.subheader('該当なし')
+    expander3 = st.expander('確率計算3')
+    expander3.write('勝率:71%,回数:14回,1回あたりの勝ち額:6357円')
+
+
+    st.title('もみ合い相場(底取り)')
+    if len(chance4_all):
+        st.table(chance4_all)
+    else:
+        st.subheader('該当なし')
+    expander3 = st.expander('確率計算4')
+    expander3.write('勝率:88%,回数:18回,1回あたりの勝ち額:3571円')
+
+
+    st.title('ボリンジャーバンド')
+    if len(chance5_all):
+        st.table(chance5_all)
+    else:
+        st.subheader('該当なし')
+    expander5 = st.expander('確率計算5')
+    expander5.write('勝率:71%,回数:14回,1回あたりの勝ち額:6357円')
+
+
+    st.title('出来高')
+    if len(chance6_all):
+        st.table(chance6_all)
+    else:
+        st.subheader('該当なし')
+    expander6 = st.expander('確率計算6')
+    expander6.write('勝率:88%,回数:18回,1回あたりの勝ち額:3571円')
+
           
           
           
@@ -1233,40 +1732,7 @@ if st.button('エラーの場合'):
 
             chance2_all.append(code)
           
-    st.title('一目×ADX×RSI')
-    if len(chance1_all):
-        st.table(chance1_all)
-    else:
-        st.subheader('該当なし')
-    expander1 = st.expander('確率計算1')
-    expander1.write('勝率:67.5%,回数:40回,1回あたりの勝ち額:2140円')
-
-
-    st.title('大循環MACD×ADX')
-    if len(chance2_all):
-        st.table(chance2_all)
-    else:
-        st.subheader('該当なし')
-    expander2 = st.expander('確率計算2')
-    expander2.write('勝率:72%,回数:22回,1回あたりの勝ち額:5467円')
-
-    st.title('ストキャスティクス')
-    if len(chance3_all):
-        st.table(chance3_all)
-    else:
-        st.subheader('該当なし')
-    expander3 = st.expander('確率計算3')
-    expander3.write('勝率:71%,回数:14回,1回あたりの勝ち額:6357円')
-
-
-    st.title('もみ合い相場(底取り)')
-    if len(chance4_all):
-        st.table(chance4_all)
-    else:
-        st.subheader('該当なし')
-    expander3 = st.expander('確率計算4')
-    expander3.write('勝率:88%,回数:18回,1回あたりの勝ち額:3571円')
-
+ 
     
 
 
@@ -1652,6 +2118,449 @@ if st.button('エラーの場合'):
         if -15<base_line-base_line_yesterday<15 and -15<base_line-base_line_yesterday2<15 and -5<price1-minimum<5 and 45<RSI_today<55 and volume_difference>0:
             chance4_all.append(code)
 
+    for code in codes5:
+        option = code
+        ticker = str(option) + '.T'
+        tkr = yf.Ticker(ticker)
+        hist = tkr.history(period='100d')
+        hist = hist.reset_index()
+        hist = hist.set_index(['Date'])
+        hist = hist.rename_axis('Date').reset_index()
+        hist = hist.T
+        a = hist.to_dict()
+ 
+        for items in a.values():
+                time = items['Date']
+                items['Date'] = time.strftime("%Y/%m/%d")
+ 
+        b = [x for x in a.values()]
+ 
+        source = pd.DataFrame(b)
+ 
+        price = source['Close']
+ 
+        #DMIの計算
+        high = source['High']
+        low = source['Low']
+        close = source['Close']
+        pDM = (high - high.shift(1))
+        mDM = (low.shift(1) - low)
+        pDM.loc[pDM<0] = 0
+        pDM.loc[pDM-mDM < 0] = 0
+        mDM.loc[mDM<0] = 0
+        mDM.loc[mDM-pDM < 0] = 0
+        # trの計算
+        a = (high - low).abs()
+        b = (high - close.shift(1)).abs()
+        c = (low - close.shift(1)).abs()
+        tr = pd.concat([a, b, c], axis=1).max(axis=1)
+        source['pDI'] = pDM.rolling(14).sum()/tr.rolling(14).sum() * 100
+        source['mDI'] = mDM.rolling(14).sum()/tr.rolling(14).sum() * 100
+        # ADXの計算
+        DX = (source['pDI']-source['mDI']).abs()/(source['pDI']+source['mDI']) * 100
+        DX = DX.fillna(0)
+        source['ADX'] = DX.rolling(14).mean()
+ 
+        #移動平均
+        span01=5
+        span02=25
+        span03=75
+ 
+        source['sma01'] = price.rolling(window=span01).mean()
+        source['sma02'] = price.rolling(window=span02).mean()
+        source['sma03'] = price.rolling(window=span03).mean()
+ 
+ 
+        # 基準線
+        high26 = source["High"].rolling(window=26).max()
+        low26 = source["Low"].rolling(window=26).min()
+        source["base_line"] = (high26 + low26) / 2
+ 
+        # 転換線
+        high9 = source["High"].rolling(window=9).max()
+        low9 = source["Low"].rolling(window=9).min()
+        source["conversion_line"] = (high9 + low9) / 2
+ 
+        # 先行スパン1
+        leading_span1 = (source["base_line"] + source["conversion_line"]) / 2
+        source["leading_span1"] = leading_span1.shift(25)
+ 
+        # 先行スパン2
+        high52 = source["High"].rolling(window=52).max()
+        low52 = source["Low"].rolling(window=52).min()
+        leading_span2 = (high52 + low52) / 2
+        source["leading_span2"] = leading_span2.shift(25)
+ 
+        # 遅行スパン
+        source["lagging_span"] = source["Close"].shift(-25)
+ 
+        #RSI
+        # 前日との差分を計算
+        df_diff = source["Close"].diff(1)
+ 
+        # 計算用のDataFrameを定義
+        df_up, df_down = df_diff.copy(), df_diff.copy()
+ 
+        # df_upはマイナス値を0に変換
+        # df_downはプラス値を0に変換して正負反転
+        df_up[df_up < 0] = 0
+        df_down[df_down > 0] = 0
+        df_down = df_down * -1
+ 
+ 
+        # 期間14でそれぞれの平均を算出
+        df_up_sma14 = df_up.rolling(window=14, center=False).mean()
+        df_down_sma14 = df_down.rolling(window=14, center=False).mean()
+ 
+ 
+ 
+        # RSIを算出
+        source["RSI"] = 100.0 * (df_up_sma14 / (df_up_sma14 + df_down_sma14))
+ 
+        #大循環macd
+        exp5 = source['Close'].ewm(span=5, adjust=False).mean()
+        exp20 = source['Close'].ewm(span=20, adjust=False).mean()
+        source['MACD1'] = exp5 - exp20
+ 
+ 
+        exp40 = source['Close'].ewm(span=40, adjust=False).mean()
+        source['MACD2'] = exp5 - exp40
+ 
+        source['MACD3'] = exp20 - exp40
+ 
+        KDAY = 26  # K算定用期間
+        MDAY = 3  # D算定用期間
+ 
+        # stochasticks K
+        source["sct_k_price"] = (
+            100*
+            (source["Close"] - source["Low"].rolling(window=KDAY, min_periods=KDAY).min())/
+            (source["High"].rolling(window=KDAY, min_periods=KDAY).max() - source["Low"].rolling(window=KDAY, min_periods=KDAY).min())
+        )
+ 
+        # stochasticks D
+        source["sct_d_price"] = (
+            100*
+            (source["Close"] - source["Low"].rolling(window=KDAY, min_periods=KDAY).min())
+            .rolling(window=MDAY, min_periods=MDAY).sum()/
+            (source["High"].rolling(window=KDAY, min_periods=KDAY).max() - source["Low"].rolling(window=KDAY, min_periods=KDAY).min())
+            .rolling(window=MDAY, min_periods=MDAY).sum()
+        )
+ 
+        # slow stochasticks
+        source["slow_sct_d_price"] = source["sct_d_price"].rolling(window=MDAY, min_periods=MDAY).mean()
+ 
+        #GMMA
+        exp3 = source['Close'].ewm(span=3, adjust=False).mean()
+        exp8 = source['Close'].ewm(span=8, adjust=False).mean()
+        exp10 = source['Close'].ewm(span=10, adjust=False).mean()
+        exp12 = source['Close'].ewm(span=12, adjust=False).mean()
+        exp15 = source['Close'].ewm(span=15, adjust=False).mean()
+        source['EMA3'] = exp3
+        source['EMA5'] = exp5
+        source['EMA8'] = exp8
+        source['EMA10'] = exp10
+        source['EMA12'] = exp12
+        source['EMA15'] = exp15
+        exp20 = source['Close'].ewm(span=20, adjust=False).mean()
+        source['EMA20'] = exp20
+ 
+ 
+        exp30 = source['Close'].ewm(span=30, adjust=False).mean()
+        exp35 = source['Close'].ewm(span=35, adjust=False).mean()
+        exp40 = source['Close'].ewm(span=40, adjust=False).mean()
+        exp45 = source['Close'].ewm(span=45, adjust=False).mean()
+        exp50 = source['Close'].ewm(span=50, adjust=False).mean()
+        exp60 = source['Close'].ewm(span=60, adjust=False).mean()
+        source['EMA30'] = exp30
+        source['EMA35'] = exp35
+        source['EMA40'] = exp40
+        source['EMA45'] = exp45
+        source['EMA50'] = exp50
+        source['EMA60'] = exp60
+ 
+        #ボリンジャーバンド
+        # 移動平均線
+        source["SMA20"] = source["Close"].rolling(window=20,min_periods=20).mean()
+        # 標準偏差
+        source["std"] = source["Close"].rolling(window=20,min_periods=20).std()
+        # ボリンジャーバンド
+        source["2upper"] = source["SMA20"] + (2 * source["std"])
+        source["2lower"] = source["SMA20"] - (2 * source["std"])
+        source["3upper"] = source["SMA20"] + (3 * source["std"])
+        source["3lower"] = source["SMA20"] - (3 * source["std"])
+        source['bandwidth'] = (source['2upper'] - source['2lower']) / source['SMA20']
+        source['percent_b'] = (source['Close'] - source['2lower']) / (source['2upper'] - source['2lower'])
+ 
+        minimum_band = source["bandwidth"].rolling(window=120).min()
+        source["minimum_band"] = minimum_band
+       
+ 
+       
+ 
+ 
+        check5_all = []
+        check5_up = []
+        check5_down = []
+        price_dif5 = []
+        price5_win = []
+ 
+ 
+ 
+ 
+ 
+
+        bandwidth = source['bandwidth'][last]
+        bandwidth_yesterday = source['bandwidth'][last-1]
+        percent_b = source['percent_b'][last]
+        percent_b_yesterday = source['percent_b'][last-1]
+        volume_difference = source['Volume'][last] - source['Volume'][last-1]*1.5
+        midband = source['SMA20'][last]
+        midband_yesterday = source['SMA20'][last-1]
+
+
+        if percent_b>1 and percent_b_yesterday<1 and bandwidth_yesterday<bandwidth and volume_difference>0 and midband>midband_yesterday:
+            for k in range(-5,0):
+                bandwidth = source['bandwidth'][last+k]
+                bandwidth_yesterday = source['bandwidth'][last-1+k]
+                minimum_bandwidth = source['minimum_band'][last+k]
+                minimum_bandwidth_yesterday = source['minimum_band'][last-1+k]
+                percent_b2 = source['percent_b'][last+k]
+                ema20 = source['EMA20'][last+k]
+                ema50 = source['EMA50'][last+k]
+                if bandwidth == minimum_bandwidth and 0.45<percent_b2<0.55:
+                    chance5_all.append(code)
+
+ 
+ 
+
+
+               
+    for code in codes1:
+        option = code
+        ticker = str(option) + '.T'
+        tkr = yf.Ticker(ticker)
+        hist = tkr.history(period='100d')
+        hist = hist.reset_index()
+        hist = hist.set_index(['Date'])
+        hist = hist.rename_axis('Date').reset_index()
+        hist = hist.T
+        a = hist.to_dict()
+
+        for items in a.values():
+                time = items['Date']
+                items['Date'] = time.strftime("%Y/%m/%d")
+
+        b = [x for x in a.values()]
+
+        source = pd.DataFrame(b)
+
+        price = source['Close']
+
+        #DMIの計算
+        high = source['High']
+        low = source['Low']
+        close = source['Close']
+        pDM = (high - high.shift(1))
+        mDM = (low.shift(1) - low)
+        pDM.loc[pDM<0] = 0
+        pDM.loc[pDM-mDM < 0] = 0
+        mDM.loc[mDM<0] = 0
+        mDM.loc[mDM-pDM < 0] = 0
+        # trの計算
+        a = (high - low).abs()
+        b = (high - close.shift(1)).abs()
+        c = (low - close.shift(1)).abs()
+        tr = pd.concat([a, b, c], axis=1).max(axis=1)
+        source['pDI'] = pDM.rolling(14).sum()/tr.rolling(14).sum() * 100
+        source['mDI'] = mDM.rolling(14).sum()/tr.rolling(14).sum() * 100
+        # ADXの計算
+        DX = (source['pDI']-source['mDI']).abs()/(source['pDI']+source['mDI']) * 100
+        DX = DX.fillna(0)
+        source['ADX'] = DX.rolling(14).mean()
+
+        #移動平均
+        span01=5
+        span02=25
+        span03=75
+
+        source['sma01'] = price.rolling(window=span01).mean()
+        source['sma02'] = price.rolling(window=span02).mean()
+        source['sma03'] = price.rolling(window=span03).mean()
+
+
+        # 基準線
+        high26 = source["High"].rolling(window=26).max()
+        low26 = source["Low"].rolling(window=26).min()
+        source["base_line"] = (high26 + low26) / 2
+
+        # 転換線
+        high9 = source["High"].rolling(window=9).max()
+        low9 = source["Low"].rolling(window=9).min()
+        source["conversion_line"] = (high9 + low9) / 2
+
+        # 先行スパン1
+        leading_span1 = (source["base_line"] + source["conversion_line"]) / 2
+        source["leading_span1"] = leading_span1.shift(25)
+
+        # 先行スパン2
+        high52 = source["High"].rolling(window=52).max()
+        low52 = source["Low"].rolling(window=52).min()
+        leading_span2 = (high52 + low52) / 2
+        source["leading_span2"] = leading_span2.shift(25)
+
+        # 遅行スパン
+        source["lagging_span"] = source["Close"].shift(-25)
+
+        #RSI
+        # 前日との差分を計算
+        df_diff = source["Close"].diff(1)
+
+        # 計算用のDataFrameを定義
+        df_up, df_down = df_diff.copy(), df_diff.copy()
+
+        # df_upはマイナス値を0に変換
+        # df_downはプラス値を0に変換して正負反転
+        df_up[df_up < 0] = 0
+        df_down[df_down > 0] = 0
+        df_down = df_down * -1
+
+
+        # 期間14でそれぞれの平均を算出
+        df_up_sma14 = df_up.rolling(window=14, center=False).mean()
+        df_down_sma14 = df_down.rolling(window=14, center=False).mean()
+
+
+
+        # RSIを算出
+        source["RSI"] = 100.0 * (df_up_sma14 / (df_up_sma14 + df_down_sma14))
+
+        #大循環macd
+        exp5 = source['Close'].ewm(span=5, adjust=False).mean()
+        exp20 = source['Close'].ewm(span=20, adjust=False).mean()
+        source['MACD1'] = exp5 - exp20
+
+
+        exp40 = source['Close'].ewm(span=40, adjust=False).mean()
+        source['MACD2'] = exp5 - exp40
+
+        source['MACD3'] = exp20 - exp40
+
+        KDAY = 26  # K算定用期間
+        MDAY = 3  # D算定用期間
+
+        # stochasticks K
+        source["sct_k_price"] = (
+            100*
+            (source["Close"] - source["Low"].rolling(window=KDAY, min_periods=KDAY).min())/
+            (source["High"].rolling(window=KDAY, min_periods=KDAY).max() - source["Low"].rolling(window=KDAY, min_periods=KDAY).min())
+        )
+
+        # stochasticks D
+        source["sct_d_price"] = (
+            100*
+            (source["Close"] - source["Low"].rolling(window=KDAY, min_periods=KDAY).min())
+            .rolling(window=MDAY, min_periods=MDAY).sum()/
+            (source["High"].rolling(window=KDAY, min_periods=KDAY).max() - source["Low"].rolling(window=KDAY, min_periods=KDAY).min())
+            .rolling(window=MDAY, min_periods=MDAY).sum()
+        )
+
+        # slow stochasticks
+        source["slow_sct_d_price"] = source["sct_d_price"].rolling(window=MDAY, min_periods=MDAY).mean()
+
+        #GMMA
+        exp3 = source['Close'].ewm(span=3, adjust=False).mean()
+        exp8 = source['Close'].ewm(span=8, adjust=False).mean()
+        exp10 = source['Close'].ewm(span=10, adjust=False).mean()
+        exp12 = source['Close'].ewm(span=12, adjust=False).mean()
+        exp15 = source['Close'].ewm(span=15, adjust=False).mean()
+        source['EMA3'] = exp3
+        source['EMA5'] = exp5
+        source['EMA8'] = exp8
+        source['EMA10'] = exp10
+        source['EMA12'] = exp12
+        source['EMA15'] = exp15
+        exp20 = source['Close'].ewm(span=20, adjust=False).mean()
+        source['EMA20'] = exp20
+
+
+        exp30 = source['Close'].ewm(span=30, adjust=False).mean()
+        exp35 = source['Close'].ewm(span=35, adjust=False).mean()
+        exp40 = source['Close'].ewm(span=40, adjust=False).mean()
+        exp45 = source['Close'].ewm(span=45, adjust=False).mean()
+        exp50 = source['Close'].ewm(span=50, adjust=False).mean()
+        exp60 = source['Close'].ewm(span=60, adjust=False).mean()
+        source['EMA30'] = exp30
+        source['EMA35'] = exp35
+        source['EMA40'] = exp40
+        source['EMA45'] = exp45
+        source['EMA50'] = exp50
+        source['EMA60'] = exp60
+
+        #ボリンジャーバンド
+        # 移動平均線
+        source["SMA20"] = source["Close"].rolling(window=20,min_periods=20).mean()
+        # 標準偏差
+        source["std"] = source["Close"].rolling(window=20,min_periods=20).std()
+        # ボリンジャーバンド
+        source["2upper"] = source["SMA20"] + (2 * source["std"])
+        source["2lower"] = source["SMA20"] - (2 * source["std"])
+        source["3upper"] = source["SMA20"] + (3 * source["std"])
+        source["3lower"] = source["SMA20"] - (3 * source["std"])
+        source['bandwidth'] = (source['2upper'] - source['2lower']) / source['SMA20']
+        source['percent_b'] = (source['Close'] - source['2lower']) / (source['2upper'] - source['2lower'])
+
+        minimum_band = source["bandwidth"].rolling(window=120).min()
+        source["minimum_band"] = minimum_band
+        
+
+        
+
+
+        check6_all = []
+        check6_up = []
+        check6_down = []
+        price_dif6 = []
+        price6_win = []
+
+
+
+
+
+        for i in range(120,1285):
+            bandwidth = source['bandwidth'][i]
+            bandwidth_yesterday = source['bandwidth'][i-1]
+            minimum_bandwidth = source['minimum_band'][i]
+            minimum_bandwidth_yesterday = source['minimum_band'][i-1]
+            percent_b = source['percent_b'][i]
+            percent_b_yesterday = source['percent_b'][i-1]
+            price = source['Close'][last]
+            open = source['Open'][last]
+            price_buy = source['Close'][i+1]
+            price_days = source['Close'][i+days+1]
+            price_days_before1 = source['Low'][i+days]
+            price_days_before2 = source['Low'][i+days-1]
+            price_days_before3 = source['Low'][i+days-2]
+            price_days_before4 = source['Low'][i+days-3]
+            price_buy_percent3 = source['Close'][i+1] * 0.03 * -1
+            price_99 = source['Close'][i+1] * 0.97
+            price_change = price_days - price_buy
+            adx_direction = source['ADX'][i] - source['ADX'][i-1]
+            volume_difference = source['Volume'][last] - source['Volume'][last-1]*6
+            midband = source['SMA20'][i]
+            midband_yesterday = source['SMA20'][i-1]
+            long_sma = source['sma03'][i]
+            ema5 = source['EMA5'][i]
+            ema20 = source['EMA20'][i]
+            ema50 = source['EMA50'][i]
+
+            if volume_difference>0 and price>open:
+                chance6_all.append(code)
+
+
+
+
+
                 
                 
 
@@ -1709,27 +2618,24 @@ if st.button('エラーの場合'):
         st.subheader('該当なし')
     expander3 = st.expander('確率計算4')
     expander3.write('勝率:88%,回数:18回,1回あたりの勝ち額:3571円')
+
+
+    st.title('ボリンジャーバンド')
+    if len(chance5_all):
+        st.table(chance5_all)
+    else:
+        st.subheader('該当なし')
+    expander5 = st.expander('確率計算5')
+    expander5.write('勝率:71%,回数:14回,1回あたりの勝ち額:6357円')
+
+
+    st.title('出来高')
+    if len(chance6_all):
+        st.table(chance6_all)
+    else:
+        st.subheader('該当なし')
+    expander6 = st.expander('確率計算6')
+    expander6.write('勝率:88%,回数:18回,1回あたりの勝ち額:3571円')
                 
                 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
