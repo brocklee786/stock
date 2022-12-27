@@ -243,7 +243,6 @@ if st.button('計算を行う'):
         source['EMA45'] = exp45
         source['EMA50'] = exp50
         source['EMA60'] = exp60
-        st.write(source['Date'][76])
 
 
 
