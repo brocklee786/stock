@@ -22,7 +22,7 @@ codes = ['5901','6810','6807','6804','6779','6770','6754','6753','6752','6750','
 tkr = yf.Ticker('7203.T')
 hist = tkr.info
 
-st.table(hist)
+st.write(hist)
 
 
 
