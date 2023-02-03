@@ -899,9 +899,13 @@ if option:
     if past_profit:
         num_past_profit = int(past_profit)
         now_profit = st.text_input('今期の営業利益を入力してください')
+        future_profit = st.text_input('来期の予想営業利益を入力してください')
+        profit_stock_now = st.text_input('今期の1株益を入力してください')
+        profit_stock_future = st.text_input('来期の1株益を入力してください')
+        sales_amount = st.text_input('今期の売上高予想を入力してください')
         if now_profit:
             num_now_profit = int(now_profit)
-            future_profit = st.text_input('来期の予想営業利益を入力してください')
+            
             if future_profit:
                 num_future_profit = int(future_profit)
                 ave_growth = ((num_now_profit - num_past_profit)/num_past_profit + (num_future_profit - num_now_profit)/num_now_profit) / 2
@@ -930,10 +934,10 @@ if option:
                     target_per2 = 25.5
 
 
-                profit_stock_now = st.text_input('今期の1株益を入力してください')
+                
                 if profit_stock_now:
                     num_profit_stock_now = float(profit_stock_now)
-                    profit_stock_future = st.text_input('来期の1株益を入力してください')
+                    
                     if profit_stock_future:
                         num_profit_stock_future = float(profit_stock_future)
                         ave_profit = (num_profit_stock_now + num_profit_stock_future) / 2
@@ -967,7 +971,7 @@ if option:
                         company_value = new_df['時価総額'][0]
                         PSR = int(company_value) / int(new_df2['売上高'][0])
 
-                        sales_amount = st.text_input('今期の売上高予想を入力してください')
+                        
                         if sales_amount:
                             profit_increase_rate = float(sales_amount) / float(new_df2['売上高'][0])
                             rule = (profit_increase_rate * 100) + ave_growth_percent
