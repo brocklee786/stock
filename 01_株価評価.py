@@ -463,12 +463,30 @@ if option:
     st.sidebar.write('<span style="color:red">事業価値</span>',
               unsafe_allow_html=True)
     st.sidebar.write(str(int_business_value) + '円')
-    st.sidebar.write('<span style="color:red">理論株価</span>',
+    st.sidebar.write('<span style="color:red">理論株価1</span>',
               unsafe_allow_html=True)
     st.sidebar.write(str(int_theoretical_stock_price) + '円')
+    st.sidebar.write('<span style="color:red">理論株価2</span>',
+              unsafe_allow_html=True)
+    st.sidebar.write(str(EPS*PER) + '円')
+    st.sidebar.write('<span style="color:red">理論株価3</span>',
+              unsafe_allow_html=True)
+    st.sidebar.write(str(EPS*10 + BPS) + '円')
     st.sidebar.write('<span style="color:red">上限株価</span>',
               unsafe_allow_html=True)
     st.sidebar.write(str(int_max_stock_price) + '円')
+    st.sidebar.write('<span style="color:red">EPS</span>',
+              unsafe_allow_html=True)
+    st.sidebar.write(EPS)
+    st.sidebar.write('<span style="color:red">PSR</span>',
+              unsafe_allow_html=True)
+    st.sidebar.write(PSR)
+    st.sidebar.write('<span style="color:red">BPS</span>',
+              unsafe_allow_html=True)
+    st.sidebar.write(BPS)
+    st.sidebar.write('<span style="color:red">PBR</span>',
+              unsafe_allow_html=True)
+    st.sidebar.write(PBR)
     sales = int(new_df4['営業CF'][0])
     investment = int(new_df4['投資CF'][0])
     finance = int(new_df4['財務CF'][0])
@@ -1246,5 +1264,9 @@ expander1 = st.sidebar.expander('資産価値算出方法')
 expander1.write('BPS x 割引率')
 expander2 = st.sidebar.expander('事業価値算出方法')
 expander2.write('EPS x ROA x 150 x 財務レバレッジ補正')
-expander3 = st.sidebar.expander('理論株価算出方法')
+expander3 = st.sidebar.expander('理論株価1算出方法')
 expander3.write('(資産価値 + 事業価値) x リスク評価率')
+expander4 = st.sidebar.expander('理論株価2算出方法')
+expander4.write('EPS×PER')
+expander5 = st.sidebar.expander('理論株価3算出方法')
+expander5.write('EPS×10 + BPS')
