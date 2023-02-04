@@ -1250,6 +1250,12 @@ if option:
                             plot_polar(labels, values, "radar.png") 
                             image = Image.open('radar.png')
                             st.sidebar.image(image, caption='分析結果',use_column_width=True)
+                            
+                            st.write('<span style="color:red">成長性</span>',
+                            unsafe_allow_html=True)
+                            left_column, right_column = st.columns(2)
+                            left_column.write('売上げ')
+                            right_column.write('利益')
 
 
 
