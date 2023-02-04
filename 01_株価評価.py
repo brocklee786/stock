@@ -1254,8 +1254,9 @@ if option:
                             st.write('<span style="color:red">成長性</span>',
                             unsafe_allow_html=True)
                             left_column, right_column = st.columns(2)
-                            left_column.write('売上げ:' + str(share_point) + '(' + str(ave_growth_percent) +')')
-                            right_column.write('利益')
+                            left_column.write('売上げ:' + str(share_point) + '点　3期平均増加率(' + str(int(ave_growth_percent)) +')')
+                            right_column.write('利益：' + str(sales_point) + '点　増加率(' + str(int(sales_growth)) +')')
+                            left_column.write('1株益:' + str(profit_point) + '点　増加率(' + str(int(stock_profit_growth)) +')')
 
 
 
