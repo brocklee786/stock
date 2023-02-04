@@ -1249,7 +1249,7 @@ if option:
                             values = [growth_point, profitness_point, cheap_point, safety_point, surprise_point]
                             plot_polar(labels, values, "radar.png") 
                             image = Image.open('radar.png')
-                            st.image(image, caption='分析結果',use_column_width=True)
+                            st.sidebar.image(image, caption='分析結果',use_column_width=True)
 
 
 
