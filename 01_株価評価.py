@@ -976,7 +976,7 @@ if option:
                             profit_increase_rate = float(sales_amount) / float(new_df2['売上高'][0])
                             rule = (profit_increase_rate * 100) + ave_growth_percent
                             sales_growth = ((int(sales_amount) - int(new_df2['売上高'][0])) / int(new_df2['売上高'][0])) * 100
-                            stock_profit_growth = ((float(profit_stock_future) + float(profit_stock_now)) / float(profit_stock_now)) * 100
+                            stock_profit_growth = ((float(profit_stock_future) - float(profit_stock_now)) / float(profit_stock_now)) * 100
 
                             sales_point = 0
                             share_point = 0
