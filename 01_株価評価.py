@@ -1254,7 +1254,7 @@ if option:
                             st.write('<span style="color:red">成長性</span>',
                             unsafe_allow_html=True)
                             left_column, right_column = st.columns(2)
-                            left_column.write('売上げ')
+                            left_column.write('売上げ:' + share_point+'('+ave_growth_percent +')')
                             right_column.write('利益')
 
 
