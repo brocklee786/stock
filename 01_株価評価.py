@@ -969,7 +969,7 @@ if option:
                         st.sidebar.write(str(target_per2 * ave_profit) + '円')
 
                         company_value = new_df['時価総額'][0]
-                        PSR = int(company_value) / int(new_df2['売上高'][0])
+                        #PSR = int(company_value) / int(new_df2['売上高'][0])
 
                         
                         if sales_amount:
