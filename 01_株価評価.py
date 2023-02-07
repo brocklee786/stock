@@ -1277,7 +1277,7 @@ if option:
                             left_column5, right_column5 = st.columns(2)
                             left_column5.write('現株価と目標株価との差:' + str(value_difference_point) + '点　(' + str(int(value_difference_rate)) +'%)')
                             right_column5.write('40%ルール:' + str(rule_point) + '点　(' + str(int(rule)) +'%)')
-                            st.subheader('<span style="color:red">合計点数</span>',
+                            st.write('<span style="color:red">合計点数</span>',
                             unsafe_allow_html=True)
                             add_point = share_point + sales_point + profit_point + profit_rate_point + ROE_point + PER_point + PSR_point + PBR_point + safety_point + value_different_point + rule_point
                             total_point = 11/10 * add_point
