@@ -1406,6 +1406,7 @@ if option:
                             add_point4 = add_point1 + add_point2 + add_point3
                             total_point = 10/11 * add_point4
                             st.subheader(str(int(total_point)) + '点')
+                            
 
 
 
@@ -1430,3 +1431,26 @@ expander4 = st.sidebar.expander('理論株価2算出方法')
 expander4.write('EPS×PER')
 expander5 = st.sidebar.expander('理論株価3算出方法')
 expander5.write('EPS×10 + BPS')
+expander6 = st.expander('PER 株価収益率')
+expander6.write('PER(倍) = 株価　÷　1株あたりの純利益(EPS)　PERが低ければ低いほど会社が稼ぐ利益に対して株価が割安であることがわかる。')
+expander7 = st.expander('EPS:一株あたりの当期純利益(Earning per Share)')
+expander7.write('EPS = 純利益 ÷ 発行済みの株式数  株価が収益の何倍まで買われているかを示す指標で、業界平均や過去の水準と比較して割高・割安を判断する')
+expander8 = st.expander('配当性向')
+expander8.write('企業が得た利益の一部が配当として分配されるため、その金額をEPSで割ると、利益のどれくらいが配当されるのかが把握できる。30~40%が平均とされており、これを超えると買いサインの目安となる。配当性向 = 1株あたりの配当 ÷ EPS × 100')
+expander9 = st.expander('PSR:株価売上高倍率(Price to Sales Ratio)')
+expander9.write('PSR = 時価総額 ÷ 売上高.新興企業同士の株価水準を判断する場合に使用されることなどがあり、PSRが低いほど、株価が割安と判断することができる。.PSRが0.5倍以下だと割安な状態、20倍以上だと割高な状態といえる')
+expander10 = st.expander('PBR:株価純資産倍率(Price book-value Ratio)')
+expander10.write('PBR = 株価 ÷ BPS.株価が1株当たり純資産(BPS：Book-value Per Share）の何倍まで買われているか、すなわち1株当たり純資産の何倍の値段が付けられているかを見る投資尺度。現在の株価が企業の資産価値（解散価値）に対して割高か割安かを判断する目安として利用される。PBRの数値は、低いほうが割安と判断される。')
+expander11 = st.expander('BPS:1株あたりの純資産(Book value per share)')
+expander11.write('BPS = 純資産 ÷ 発行済株式数.1株当たりの純資産額を表した金額で、株価が純資産の何倍まで買われているかを示す指標である。BPSが上昇していれば投資先としての安全性、安定性が高いと判断できるため買いサイン。')
+expander12 = st.expander('ROA:総資産利益率(Return on Asset)')
+expander12.write('4%前後が多く5%を超える日本株は優良企業とされる。インフラ関連や工場をもつ産業や企業などはROAが低くなり、設備投資が少ないIT関連企業などはROAが高くなる傾向がある.ROA = 当期純利益 ÷ 純資産 × １００')
+expander13 = st.sidebar.expander('ROE:自己資本利益率(Return On Equity)')
+expander13.write('その株を買うことによってどれだけ効率よく利益を狙えるかを示す指標。８％前後の企業が多く10%を超えると優良企業。ROE=当期純利益÷自己資本×１００.')
+expander14 = st.expander('PEGレシオ(price earning growth)')
+expander14.write('1倍以下は割安、2倍以上は割高と判断できる。PERが高くなりがちな中小型株を分析できる。PEGレシオ = PER ÷ EPS成長率。')
+
+
+
+
+
