@@ -12,6 +12,7 @@ import altair as alt
 import os
 import sys
 import subprocess
+import mplfinance.original_flavor as mpf
 
 
 
