@@ -1285,7 +1285,7 @@ if option:
                             add_point3 = float(safety_point) + float(value_difference_point) + float(rule_point)
                             add_point4 = add_point1 + add_point2 + add_point3
                             total_point = 10/11 * add_point4
-                            st.subheader(str(total_point) + '点')
+                            st.subheader(str(int(total_point)) + '点')
 
 
 
