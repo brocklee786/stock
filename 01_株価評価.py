@@ -1279,7 +1279,8 @@ if option:
                             right_column5.write('40%ルール:' + str(rule_point) + '点　(' + str(int(rule)) +'%)')
                             st.write('<span style="color:red">合計点数</span>',
                             unsafe_allow_html=True)
-                            add_point = share_point + sales_point + profit_point + profit_rate_point + ROE_point + PER_point + PSR_point + PBR_point + safety_point + value_different_point + rule_point
+                            
+                            add_point = float(share_point) + float(sales_point) + float(profit_point) + float(profit_rate_point) + float(ROE_point) + float(PER_point) + float(PSR_point) + float(PBR_point) + float(safety_point) + float(value_different_point) + float(rule_point)
                             total_point = 11/10 * add_point
                             st.subheader(str(total_point) + '点')
 
