@@ -1259,20 +1259,24 @@ if option:
                             left_column.write('1株益:' + str(profit_point) + '点　増加率(' + str(int(stock_profit_growth)) +')')
                             st.write('<span style="color:red">収益性</span>',
                             unsafe_allow_html=True)
-                            left_column.write('利益率:' + str(profit_rate_point) + '点　(' + str(int(profit_rate)) +'%)')
-                            right_column.write('ROE:' + str(ROE_point) + '点　増加率(' + str(int(ROE)) +'%)')
+                            left_column2, right_column2 = st.columns(2)
+                            left_column2.write('利益率:' + str(profit_rate_point) + '点　(' + str(int(profit_rate)) +'%)')
+                            right_column2.write('ROE:' + str(ROE_point) + '点　増加率(' + str(int(ROE)) +'%)')
                             st.write('<span style="color:red">割安性</span>',
                             unsafe_allow_html=True)
-                            left_column.write('PER:' + str(PER_point) + '点　(' + str(int(PER)) +'倍)')
-                            right_column.write('PSR:' + str(PSR_point) + '点　(' + str(int(PSR)) +'倍)')
-                            left_column.write('PBR:' + str(PBR_point) + '点　(' + str(int(PBR)) +'倍)')
+                            left_column3, right_column3 = st.columns(2)
+                            left_column3.write('PER:' + str(PER_point) + '点　(' + str(int(PER)) +'倍)')
+                            right_column3.write('PSR:' + str(PSR_point) + '点　(' + str(int(PSR)) +'倍)')
+                            left_column3.write('PBR:' + str(PBR_point) + '点　(' + str(int(PBR)) +'倍)')
                             st.write('<span style="color:red">安全性</span>',
                             unsafe_allow_html=True)
-                            left_column.write('自己資本比率:' + str(safety_point) + '点　(' + str(int(self_asset_rate)) +'%)')
+                            left_column4, right_column4 = st.columns(2)
+                            left_column4.write('自己資本比率:' + str(safety_point) + '点　(' + str(int(self_asset_rate)) +'%)')
                             st.write('<span style="color:red">大化け性</span>',
                             unsafe_allow_html=True)
-                            left_column.write('現株価と目標株価との差:' + str(value_difference_point) + '点　(' + str(int(value_difference_rate)) +'%)')
-                            right_column.write('40%ルール:' + str(rule_point) + '点　(' + str(int(rule)) +'%)')
+                            left_column5, right_column5 = st.columns(2)
+                            left_column5.write('現株価と目標株価との差:' + str(value_difference_point) + '点　(' + str(int(value_difference_rate)) +'%)')
+                            right_column5.write('40%ルール:' + str(rule_point) + '点　(' + str(int(rule)) +'%)')
 
 
 
