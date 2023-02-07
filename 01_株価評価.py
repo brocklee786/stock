@@ -13,6 +13,7 @@ import os
 import sys
 import subprocess
 import mplfinance.original_flavor as mpf
+from scipy.stats import linregress
 
 
 
