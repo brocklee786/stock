@@ -1284,7 +1284,7 @@ if option:
                             add_point2 = float(ROE_point) + float(PER_point) + float(PSR_point) + float(PBR_point)
                             add_point3 = float(safety_point) + float(value_difference_point) + float(rule_point)
                             add_point4 = add_point1 + add_point2 + add_point3
-                            total_point = 11/10 * add_point4
+                            total_point = 10/11 * add_point4
                             st.subheader(str(total_point) + '点')
 
 
