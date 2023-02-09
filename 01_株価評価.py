@@ -1018,8 +1018,7 @@ if option:
     past_profit = new_df2["営業利益"][0]
     if past_profit:
         num_past_profit = int(past_profit)
-        now_profit = df2['営業利益'][1]
-        st.write(df2['営業利益'][1])
+        now_profit = st.text_input('今期の営業利益を入力してください')
         future_profit = st.text_input('来期の予想営業利益を入力してください')
         profit_stock_now = st.text_input('今期の1株益を入力してください')
         profit_stock_future = st.text_input('来期の1株益を入力してください')
