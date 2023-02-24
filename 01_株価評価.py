@@ -1030,7 +1030,8 @@ if option:
                 num_future_profit = int(future_profit)
                 ave_growth = ((num_now_profit - num_past_profit)/num_past_profit + (num_future_profit - num_now_profit)/num_now_profit) / 2
                 ave_growth_percent = ave_growth * 100
-                sale_growth_rule = ((num_now_profit - num_past_profit)/num_past_profit) * 100 
+                sale_growth_rule = ((num_now_profit - num_past_profit)/num_past_profit) * 100
+                profit_rate = float(new_df2['営業利益'][0]) / float(new_df2['売上高'][0]) * 100
                 if 0 < ave_growth <= 0.075:
                     target_per2 = 15.75
                 elif 0.075 < ave_growth <= 0.125:
@@ -1171,7 +1172,7 @@ if option:
 
                             growth_point = (share_point + sales_point + profit_point) / 3
 
-                            profit_rate = float(new_df2['営業利益'][0]) / float(new_df2['売上高'][0]) * 100
+                            
 
                             if   profit_rate <= 0:
                                 profit_rate_point = 1
