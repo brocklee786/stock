@@ -1095,7 +1095,7 @@ if option:
                         
                         if sales_amount:
                             profit_increase_rate = float(sales_amount) / float(new_df2['売上高'][0])
-                            rule = sale_growth_rule + profit_rate
+                            rule = int(sale_growth_rule) + int(profit_rate)
                             sales_growth = ((int(sales_amount) - int(new_df2['売上高'][0])) / int(new_df2['売上高'][0])) * 100
                             stock_profit_growth = ((float(profit_stock_future) - float(profit_stock_now)) / float(profit_stock_now)) * 100
 
