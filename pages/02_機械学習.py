@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from prophet import Prophet
-from pandas_datareader.data import DataReader
+from pandas_datareader import data
 import datetime
 import streamlit as st
 
