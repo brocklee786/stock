@@ -13,12 +13,12 @@ option = st.text_input('銘柄コードを入力してください')
 if option:
           start = datetime.date(2015,1,1)
           end = datetime.date.today()
-          data_train = data.DataReader('6804.JP','stooq').sort_values('Date', ascending=True)
+          data_train = data.DataReader(option + '.JP','stooq').sort_values('Date', ascending=True)
 
           data_train['ds'] = data_train.index
           data_train = data_train.rename({'Adj Close':'y'}, axis=1)
           
-          data_train['y'] = np.log(data_train['y'])
+         
 
 
           params = {'growth': 'linear',
