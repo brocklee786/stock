@@ -47,7 +47,8 @@ if option:
           )
 
           pred = model.predict(future)
-          st.write(pred.tail(-65:))
+          future_pred = pred.iloc[-65:]
+          st.write(future_pred)
           fig_pred = model.plot(pred)
           st.pyplot(fig_pred)
           st.pyplot(model.plot_components(forecast_data))
