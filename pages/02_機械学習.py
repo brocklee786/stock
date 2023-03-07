@@ -42,13 +42,13 @@ if option:
           model.fit(data_train)
 
           future = model.make_future_dataframe(
-              periods=300, 
+              periods=60, 
               freq = 'd'  
           )
 
           pred = model.predict(future)
-          st.write(pred)
+          st.write(pred.tail())
           fig_pred = model.plot(pred)
           st.pyplot(fig_pred)
-
+          st.write(model.plot_components(forecast_data))
           
