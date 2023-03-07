@@ -48,8 +48,26 @@ if option:
 
           pred = model.predict(future)
           future_pred = pred.iloc[-65:]
+          del(future_pred['trend'])
+          del(future_pred['trend_lower'])
+          del(future_pred['trend_upper'])
+          del(future_pred['addictive_terms'])
+          del(future_pred['addictive_terms_lower'])
+          del(future_pred['addictive_terms_upper'])
+          del(future_pred['weekly'])
+          del(future_pred['weekly_lower'])
+          del(future_pred['weekly_upper'])
+          del(future_pred['yearly'])
+          del(future_pred['yearly_upper'])
+          del(future_pred['yearly_lower'])
+          del(future_pred['multiplicative_terms'])
+          del(future_pred['multiplicative_terms_lower'])
+          del(future_pred['multiplicative_terms_upper'])
+                
+              
           st.write(future_pred)
           fig_pred = model.plot(pred)
           st.pyplot(fig_pred)
-          st.pyplot(model.plot_components(forecast_data))
+          trend = model.plot_components(forecast_data)
+          st.pyplot(trend)
           
