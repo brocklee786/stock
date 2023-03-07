@@ -42,12 +42,12 @@ if option:
           model.fit(data_train)
 
           future = model.make_future_dataframe(
-              periods=60, 
+              periods=20, 
               freq = 'd'  
           )
 
           pred = model.predict(future)
-          future_pred = pred.iloc[-65:]
+          future_pred = pred.iloc[-25:]
           del(future_pred['trend'])
           del(future_pred['trend_lower'])
           del(future_pred['trend_upper'])
@@ -68,6 +68,6 @@ if option:
           st.write(future_pred)
           fig_pred = model.plot(pred)
           st.pyplot(fig_pred)
-          trend = model.plot_components(forecast_data)
+          trend = model.plot_components(pred)
           st.pyplot(trend)
           
