@@ -39,7 +39,7 @@ st.write(df)
 
 df2 = df.tail(10)
 df2 = pd.DataFrame(df2)
-st.write(df2['$'][-3])
+st.write(df2['$'][-3:])
 
 for i in range(10):
   datetime = df['@time'][i] 
