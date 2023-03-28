@@ -38,11 +38,11 @@ df = pd.DataFrame(values)
 st.write(df)
 
 df2 = df.tail(10)
-df2 = pd.DataFrame(df2)
-st.write(df2['$'][-3:])
+df2 = df2.reset_index(drop=True)
+st.write(df2)
 
-for i in range(10):
-  datetime = df['@time'][i] 
+for i in range(9):
+  datetime = df2['@time'][i] 
   datetime = datetime[:4] + datetime[6:]
   st.write(datetime)
   
