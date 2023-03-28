@@ -40,8 +40,8 @@ st.write(df)
 df2 = df.tail(10)
 st.write(df2)
 
-for i in range(5):
-  datetime = df2['@time'][i] 
+for i in range(10):
+  datetime = df['@time'][i] 
   datetime = datetime[:5] + datetime[7:]
   st.write(datetime)
   
