@@ -64,8 +64,8 @@ ax.plot(df2['date'], df2['$'], label='GDP')
 
 
 # Y軸の範囲設定
-ymax = max([ df2['$'].max(), mortality_rate['$'].max() ])
-ax.set_ylim([0, ymax])
+#ymax = max([ df2['$'].max(), mortality_rate['$'].max() ])
+#ax.set_ylim([0, ymax])
 
 # 凡例表示
 ax.legend()
