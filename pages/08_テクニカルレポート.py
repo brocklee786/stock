@@ -41,7 +41,7 @@ df2 = df.tail(10)
 df2 = df2.reset_index(drop=True)
 st.write(df2)
 
-for i in range(9):
+for i in range(10):
   datetime = df2['@time'][i] 
   datetime = datetime[:4] + datetime[6:]
   st.write(datetime)
