@@ -17,7 +17,7 @@ import subprocess
 
 
 app_id = '47d4ff02a160e5f085f1baf6ff2dea46e8110488'
-stats_data_id = '0003427113' # 年次別にみた人口動態総覧
+stats_data_id = '0003109785' # 年次別にみた人口動態総覧
 
 # 統計データ取得のURL
 url = 'https://api.e-stat.go.jp/rest/3.0/app/json/getStatsData?'
