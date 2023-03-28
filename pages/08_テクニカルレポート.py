@@ -40,13 +40,13 @@ st.write(df)
 df2 = df.tail(10)
 df2 = df2.reset_index(drop=True)
 st.write(df2)
-df2['datetime'] = 1
+df2['date'] = 1
 
 for i in range(10):
-  datetime = df2['@time'][i] 
-  datetime = datetime[:4] + datetime[6:]
+  date = df2['@time'][i] 
+  date = date[:4] + date[6:]
   
-  df2['datetime'][i] = datetime
-  
-  
+  date_object = datetime.datetime.strptime(date, "%Y%m%d%H")
+　formatted_date = date_object.strftime("%Y-%m-%d")
+  df2['date'][i] = formatted_date
 st.write(df2)
