@@ -42,6 +42,6 @@ st.write(df2)
 
 for i in range(10):
   datetime = df['@time'][i] 
-  datetime = datetime[:5] + datetime[7:]
+  datetime = datetime[:4] + datetime[6:]
   st.write(datetime)
   
