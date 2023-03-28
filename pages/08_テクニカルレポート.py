@@ -46,7 +46,7 @@ for i in range(10):
   date = df2['@time'][i] 
   date = date[:4] + date[6:]
   
-  date_object = datetime.datetime.strptime(date, "%Y%m%d%H")
+  date_object = datetime.datetime.strptime(date, "%Y%m%d")
   formatted_date = date_object.strftime("%Y-%m-%d")
   df2['date'][i] = formatted_date
 st.write(df2)
