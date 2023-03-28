@@ -46,3 +46,5 @@ for i in range(10):
   datetime = datetime[:4] + datetime[6:]
   df2['datetime'] = datetime
   
+  
+st.write(df2)
