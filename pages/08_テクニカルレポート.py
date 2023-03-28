@@ -37,3 +37,5 @@ values = json['GET_STATS_DATA']['STATISTICAL_DATA']['DATA_INF']['VALUE']
 df = pd.DataFrame(values)
 st.write(df)
 
+df2 = df.tail(10)
+st.write(df2)
