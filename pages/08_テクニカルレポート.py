@@ -38,7 +38,7 @@ df = pd.DataFrame(values)
 st.write(df)
 
 df2 = df.tail(10)
-st.write(df2)
+st.write(df2[0])
 
 for i in range(10):
   datetime = df['@time'][i] 
