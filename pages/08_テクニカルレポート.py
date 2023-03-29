@@ -89,10 +89,10 @@ values = json['GET_STATS_DATA']['STATISTICAL_DATA']['DATA_INF']['VALUE']
 
 # jsonからDataFrameを作成
 df = pd.DataFrame(values)
-
+df3=[]
 for data in range(5000):
-  if df['@tab'][data] != '100' or df['@cat01'][data] !='100':
-    df3 = df.drop((df.index[[data]]))
+  if df['@tab'][data] == '100' and df['@cat01'][data] =='100':
+    df3.append(df[data])
     
 st.write(df3)
     
