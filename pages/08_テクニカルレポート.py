@@ -89,8 +89,7 @@ values = json['GET_STATS_DATA']['STATISTICAL_DATA']['DATA_INF']['VALUE']
 
 # jsonからDataFrameを作成
 df = pd.DataFrame(values)
-
-
+st.write(df)
 df2 = df.tail(10)
 df2 = df2.reset_index(drop=True)
 df2['date'] = 1
