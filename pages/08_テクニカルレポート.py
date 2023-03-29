@@ -89,9 +89,7 @@ values = json['GET_STATS_DATA']['STATISTICAL_DATA']['DATA_INF']['VALUE']
 
 # jsonからDataFrameを作成
 df = pd.DataFrame(values)
-df3 = []
-df3['date'] = 1
-df3['CI'] = 1
+
 for data in df:
   if df['@tab'][data] != '100' or df['@cat01'][data] !='100':
     df.drop(df.index[[data]])
