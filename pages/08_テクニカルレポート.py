@@ -15,6 +15,7 @@ import sys
 import subprocess
 import datetime
 
+st.set_page_config(layout="wide")
 
 app_id = '47d4ff02a160e5f085f1baf6ff2dea46e8110488'
 stats_data_id = '0003109785' # 年次別にみた人口動態総覧GDP
@@ -81,5 +82,5 @@ fig2 = plt.plot_date(X, Y, label='Time Series Graph', linestyle='solid')
 # 書式設定
 plt.legend(loc="best")         # 凡例
 plt.gcf().autofmt_xdate()      # X軸値を45度回転
-plt.savefig("date_graph3.jpg") # 画像保存
+#plt.savefig("date_graph3.jpg") # 画像保存
 st.pyplot(fig2)
