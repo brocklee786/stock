@@ -40,7 +40,6 @@ df = pd.DataFrame(values)
 
 df2 = df.tail(10)
 df2 = df2.reset_index(drop=True)
-st.write(df2)
 df2['date'] = 1
 
 for i in range(10):
