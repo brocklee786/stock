@@ -36,7 +36,7 @@ values = json['GET_STATS_DATA']['STATISTICAL_DATA']['DATA_INF']['VALUE']
 
 # jsonからDataFrameを作成
 df = pd.DataFrame(values)
-st.write(df)
+
 
 df2 = df.tail(10)
 df2 = df2.reset_index(drop=True)
@@ -50,7 +50,7 @@ for i in range(10):
   date_object = datetime.datetime.strptime(date, "%Y%m%d")
   formatted_date = date_object.strftime("%Y-%m-%d")
   df2['date'][i] = formatted_date
-st.write(df2)
+
 
 #GDPの値を文字列から数値に変換
 df2['$'] = df2['$'].astype('float')
