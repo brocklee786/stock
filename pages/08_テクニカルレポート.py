@@ -52,27 +52,8 @@ for i in range(10):
   df2['date'][i] = formatted_date
 st.write(df2)
 
-# 出生率と死亡率を取得する
-#gdp = df2['$']
-
-
-# 図と座標軸を取得
-fig = plt.figure()
-ax = fig.add_subplot(1,1,1)
-
-# 折れ線グラフをセット
-ax.plot(df2['date'], df2['$'], label='GDP')
-
-
-# Y軸の範囲設定
-#ymax = max([ df2['$'].max(), mortality_rate['$'].max() ])
-#ax.set_ylim([0, ymax])
-
-# 凡例表示
-ax.legend()
-
-# 折れ線グラフを表示
-st.pyplot(fig)
+#GDPの値を文字列から数値に変換
+df2['$'] = df['$'].astype('int')
 
 X = df2['date']
 Y = df2['$']
