@@ -77,10 +77,11 @@ st.pyplot(fig)
 X = df2['date']
 Y = df2['$']
 # グラフ可視化（折れ線グラフ）
-fig2 = plt.plot_date(X, Y, label='Time Series Graph', linestyle='solid')
+plt.plot_date(X, Y, label='Time Series Graph', linestyle='solid')
 
 # 書式設定
 plt.legend(loc="best")         # 凡例
 plt.gcf().autofmt_xdate()      # X軸値を45度回転
-#plt.savefig("date_graph3.jpg") # 画像保存
-st.pyplot(fig2)
+plt.savefig("date_graph3.jpg") # 画像保存
+image = Image.open('date_graph3.jpg')
+st.image(image, caption='サンプル',use_column_width=True)
