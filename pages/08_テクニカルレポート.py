@@ -58,7 +58,7 @@ df2['$'] = df['$'].astype('float')
 X = df2['date']
 Y = df2['$']
 # グラフ可視化（折れ線グラフ）
-plt.plot_date(X, Y, label='Time Series Graph', linestyle='solid')
+plt.plot_date(X, Y, label='GDP', linestyle='solid')
 
 # 書式設定
 plt.legend(loc="best")         # 凡例
