@@ -92,7 +92,7 @@ df = pd.DataFrame(values)
 
 for data in range(5000):
   if df['@tab'][data] != '100' or df['@cat01'][data] !='100':
-    df.drop(df.index[[data]])
+    df.drop(df.[data])
     
 st.write(df)
     
