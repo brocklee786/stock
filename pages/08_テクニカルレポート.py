@@ -53,7 +53,7 @@ for i in range(10):
 st.write(df2)
 
 #GDPの値を文字列から数値に変換
-df2['$'] = df['$'].astype('int')
+df2['$'] = df['$'].astype('float')
 
 X = df2['date']
 Y = df2['$']
