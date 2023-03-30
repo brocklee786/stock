@@ -113,7 +113,7 @@ df2 = df2.reset_index(drop=True)
 df2['date'] = 1
 
 for i in range(10):
-  date = df2['@time'][i] 
+  date = df2['datetime'][i] 
   date = date[:4] + date[6:]
   
   date_object = datetime.datetime.strptime(date, "%Y%m%d")
