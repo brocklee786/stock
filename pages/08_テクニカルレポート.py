@@ -108,23 +108,23 @@ for data in range(5000):
 
 
 
-df2 = df3.tail(10)
-df2 = df2.reset_index(drop=True)
-df2['date'] = 1
+df4 = df3.tail(10)
+df4 = df2.reset_index(drop=True)
+df4['date'] = 1
 
 for i in range(10):
-  date = df2['datetime'][i] 
+  date = df4['datetime'][i] 
   date = date[:4] + date[6:]
   
   date_object = datetime.datetime.strptime(date, "%Y%m%d")
   formatted_date = date_object.strftime("%Y-%m-%d")
-  df2['date'][i] = formatted_date
+  df4['date'][i] = formatted_date
 
 #GDPの値を文字列から数値に変換
-df2[0] = df2[0].astype('float')
+df4[0] = df4[0].astype('float')
 
-X2 = df2['date']
-Y2 = df2[0]
+X2 = df4['date']
+Y2 = df4[0]
 # グラフ可視化（折れ線グラフ）
 plt.plot_date(X2, Y2, label='CI', linestyle='solid')
 
