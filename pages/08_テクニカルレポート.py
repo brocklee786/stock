@@ -97,18 +97,18 @@ for data in range(5000):
     
 
 df3=pd.DataFrame(df3)
-df3['date'] = 1
+df3['datetime'] = 1
 for data in range(5000):
   if df['@tab'][data] == '100' and df['@cat01'][data] =='100':
-    df3['date'][data] = df['@time'][data]
-st.write(df3)
+    df3['datetime'][data] = df['@time'][data]
+
     
     
 
 
 
 
-df2 = df.tail(10)
+df2 = df3.tail(10)
 df2 = df2.reset_index(drop=True)
 df2['date'] = 1
 
@@ -121,17 +121,17 @@ for i in range(10):
   df2['date'][i] = formatted_date
 
 st.write(df2)
-# #GDPの値を文字列から数値に変換
-# df2['$'] = df2['$'].astype('float')
+#GDPの値を文字列から数値に変換
+df2['0'] = df2['0'].astype('float')
 
-# X = df2['date']
-# Y = df2['$']
-# # グラフ可視化（折れ線グラフ）
-# plt.plot_date(X, Y, label='GDP', linestyle='solid')
+X = df2['date']
+Y = df2['0']
+# グラフ可視化（折れ線グラフ）
+plt.plot_date(X, Y, label='GDP', linestyle='solid')
 
-# # 書式設定
-# plt.legend(loc="best")         # 凡例
-# plt.gcf().autofmt_xdate()      # X軸値を45度回転
-# plt.savefig("date_graph3.jpg") # 画像保存
-# image = Image.open('date_graph3.jpg')
-# st.image(image, caption='GDP [10億円]',width=600)
+# 書式設定
+plt.legend(loc="best")         # 凡例
+plt.gcf().autofmt_xdate()      # X軸値を45度回転
+plt.savefig("date_graph3.jpg") # 画像保存
+image = Image.open('date_graph3.jpg')
+st.image(image, caption='GDP [10億円]',width=600)
