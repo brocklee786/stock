@@ -126,11 +126,11 @@ df2[0] = df2[0].astype('float')
 X2 = df2['date']
 Y2 = df2[0]
 # グラフ可視化（折れ線グラフ）
-plt.plot_date(X2, Y2, label='先行指数', linestyle='solid')
+plt.plot_date(X2, Y2, label='CI', linestyle='solid')
 
 # 書式設定
 plt.legend(loc="best")         # 凡例
 plt.gcf().autofmt_xdate()      # X軸値を45度回転
 plt.savefig("date_graph4.jpg") # 画像保存
 image = Image.open('date_graph4.jpg')
-st.image(image, caption='景気動向指数CI ',width=400)
+st.image(image, caption='景気動向指数CI ',width=600)
