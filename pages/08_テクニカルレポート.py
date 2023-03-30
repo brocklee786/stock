@@ -125,9 +125,9 @@ st.write(df2)
 df2[0] = df2[0].astype('float')
 
 X = df2['date']
-Y = df2[0]
+Y2 = df2[0]
 # グラフ可視化（折れ線グラフ）
-plt.plot_date(X, Y, label='先行指数', linestyle='solid')
+plt.plot_date(X, Y2, label='先行指数', linestyle='solid')
 
 # 書式設定
 plt.legend(loc="best")         # 凡例
