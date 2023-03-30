@@ -94,9 +94,8 @@ df3=[]
 for data in range(5000):
   if df['@tab'][data] == '100' and df['@cat01'][data] =='100':
     df3.append(df['$'][data])
-    
-    time = df['@time'][data]
-    df3['date'][data] = time
+    df3.append(df['@time'][data])
+
 df3=pd.DataFrame(df3)
 st.write(df3)
     
