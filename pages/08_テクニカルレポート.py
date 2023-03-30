@@ -109,7 +109,7 @@ for data in range(5000):
 
 
 df4 = df3.tail(10)
-df4 = df2.reset_index(drop=True)
+df4 = df4.reset_index(drop=True)
 df4['date'] = 1
 
 for i in range(10):
