@@ -122,10 +122,10 @@ for i in range(10):
 
 st.write(df2)
 #GDPの値を文字列から数値に変換
-df2['0'] = df2['0'].astype('float')
+df2[0] = df2[0].astype('float')
 
 X = df2['date']
-Y = df2['0']
+Y = df2[0]
 # グラフ可視化（折れ線グラフ）
 plt.plot_date(X, Y, label='GDP', linestyle='solid')
 
