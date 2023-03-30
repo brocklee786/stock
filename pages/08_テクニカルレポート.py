@@ -133,4 +133,4 @@ plt.legend(loc="best")         # 凡例
 plt.gcf().autofmt_xdate()      # X軸値を45度回転
 plt.savefig("date_graph4.jpg") # 画像保存
 image = Image.open('date_graph4.jpg')
-st.image(image, caption='景気動向指数CI ',width=600)
+st.image(image, caption='景気動向指数CI ',width=400)
