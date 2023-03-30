@@ -120,7 +120,6 @@ for i in range(10):
   formatted_date = date_object.strftime("%Y-%m-%d")
   df2['date'][i] = formatted_date
 
-st.write(df2)
 #GDPの値を文字列から数値に変換
 df2[0] = df2[0].astype('float')
 
@@ -133,5 +132,5 @@ plt.plot_date(X, Y2, label='先行指数', linestyle='solid')
 plt.legend(loc="best")         # 凡例
 plt.gcf().autofmt_xdate()      # X軸値を45度回転
 plt.savefig("date_graph3.jpg") # 画像保存
-image = Image.open('date_graph3.jpg')
+image = Image.open('date_graph4.jpg')
 st.image(image, caption='景気動向指数CI ',width=400)
