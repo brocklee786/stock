@@ -58,7 +58,7 @@ X = df2['date']
 Y = df2['$']
 # グラフ可視化（折れ線グラフ）
 ax1.plot(X, Y)
-st.pyplot(ax21)
+st.pyplot(ax1)
 plt.plot_date(X, Y, label='GDP', linestyle='solid')
 
 # 書式設定
