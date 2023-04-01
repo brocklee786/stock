@@ -53,10 +53,12 @@ for i in range(10):
 
 #GDPの値を文字列から数値に変換
 df2['$'] = df2['$'].astype('float')
-
+fig, (ax1, ax2, ax3) = plt.subplots(nrows=3, ncols=1, figsize=(8, 8))
 X = df2['date']
 Y = df2['$']
 # グラフ可視化（折れ線グラフ）
+ax1.plot(X, Y)
+st.pyplot(ax21)
 plt.plot_date(X, Y, label='GDP', linestyle='solid')
 
 # 書式設定
@@ -126,6 +128,8 @@ df4[0] = df4[0].astype('float')
 X2 = df4['date']
 Y2 = df4[0]
 # グラフ可視化（折れ線グラフ）
+ax2.plot(X2, Y2)
+st.pyplot(ax2)
 plt.plot_date(X2, Y2, label='CI', linestyle='solid')
 
 # 書式設定
