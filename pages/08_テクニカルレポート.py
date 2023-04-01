@@ -59,7 +59,7 @@ Y = df2['$']
 # グラフ可視化（折れ線グラフ）
 
 
-fig, ax1 = plt.plot_date(X, Y, label='GDP', linestyle='solid')
+fig = plt.plot_date(X, Y, label='GDP', linestyle='solid')
 
 # 書式設定
 fig.legend(loc="best")         # 凡例
