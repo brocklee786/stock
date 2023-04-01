@@ -59,12 +59,12 @@ Y = df2['$']
 # グラフ可視化（折れ線グラフ）
 
 
-plt.plot_date(X, Y, label='GDP', linestyle='solid')
+fig, ax1 = plt.plot_date(X, Y, label='GDP', linestyle='solid')
 
 # 書式設定
-plt.legend(loc="best")         # 凡例
-plt.gcf().autofmt_xdate()      # X軸値を45度回転
-plt.savefig("date_graph3.jpg") # 画像保存
+fig.legend(loc="best")         # 凡例
+fig.gcf().autofmt_xdate()      # X軸値を45度回転
+fig.savefig("date_graph3.jpg") # 画像保存
 image = Image.open('date_graph3.jpg')
 st.image(image, caption='GDP [10億円]',width=400)
 df=[]
