@@ -3,7 +3,7 @@ from PIL import Image, ImageDraw
 import easyocr
 import streamlit as st
 
-reader = easyocr.Reader(['jp','en'])
+reader = easyocr.Reader(['j','en'])
 selected_image = st.file_uploader('upload image', type='jpeg',)
 
 original_image = st.empty()
