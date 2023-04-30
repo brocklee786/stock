@@ -12,7 +12,7 @@ if my_upload:
 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 
 # 画像から文字を読み取る
-text = pytesseract.image_to_string(img, lang='jpn')
+text = pytesseract.image_to_string(img, lang='eng')
 
 # 結果の表示
 st.write(text)
