@@ -26,7 +26,7 @@ def app():
         st.image(img, caption='アップロードされた画像', use_column_width=True)
 
         # 画像から文字を読み取る
-        text = pytesseract.image_to_string(img, lang='eng')
+        text = pytesseract.image_to_string(img, lang='jpn')
 
         # 読み取った文字の表示
         st.subheader('読み取った文字')
