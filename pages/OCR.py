@@ -1,18 +1,33 @@
+# 必要なライブラリのインポート
 import streamlit as st
 import pytesseract
 from PIL import Image
 
-
-my_upload = st.sidebar.file_uploader("Upload an image", type=["png", "jpg", "jpeg"])
-
-if my_upload:
-    img = fix_image("./ocr.jpg")
-    
 # OCRエンジンのパスを設定
 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 
-# 画像から文字を読み取る
-text = pytesseract.image_to_string(img, lang='eng')
+# Streamlitアプリケーションを定義する
+def app():
+    # サイドバーの設定
+    st.sidebar.title('OCRアプリ')
+    st.sidebar.subheader('画像から文字を読み取る')
 
-# 結果の表示
-st.write(text)
+    # メイン画面の設定
+    st.title('OCRアプリ')
+    st.write('画像から文字を読み取ります')
+
+    # 画像のアップロード
+    uploaded_file = st.file_uploader('画像をアップロードしてください', type=['jpg', 'png'])
+
+    # 画像がアップロードされた場合
+    if uploaded_file is not None:
+        # 画像の表示
+        img = Image.open(uploaded_file)
+        st.image(img, caption='アップロードされた画像', use_column_width=True)
+
+        # 画像から文字を読み取る
+        text = pytesseract.image_to_string(img, lang='jpn')
+
+        # 読み取った文字の表示
+        st.subheader('読み取った文字')
+        st.write(text)
