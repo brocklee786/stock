@@ -4,7 +4,7 @@ import easyocr
 import streamlit as st
 
 reader = easyocr.Reader(['ja','en'])
-selected_image = st.file_uploader('upload image', type='jpg')
+selected_image = st.file_uploader('upload image', type='jpg','jpeg')
 
 original_image = st.empty()
 result_image = st.empty()
