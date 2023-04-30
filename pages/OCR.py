@@ -31,3 +31,5 @@ def app():
         # 読み取った文字の表示
         st.subheader('読み取った文字')
         st.write(text)
+
+app()
