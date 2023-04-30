@@ -17,7 +17,7 @@ def app():
     st.write('画像から文字を読み取ります')
 
     # 画像のアップロード
-    uploaded_file = st.file_uploader('画像をアップロードしてください', type=['jpg', 'png'])
+    uploaded_file = st.file_uploader('画像をアップロードしてください', type=['jpeg', 'png'])
 
     # 画像がアップロードされた場合
     if uploaded_file is not None:
@@ -26,7 +26,7 @@ def app():
         st.image(img, caption='アップロードされた画像', use_column_width=True)
 
         # 画像から文字を読み取る
-        text = pytesseract.image_to_string(img, lang='jpn')
+        text = pytesseract.image_to_string(img, lang='eng')
 
         # 読み取った文字の表示
         st.subheader('読み取った文字')
