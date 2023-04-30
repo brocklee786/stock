@@ -1,35 +1,20 @@
-# 必要なライブラリのインポート
+import numpy as np 
+from PIL import Image, ImageDraw
+import easyocr
 import streamlit as st
-import pytesseract
-from PIL import Image
 
-# OCRエンジンのパスを設定
-pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
+reader = easyocr.Reader(['ja','en'])
+selected_image = st.file_uploader('upload image', type='jpg')
 
-# Streamlitアプリケーションを定義する
-def app():
-    # サイドバーの設定
-    st.sidebar.title('OCRアプリ')
-    st.sidebar.subheader('画像から文字を読み取る')
+original_image = st.empty()
+result_image = st.empty()
 
-    # メイン画面の設定
-    st.title('OCRアプリ')
-    st.write('画像から文字を読み取ります')
-
-    # 画像のアップロード
-    uploaded_file = st.file_uploader('画像をアップロードしてください', type=['jpeg', 'png', 'jpg'])
-
-    # 画像がアップロードされた場合
-    if uploaded_file is not None:
-        # 画像の表示
-        img = Image.open(uploaded_file)
-        st.image(img, caption='アップロードされた画像', use_column_width=True)
-
-        # 画像から文字を読み取る
-        text = pytesseract.image_to_string(img, lang='eng')
-
-        # 読み取った文字の表示
-        st.subheader('読み取った文字')
-        st.write(text)
-
-app()
+if (selected_image != None):
+    original_image.image(selected_image)
+    pil = Image.open(selected_image)
+    result = reader.readtext(np.array(pil))
+    draw = ImageDraw.Draw(pil)
+    for each_result in result:
+        draw.rectangle(tuple(each_result[0][0] + each_result[0][2]), outline=(0, 0, 255), width=3)
+        st.write(each_result[1])
+    result_image.image(pil)
