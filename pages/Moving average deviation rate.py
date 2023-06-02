@@ -8,7 +8,7 @@ import requests
 import streamlit as st
 from bs4 import BeautifulSoup
 
-%matplotlib inline
+
 
 def get_kessan(option):
     # 指定URLのHTMLデータを取得
