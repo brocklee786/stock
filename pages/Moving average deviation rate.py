@@ -129,3 +129,10 @@ st.write('現在の乖離率長期',today_long)
 
 df2 = pd.DataFrame(get_kessan(option))
 st.table(df2)
+
+x = [2019, 2020, 2021, 2022]
+profit = [df2["営業利益"][0], df2["営業利益"][1], df2["営業利益"][2], df2["営業利益"][3]]
+fig2, ax = plt.subplots()
+ 
+ax.bar(x, profit)
+st.pyplot(fig2)
