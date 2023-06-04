@@ -8,7 +8,7 @@ import requests
 import streamlit as st
 from bs4 import BeautifulSoup
 
-st.title("移動平均乖離率分析”)
+st.title("移動平均乖離率分析")
 
 def get_kessan(option):
     # 指定URLのHTMLデータを取得
