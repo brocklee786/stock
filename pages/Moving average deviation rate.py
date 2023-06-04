@@ -68,71 +68,81 @@ def get_kessan(option):
     df2 = df2.set_index(headers[0])
     return(df2)
 
-option = 4452
-ticker = str(option) + '.T'
-tkr = yf.Ticker(ticker)
-hist = tkr.history(period='1000d')
-hist = hist.reset_index()
-hist = hist.set_index(['Date'])
-hist = hist.rename_axis('Date').reset_index()
-hist = hist.T
-a = hist.to_dict()
 
-for items in a.values():
-        time = items['Date']
-        items['Date'] = time.strftime("%Y/%m/%d")
+option = st.text_input('銘柄コードを入力してください')
 
-b = [x for x in a.values()]
+if option:
+    ticker = str(option) + '.T'
+    tkr = yf.Ticker(ticker)
+    hist = tkr.history(period='1000d')
+    hist = hist.reset_index()
+    hist = hist.set_index(['Date'])
+    hist = hist.rename_axis('Date').reset_index()
+    hist = hist.T
+    a = hist.to_dict()
 
-source = pd.DataFrame(b)
+    for items in a.values():
+            time = items['Date']
+            items['Date'] = time.strftime("%Y/%m/%d")
 
-price = source['Close']
+    b = [x for x in a.values()]
 
-#移動平均
-span01=5
-span02=25
-span03=50
+    source = pd.DataFrame(b)
 
-source['sma01'] = price.rolling(window=span01).mean()
-source['sma02'] = price.rolling(window=span02).mean()
-source['sma03'] = price.rolling(window=span03).mean()
+    price = source['Close']
 
-# 移動平均線乖離率
-source["SMA5_乖離率"] = (source["Close"] - source["sma01"]) / source["sma01"] * 100
-source["SMA25_乖離率"] = (source["Close"] - source["sma02"]) / source["sma02"] * 100
-source["SMA50_乖離率"] = (source["Close"] - source["sma03"]) / source["sma03"] * 100
+    #移動平均
+    span01=5
+    span02=25
+    span03=50
 
-fig, ax = plt.subplots(1, 3, figsize=(15, 5))
- 
-sns.histplot(source["SMA5_乖離率"], ax=ax[0])
-sns.histplot(source["SMA25_乖離率"], ax=ax[1])
-sns.histplot(source["SMA50_乖離率"], ax=ax[2])
-st.pyplot(fig)
+    source['sma01'] = price.rolling(window=span01).mean()
+    source['sma02'] = price.rolling(window=span02).mean()
+    source['sma03'] = price.rolling(window=span03).mean()
 
-info = source[["SMA5_乖離率", "SMA25_乖離率", "SMA50_乖離率"]].describe().round(2)
-st.write(info)
-percent68 = float(info["SMA5_乖離率"][1]) - float(info["SMA5_乖離率"][2])
-percent95 = float(info["SMA25_乖離率"][1]) - float(info["SMA25_乖離率"][2]) *2
-percent99 = float(info["SMA50_乖離率"][1]) - float(info["SMA50_乖離率"][2]) *3
-st.write('パーセント短期',percent95)
-st.write('パーセント中期',percent95)
-st.write('パーセント長期',percent95)
-last = 999
-# 今日の乖離率
-today_short = (source["Close"][last] - source["sma01"][last]) / source["sma01"][last] * 100
-today_mid = (source["Close"][last] - source["sma02"][last]) / source["sma02"][last] * 100
-today_long = (source["Close"][last] - source["sma03"][last]) / source["sma03"][last] * 100
+    # 移動平均線乖離率
+    source["SMA5_乖離率"] = (source["Close"] - source["sma01"]) / source["sma01"] * 100
+    source["SMA25_乖離率"] = (source["Close"] - source["sma02"]) / source["sma02"] * 100
+    source["SMA50_乖離率"] = (source["Close"] - source["sma03"]) / source["sma03"] * 100
 
-st.write('現在の乖離率短期',today_short)
-st.write('現在の乖離率中期',today_mid)
-st.write('現在の乖離率長期',today_long)
+    fig, ax = plt.subplots(1, 3, figsize=(15, 5))
 
-df2 = pd.DataFrame(get_kessan(option))
-st.table(df2)
+    sns.histplot(source["SMA5_乖離率"], ax=ax[0])
+    sns.histplot(source["SMA25_乖離率"], ax=ax[1])
+    sns.histplot(source["SMA50_乖離率"], ax=ax[2])
+    st.pyplot(fig)
+    
+    sigma = st.selectbox(
+    '標準偏差を指定してください',
+    (1,2,3))
+    info = source[["SMA5_乖離率", "SMA25_乖離率", "SMA50_乖離率"]].describe().round(2)
+    st.write(info)
+    
+    if shiguma:
+        percent68 = float(info["SMA5_乖離率"][1]) - float(info["SMA5_乖離率"][2]) *sigma
+        percent95 = float(info["SMA5_乖離率"][1]) - float(info["SMA25_乖離率"][2]) *sigma
+        percent99 = float(info["SMA5_乖離率"][1]) - float(info["SMA50_乖離率"][2]) *sigma
+        st.subheader("<短期">")
+        st.write('σ:',str(percent68))
+        st.write('2σ:',str(percent95))
+        st.write('3σ:',str(percent95))
+                     
+    last = 999
+    # 今日の乖離率
+    today_short = (source["Close"][last] - source["sma01"][last]) / source["sma01"][last] * 100
+    today_mid = (source["Close"][last] - source["sma02"][last]) / source["sma02"][last] * 100
+    today_long = (source["Close"][last] - source["sma03"][last]) / source["sma03"][last] * 100
 
-x = ["3years before", "2years before", "1year before", "Now"]
-profit = [df2["営業利益"][0], df2["営業利益"][1], df2["営業利益"][2], df2["営業利益"][3]]
-fig2, ax = plt.subplots()
- 
-ax.bar(x, profit)
-st.pyplot(fig2)
+    st.write('現在の乖離率短期',today_short)
+    st.write('現在の乖離率中期',today_mid)
+    st.write('現在の乖離率長期',today_long)
+
+    df2 = pd.DataFrame(get_kessan(option))
+    st.table(df2)
+
+    x = ["3years before", "2years before", "1year before", "Now"]
+    profit = [df2["営業利益"][0], df2["営業利益"][1], df2["営業利益"][2], df2["営業利益"][3]]
+    fig2, ax = plt.subplots()
+
+    ax.bar(x, profit)
+    st.pyplot(fig2)
