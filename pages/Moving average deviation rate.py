@@ -116,7 +116,7 @@ if option:
     '標準偏差を指定してください',
     (1,2,3))
     info = source[["SMA5_乖離率", "SMA25_乖離率", "SMA50_乖離率"]].describe().round(2)
-    st.write(info)
+
     # 今日の乖離率
     last = 999
     today_short = (source["Close"][last] - source["sma01"][last]) / source["sma01"][last] * 100
@@ -159,11 +159,12 @@ if option:
 
                      
 
-
-    st.write(info)
+    st.subheader('<データ一覧>')
+    st.table(info)
 
 
     df2 = pd.DataFrame(get_kessan(option))
+    st.subheader('<決算情報>')
     st.table(df2)
 
     x = ["3years before", "2years before", "1year before", "Now"]
