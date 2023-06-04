@@ -119,13 +119,37 @@ if option:
     st.write(info)
     
     if sigma:
-        percent68 = float(info["SMA5_乖離率"][1]) - float(info["SMA5_乖離率"][2]) *sigma
-        percent95 = float(info["SMA5_乖離率"][1]) - float(info["SMA25_乖離率"][2]) *sigma
-        percent99 = float(info["SMA5_乖離率"][1]) - float(info["SMA50_乖離率"][2]) *sigma
-        st.subheader("<短期>")
-        st.write('σ:',str(percent68))
-        st.write('2σ:',str(percent95))
-        st.write('3σ:',str(percent95))
+        short_percent68 = float(info["SMA5_乖離率"][1]) - float(info["SMA5_乖離率"][2]) *sigma
+        short_percent95 = float(info["SMA5_乖離率"][1]) - float(info["SMA5_乖離率"][2]) *sigma
+        short_percent99 = float(info["SMA5_乖離率"][1]) - float(info["SMA5_乖離率"][2]) *sigma
+        
+        mid_percent68 = float(info["SMA25_乖離率"][1]) - float(info["SMA25_乖離率"][2]) *sigma
+        mid_percent95 = float(info["SMA25_乖離率"][1]) - float(info["SMA25_乖離率"][2]) *sigma
+        mid_percent99 = float(info["SMA25_乖離率"][1]) - float(info["SMA25_乖離率"][2]) *sigma
+        
+        long_percent68 = float(info["SMA50_乖離率"][1]) - float(info["SMA50_乖離率"][2]) *sigma
+        long_percent95 = float(info["SMA50_乖離率"][1]) - float(info["SMA50_乖離率"][2]) *sigma
+        long_percent99 = float(info["SMA50_乖離率"][1]) - float(info["SMA50_乖離率"][2]) *sigma
+        col1, col2, col3 = st.columns(3)
+
+        # コンテキストマネージャとして使う
+        with col1:
+            st.subheader('<短期>')
+            st.write('σ:',str(short_percent68))
+            st.write('2σ:',str(short_percent95))
+            st.write('3σ:',str(short_percent99))
+        with col2:
+            st.subheader('<中期>')
+            st.write('σ:',str(mid_percent68))
+            st.write('2σ:',str(mid_percent95))
+            st.write('3σ:',str(mid_percent99))
+
+        with col3:
+            st.subheader('<長期>')
+            st.write('σ:',str(long_percent68))
+            st.write('2σ:',str(long_percent95))
+            st.write('3σ:',str(long_percent99))
+
                      
     last = 999
     # 今日の乖離率
