@@ -117,7 +117,11 @@ if option:
     (1,2,3))
     info = source[["SMA5_乖離率", "SMA25_乖離率", "SMA50_乖離率"]].describe().round(2)
     st.write(info)
-    
+    # 今日の乖離率
+    last = 999
+    today_short = (source["Close"][last] - source["sma01"][last]) / source["sma01"][last] * 100
+    today_mid = (source["Close"][last] - source["sma02"][last]) / source["sma02"][last] * 100
+    today_long = (source["Close"][last] - source["sma03"][last]) / source["sma03"][last] * 100
     if sigma:
         short_percent68 = float(info["SMA5_乖離率"][1]) - float(info["SMA5_乖離率"][2]) *sigma
         short_percent95 = float(info["SMA5_乖離率"][1]) - float(info["SMA5_乖離率"][2]) *sigma
@@ -138,28 +142,26 @@ if option:
             st.write('σ:',str(short_percent68))
             st.write('2σ:',str(short_percent95))
             st.write('3σ:',str(short_percent99))
+            st.write('現在の乖離率短期',str(today_short))
         with col2:
             st.subheader('<中期>')
             st.write('σ:',str(mid_percent68))
             st.write('2σ:',str(mid_percent95))
             st.write('3σ:',str(mid_percent99))
+            st.write('現在の乖離率中期',str(today_mid))
 
         with col3:
             st.subheader('<長期>')
             st.write('σ:',str(long_percent68))
             st.write('2σ:',str(long_percent95))
             st.write('3σ:',str(long_percent99))
+            st.write('現在の乖離率長期',str(today_long))
 
                      
-    last = 999
-    # 今日の乖離率
-    today_short = (source["Close"][last] - source["sma01"][last]) / source["sma01"][last] * 100
-    today_mid = (source["Close"][last] - source["sma02"][last]) / source["sma02"][last] * 100
-    today_long = (source["Close"][last] - source["sma03"][last]) / source["sma03"][last] * 100
 
-    st.write('現在の乖離率短期',today_short)
-    st.write('現在の乖離率中期',today_mid)
-    st.write('現在の乖離率長期',today_long)
+
+    st.write(info)
+
 
     df2 = pd.DataFrame(get_kessan(option))
     st.table(df2)
