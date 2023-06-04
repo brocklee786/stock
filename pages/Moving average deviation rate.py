@@ -122,7 +122,7 @@ if option:
         percent68 = float(info["SMA5_乖離率"][1]) - float(info["SMA5_乖離率"][2]) *sigma
         percent95 = float(info["SMA5_乖離率"][1]) - float(info["SMA25_乖離率"][2]) *sigma
         percent99 = float(info["SMA5_乖離率"][1]) - float(info["SMA50_乖離率"][2]) *sigma
-        st.subheader("<短期">")
+        st.subheader("<短期>")
         st.write('σ:',str(percent68))
         st.write('2σ:',str(percent95))
         st.write('3σ:',str(percent95))
