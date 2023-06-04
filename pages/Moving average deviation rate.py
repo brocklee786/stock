@@ -118,7 +118,7 @@ if option:
     info = source[["SMA5_乖離率", "SMA25_乖離率", "SMA50_乖離率"]].describe().round(2)
     st.write(info)
     
-    if shiguma:
+    if sigma:
         percent68 = float(info["SMA5_乖離率"][1]) - float(info["SMA5_乖離率"][2]) *sigma
         percent95 = float(info["SMA5_乖離率"][1]) - float(info["SMA25_乖離率"][2]) *sigma
         percent99 = float(info["SMA5_乖離率"][1]) - float(info["SMA50_乖離率"][2]) *sigma
