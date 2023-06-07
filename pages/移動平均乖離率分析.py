@@ -174,8 +174,8 @@ if option:
     ax.bar(x, profit)
     st.pyplot(fig2)
     
-    fig3, ax = plt.subplots()
+    fig3, ax2 = plt.subplots()
 
-    ax.bar(x, profit2)
+    ax2.bar(x, profit2)
     st.pyplot(fig3)
     
