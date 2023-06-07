@@ -107,9 +107,9 @@ if option:
 
     fig, ax = plt.subplots(1, 3, figsize=(15, 5))
 
-    sns.histplot(source["SMA5_乖離率"], ax=ax[0])
-    sns.histplot(source["SMA25_乖離率"], ax=ax[1])
-    sns.histplot(source["SMA50_乖離率"], ax=ax[2])
+    sns.histplot(source["SMA5"], ax=ax[0])
+    sns.histplot(source["SMA25"], ax=ax[1])
+    sns.histplot(source["SMA50"], ax=ax[2])
     st.pyplot(fig)
     
 
@@ -171,3 +171,14 @@ if option:
 
     ax.bar(x, profit)
     st.pyplot(fig2)
+    
+    fig3 = plt.figure(figsize = (5,5), facecolor='lightblue')
+
+    plt.xlabel('年次')
+    plt.ylabel('億円')
+
+    plt.bar(x, profit, label='bar')
+
+    plt.legend()
+    
+    st.pyplot(fig3)
