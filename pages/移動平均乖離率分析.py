@@ -107,9 +107,9 @@ if option:
 
     fig, ax = plt.subplots(1, 3, figsize=(15, 5))
 
-    sns.histplot(source["SMA5"], ax=ax[0])
-    sns.histplot(source["SMA25"], ax=ax[1])
-    sns.histplot(source["SMA50"], ax=ax[2])
+    sns.histplot(source["SMA5_乖離率"], ax=ax[0])
+    sns.histplot(source["SMA25_乖離率"], ax=ax[1])
+    sns.histplot(source["SMA50_乖離率"], ax=ax[2])
     st.pyplot(fig)
     
 
@@ -167,15 +167,23 @@ if option:
     
     #利益率の
     x = ["3years before", "2years before", "1year before", "Now"]
+    sales = [df2["売上高"][0], df2["売上高"][1], df2["売上高"][2], df2["売上高"][3]]
     profit = [df2["営業利益"][0], df2["営業利益"][1], df2["営業利益"][2], df2["営業利益"][3]]
     profit2 = [df2["経常利益"][0], df2["経常利益"][1], df2["経常利益"][2], df2["経常利益"][3]]
-    fig2, ax = plt.subplots()
+#     fig2, ax = plt.subplots()
 
-    ax.bar(x, profit)
-    st.pyplot(fig2)
+#     ax.bar(x, profit)
+#     st.pyplot(fig2)
     
-    fig3, ax2 = plt.subplots()
+#     fig3, ax2 = plt.subplots()
 
-    ax2.bar(x, profit2)
-    st.pyplot(fig3)
+#     ax2.bar(x, profit2)
+#     st.pyplot(fig3)
+
+    fig2, ax = plt.subplots(1, 3, figsize=(15, 5))
+
+    sns.barplot(sales, ax=ax[0])
+    sns.barplot(profit, ax=ax[1])
+    sns.barplot(profit2, ax=ax[2])
+    st.pyplot(fig2)
     
