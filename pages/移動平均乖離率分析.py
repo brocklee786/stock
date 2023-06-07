@@ -184,8 +184,8 @@ if option:
 
     fig2, ax = plt.subplots(1, 3, figsize=(15, 5))
 
-    sns.barplot(sales, ax=ax[0])
-    sns.barplot(profit, ax=ax[1])
-    sns.barplot(profit2, ax=ax[2])
+    sns.barplot(df2["売上高"], ax=ax[0])
+    sns.barplot(df2["営業利益"], ax=ax[1])
+    sns.barplot(df2["経常利益"], ax=ax[2])
     st.pyplot(fig2)
     
