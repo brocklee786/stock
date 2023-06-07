@@ -170,8 +170,12 @@ if option:
     #利益率の
     x = ["3years before", "2years before", "1year before", "latest"]
     sales = [df2["売上高"][0], df2["売上高"][1], df2["売上高"][2], df2["売上高"][3]]
+    sales_data = pd.DataFrame(sales)
     profit = [df2["営業利益"][0], df2["営業利益"][1], df2["営業利益"][2], df2["営業利益"][3]]
+    profit_data = pd.DataFrame(profit)
     profit2 = [df2["経常利益"][0], df2["経常利益"][1], df2["経常利益"][2], df2["経常利益"][3]]
+    profit2_data = pd.DataFrame(profit2)
+    
 #     fig2, ax = plt.subplots()
 
 #     ax.bar(x, profit)
@@ -184,8 +188,8 @@ if option:
 
     fig2, ax2 = plt.subplots(1, 3, figsize=(15, 5))
 
-    sns.barplot(sales, ax2=ax2[0])
-    sns.barplot(profit, ax2=ax2[1])
-    sns.barplot(profit2, ax2=ax2[2])
+    sns.barplot(sales_data, ax2=ax2[0])
+    sns.barplot(profit_data, ax2=ax2[1])
+    sns.barplot(profit2_data, ax2=ax2[2])
     st.pyplot(fig2)
     
