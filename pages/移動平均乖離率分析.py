@@ -167,10 +167,10 @@ if option:
 
     x = ["3years before", "2years before", "1year before", "Now"]
     profit = [df2["営業利益"][0], df2["営業利益"][1], df2["営業利益"][2], df2["営業利益"][3]]
-    fig2, ax = plt.subplots()
+#     fig2, ax = plt.subplots()
 
-    ax.bar(x, profit)
-    st.pyplot(fig2)
+#     ax.bar(x, profit)
+#     st.pyplot(fig2)
     
     fig3 = plt.figure(figsize = (5,5), facecolor='lightblue')
 
