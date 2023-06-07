@@ -166,7 +166,7 @@ if option:
     st.table(df2)
     
     #利益率の
-    x = ["3years before", "2years before", "1year before", ""]
+    x = ["3years before", "2years before", "1year before", "latest"]
     sales = [df2["売上高"][0], df2["売上高"][1], df2["売上高"][2], df2["売上高"][3]]
     profit = [df2["営業利益"][0], df2["営業利益"][1], df2["営業利益"][2], df2["営業利益"][3]]
     profit2 = [df2["経常利益"][0], df2["経常利益"][1], df2["経常利益"][2], df2["経常利益"][3]]
