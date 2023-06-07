@@ -182,10 +182,10 @@ if option:
 #     ax2.bar(x, profit2)
 #     st.pyplot(fig3)
 
-    fig2, ax = plt.subplots(1, 3, figsize=(15, 5))
+    fig2, ax2 = plt.subplots(1, 3, figsize=(15, 5))
 
-    sns.barplot(x, sales)
-    sns.barplot(x, profit, ax=ax[1])
-    sns.barplot(x, profit2, ax=ax[2])
+    sns.barplot(x, sales, ax2=ax2[0])
+    sns.barplot(x, profit, ax2=ax2[1])
+    sns.barplot(x, profit2, ax2=ax2[2])
     st.pyplot(fig2)
     
