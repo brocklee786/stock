@@ -164,21 +164,18 @@ if option:
     df2 = pd.DataFrame(get_kessan(option))
     st.subheader('<決算情報>')
     st.table(df2)
-
+    
+    #利益率の
     x = ["3years before", "2years before", "1year before", "Now"]
     profit = [df2["営業利益"][0], df2["営業利益"][1], df2["営業利益"][2], df2["営業利益"][3]]
-#     fig2, ax = plt.subplots()
+    profit2 = [df2["経常利益"][0], df2["経常利益"][1], df2["経常利益"][2], df2["経常利益"][3]]
+    fig2, ax = plt.subplots()
 
-#     ax.bar(x, profit)
-#     st.pyplot(fig2)
+    ax.bar(x, profit)
+    st.pyplot(fig2)
     
-    fig3 = plt.figure(figsize = (5,5), facecolor='lightblue')
+    fig3, ax = plt.subplots()
 
-    plt.xlabel('年次')
-    plt.ylabel('億円')
-
-    plt.bar(x, profit, label='bar')
-    plt.tight_layout()
-    plt.legend()
-    
+    ax.bar(x, profit2)
     st.pyplot(fig3)
+    
