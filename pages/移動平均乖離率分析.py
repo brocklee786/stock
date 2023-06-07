@@ -178,7 +178,7 @@ if option:
     plt.ylabel('億円')
 
     plt.bar(x, profit, label='bar')
-    plt.ylim(0)
+    plt.tight_layout()
     plt.legend()
     
     st.pyplot(fig3)
