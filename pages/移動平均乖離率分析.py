@@ -10,7 +10,7 @@ from bs4 import BeautifulSoup
 
 st.set_page_config(layout="wide")
 @st.cache
-st.title("移動平均乖離率分析")
+st.title("移動平均乖離分析")
 
 def get_kessan(option):
     # 指定URLのHTMLデータを取得
