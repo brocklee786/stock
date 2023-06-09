@@ -70,7 +70,17 @@ def get_kessan(option):
     df2 = df2.set_index(headers[0])
     return(df2)
 
-
+# 数値のカンマを削除する関数
+def trim_camma_kessan(x):
+    # 2,946,639.3のようなカンマ区切り、小数点有りの数値か否か確認する
+    comma_re = re.search(r"(\d{1,3}(,\d{3})*(\.\d+){0,1})", x)
+    if comma_re:
+        value = comma_re.group(1)
+        value = value.replace(',', '') # カンマを削除
+        return value
+   
+    return x
+ 
 option = st.text_input('銘柄コードを入力してください')
 
 if option:
