@@ -1,12 +1,20 @@
-import yfinance as yf
+import streamlit as st
+from PIL import Image
 import pandas as pd
 import numpy as np
+import requests
+from bs4 import BeautifulSoup
+import re
 import matplotlib
 import matplotlib.pyplot as plt
-import seaborn as sns
-import requests
-import streamlit as st
-from bs4 import BeautifulSoup
+import yfinance as yf
+import altair as alt
+import os
+import sys
+import subprocess
+import mplfinance.original_flavor as mpf
+from scipy.stats import linregress
+
 
 st.set_page_config(layout="wide")
 
