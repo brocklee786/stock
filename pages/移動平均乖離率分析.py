@@ -14,6 +14,7 @@ import sys
 import subprocess
 import mplfinance.original_flavor as mpf
 from scipy.stats import linregress
+import seaborn as sns
 
 
 st.set_page_config(layout="wide")
