@@ -193,11 +193,11 @@ if option:
     #利益率の
     x = ["3years before", "2years before", "1year before", "latest"]
     x = pd.DataFrame(x)
-    sales = [int(new_df2["売上高"][0]), int(new_df2["売上高"][1]), int(new_df2["売上高"][2]), int(new_df2["売上高"][3])]
+    sales = [int(new_df2["売上高"][3]), int(new_df2["売上高"][2]), int(new_df2["売上高"][1]), int(new_df2["売上高"][0])]
     sales_data = pd.DataFrame(sales)
-    profit = [new_df2["営業利益"][0], new_df2["営業利益"][1], new_df2["営業利益"][2], new_df2["営業利益"][3]]
+    profit = [int(new_df2["営業利益"][3]), int(new_df2["営業利益"][2]), int(new_df2["営業利益"][1]), int(new_df2["営業利益"][0])]
     profit_data = pd.DataFrame(profit)
-    profit2 = [new_df2["経常利益"][0], new_df2["経常利益"][1], new_df2["経常利益"][2], new_df2["経常利益"][3]]
+    profit2 = [int(new_df2["経常利益"][3]), int(new_df2["経常利益"][2]), int(new_df2["経常利益"][1]), int(new_df2["経常利益"][0])]
     profit2_data = pd.DataFrame(profit2)
     
     # 年度データ
