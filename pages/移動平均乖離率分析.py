@@ -176,15 +176,20 @@ if option:
     df2 = pd.DataFrame(get_kessan(option))
     st.subheader('<決算情報>')
     st.table(df2)
-    
+    # 各列に対して、trim_cammaを適用する(決算)
+    new_df2 = df2.copy()
+    for col in df2.columns:
+        new_df2[col] = df2[col].map(lambda v : trim_camma_kessan(v))
+ 
+    st.table(new_df2)
     #利益率の
     x = ["3years before", "2years before", "1year before", "latest"]
     x = pd.DataFrame(x)
-    sales = [int(df2["売上高"][0]), int(df2["売上高"][1]), int(df2["売上高"][2]), int(df2["売上高"][3])]
+    sales = [int(new_df2["売上高"][0]), int(new_df2["売上高"][1]), int(new_df2["売上高"][2]), int(new_df2["売上高"][3])]
     sales_data = pd.DataFrame(sales)
-    profit = [df2["営業利益"][0], df2["営業利益"][1], df2["営業利益"][2], df2["営業利益"][3]]
+    profit = [new_df2["営業利益"][0], new_df2["営業利益"][1], new_df2["営業利益"][2], new_df2["営業利益"][3]]
     profit_data = pd.DataFrame(profit)
-    profit2 = [df2["経常利益"][0], df2["経常利益"][1], df2["経常利益"][2], df2["経常利益"][3]]
+    profit2 = [new_df2["経常利益"][0], new_df2["経常利益"][1], new_df2["経常利益"][2], new_df2["経常利益"][3]]
     profit2_data = pd.DataFrame(profit2)
     
     # 年度データ
