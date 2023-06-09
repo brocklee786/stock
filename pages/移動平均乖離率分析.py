@@ -173,15 +173,14 @@ if option:
     st.table(info)
 
 
-    df2 = get_kessan(option)
+    df2 = pd.DataFrame(get_kessan(option))
     st.subheader('<決算情報>')
     st.table(df2)
+    
     # 各列に対して、trim_cammaを適用する(決算)
     new_df2 = df2.copy()
     for col in df2.columns:
         new_df2[col] = df2[col].map(lambda v : trim_camma_kessan(v))
- 
-    st.table(new_df2)
     #利益率の
     x = ["3years before", "2years before", "1year before", "latest"]
     x = pd.DataFrame(x)
