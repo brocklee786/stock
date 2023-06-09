@@ -170,7 +170,7 @@ if option:
     #利益率の
     x = ["3years before", "2years before", "1year before", "latest"]
     x = pd.DataFrame(x)
-    sales = [df2["売上高"][0], df2["売上高"][1], df2["売上高"][2], df2["売上高"][3]]
+    sales = [int(df2["売上高"][0]), int(df2["売上高"][1]), int(df2["売上高"][2]), int(df2["売上高"][3])]
     sales_data = pd.DataFrame(sales)
     profit = [df2["営業利益"][0], df2["営業利益"][1], df2["営業利益"][2], df2["営業利益"][3]]
     profit_data = pd.DataFrame(profit)
