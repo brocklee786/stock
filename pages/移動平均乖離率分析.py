@@ -173,7 +173,7 @@ if option:
     st.table(info)
 
 
-    df2 = pd.DataFrame(get_kessan(option))
+    #df2 = pd.DataFrame(get_kessan(option))
     st.subheader('<決算情報>')
     st.table(df2)
     # 各列に対して、trim_cammaを適用する(決算)
