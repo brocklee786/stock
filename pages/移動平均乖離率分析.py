@@ -177,20 +177,33 @@ if option:
     profit2 = [df2["経常利益"][0], df2["経常利益"][1], df2["経常利益"][2], df2["経常利益"][3]]
     profit2_data = pd.DataFrame(profit2)
     
-#     fig2, ax = plt.subplots()
+    # 年度データ
+    years = ['2020', '2021', '2022', '2023']
 
-#     ax.bar(x, profit)
-#     st.pyplot(fig2)
+
+    # グラフの作成
+    fig, axes = plt.subplots(nrows=1, ncols=3, figsize=(15, 5))
+
+    # 売上高のグラフ
+    axes[0].plot(years, sales, marker='o', linestyle='-', color='b')
+    axes[0].set_title('Revenue')
+    axes[0].set_xlabel('Year')
+    axes[0].set_ylabel('Revenue')
+
+    # 営業利益のグラフ
+    axes[1].plot(years, profit, marker='o', linestyle='-', color='g')
+    axes[1].set_title('Operating Income')
+    axes[1].set_xlabel('Year')
+    axes[1].set_ylabel('Operating Income')
+
+    # 経常利益のグラフ
+    axes[2].plot(years, profit2, marker='o', linestyle='-', color='r')
+    axes[2].set_title('Ordinary Income')
+    axes[2].set_xlabel('Year')
+    axes[2].set_ylabel('Ordinary Income')
+
+    # グラフの間のスペース調整
+    plt.tight_layout()
     
-#     fig3, ax2 = plt.subplots()
-
-#     ax2.bar(x, profit2)
-#     st.pyplot(fig3)
-
-    fig2, ax2 = plt.subplots(1, 3, figsize=(15, 5))
-
-    sns.barplot(x, sales_data, ax2=ax2[0])
-    sns.barplot(x, profit_data, ax2=ax2[1])
-    sns.barplot(x, profit2_data, ax2=ax2[2])
-    st.pyplot(fig2)
+    st.pyplot(fig)
     
