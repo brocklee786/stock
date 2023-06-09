@@ -185,7 +185,12 @@ if option:
     df2 = pd.DataFrame(get_kessan(option))
     st.subheader('<決算情報>')
     st.table(df2)
-    
+    with col1:
+        st.subheader('<売上高>')
+    with col2:
+        st.subheader('<営業利益>')
+    with col3:
+        st.subheader('<経常利益>')
     # 各列に対して、trim_cammaを適用する(決算)
     new_df2 = df2.copy()
     for col in df2.columns:
