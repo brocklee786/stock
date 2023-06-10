@@ -286,6 +286,12 @@ if st.button('計算を行う'):
         long_percent95 = float(info["SMA50_乖離率"][1]) - float(info["SMA50_乖離率"][2]) *2
         long_percent99 = float(info["SMA50_乖離率"][1]) - float(info["SMA50_乖離率"][2]) *3
         
+        if today_mid<mid_percent68:
+            st.write('68%:',code)
+            
+        if today_mid<mid_percent95:
+            st.write('95%:',code)
+        
         
         
     
