@@ -234,5 +234,58 @@ if option:
     
 if st.button('計算を行う'):
     for code in codes1_3:
+        option = code
+        ticker = str(option) + '.T'
+        tkr = yf.Ticker(ticker)
+        hist = tkr.history(period='1000d')
+        hist = hist.reset_index()
+        hist = hist.set_index(['Date'])
+        hist = hist.rename_axis('Date').reset_index()
+        hist = hist.T
+        a = hist.to_dict()
+
+        for items in a.values():
+                time = items['Date']
+                items['Date'] = time.strftime("%Y/%m/%d")
+
+        b = [x for x in a.values()]
+
+        source = pd.DataFrame(b)
+
+        price = source['Close']
+        
+        #移動平均
+        span01=5
+        span02=25
+        span03=50
+
+        source['sma01'] = price.rolling(window=span01).mean()
+        source['sma02'] = price.rolling(window=span02).mean()
+        source['sma03'] = price.rolling(window=span03).mean()
+
+        # 移動平均線乖離率
+        source["SMA5_乖離率"] = (source["Close"] - source["sma01"]) / source["sma01"] * 100
+        source["SMA25_乖離率"] = (source["Close"] - source["sma02"]) / source["sma02"] * 100
+        source["SMA50_乖離率"] = (source["Close"] - source["sma03"]) / source["sma03"] * 100
+        
+        # 今日の乖離率
+        last = 999
+        today_short = (source["Close"][last] - source["sma01"][last]) / source["sma01"][last] * 100
+        today_mid = (source["Close"][last] - source["sma02"][last]) / source["sma02"][last] * 100
+        today_long = (source["Close"][last] - source["sma03"][last]) / source["sma03"][last] * 100
+
+        short_percent68 = float(info["SMA5_乖離率"][1]) - float(info["SMA5_乖離率"][2]) *1
+        short_percent95 = float(info["SMA5_乖離率"][1]) - float(info["SMA5_乖離率"][2]) *2
+        short_percent99 = float(info["SMA5_乖離率"][1]) - float(info["SMA5_乖離率"][2]) *3
+
+        mid_percent68 = float(info["SMA25_乖離率"][1]) - float(info["SMA25_乖離率"][2]) *1
+        mid_percent95 = float(info["SMA25_乖離率"][1]) - float(info["SMA25_乖離率"][2]) *2
+        mid_percent99 = float(info["SMA25_乖離率"][1]) - float(info["SMA25_乖離率"][2]) *3
+
+        long_percent68 = float(info["SMA50_乖離率"][1]) - float(info["SMA50_乖離率"][2]) *1
+        long_percent95 = float(info["SMA50_乖離率"][1]) - float(info["SMA50_乖離率"][2]) *2
+        long_percent99 = float(info["SMA50_乖離率"][1]) - float(info["SMA50_乖離率"][2]) *3
+        
+        
         
     
