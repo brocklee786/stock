@@ -136,6 +136,7 @@ if option:
     
 
     info = source[["SMA5_乖離率", "SMA25_乖離率", "SMA50_乖離率"]].describe().round(2)
+    st.table(info)
 
     # 今日の乖離率
     last = 999
