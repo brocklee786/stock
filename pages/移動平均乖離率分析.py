@@ -232,3 +232,7 @@ if option:
     
     st.pyplot(fig)
     
+if st.button('計算を行う'):
+    for code in codes1_3:
+        
+    
