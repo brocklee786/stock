@@ -137,7 +137,8 @@ if option:
 
     info = source[["SMA5_乖離率", "SMA25_乖離率", "SMA50_乖離率"]].describe().round(2)
     st.table(info)
-
+    st.write(source["Close"][last])
+    st.write(source["sma02"][last])
     # 今日の乖離率
     last = 999
     today_short = (source["Close"][last] - source["sma01"][last]) / source["sma01"][last] * 100
