@@ -119,7 +119,7 @@ if option:
     span03=50
 
     source['sma01'] = price.rolling(window=span01).mean()
-    source['sma02'] = price.rolling(window=span02).mean()
+    source['sma02'] = price.rolling(window=span02).mean().round(1)
     source['sma03'] = price.rolling(window=span03).mean()
 
     # 移動平均線乖離率
