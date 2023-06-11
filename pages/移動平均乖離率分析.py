@@ -142,6 +142,7 @@ if option:
     last = 999
     st.write(source["Close"][last])
     st.write(source["sma02"][last])
+    st.write(source["sma02"])
     today_short = (source["Close"][last] - source["sma01"][last]) / source["sma01"][last] * 100
     today_mid = (source["Close"][last] - source["sma02"][last]) / source["sma02"][last] * 100
     today_long = (source["Close"][last] - source["sma03"][last]) / source["sma03"][last] * 100
