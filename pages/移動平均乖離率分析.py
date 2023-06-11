@@ -274,7 +274,7 @@ if st.button('計算を行う'):
         today_short = (source["Close"][last] - source["sma01"][last]) / source["sma01"][last] * 100
         today_mid = (source["Close"][last] - source["sma02"][last]) / source["sma02"][last] * 100
         today_long = (source["Close"][last] - source["sma03"][last]) / source["sma03"][last] * 100
-
+        info = source[["SMA5_乖離率", "SMA25_乖離率", "SMA50_乖離率"]].describe().round(2)
         short_percent68 = float(info["SMA5_乖離率"][1]) - float(info["SMA5_乖離率"][2]) 
         short_percent95 = float(info["SMA5_乖離率"][1]) - float(info["SMA5_乖離率"][2]) *2
         short_percent99 = float(info["SMA5_乖離率"][1]) - float(info["SMA5_乖離率"][2]) *3
