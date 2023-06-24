@@ -16,4 +16,4 @@ seaborn
 scipy
 pytesseract
 easyocr
-sklearn
+LinearRegression
