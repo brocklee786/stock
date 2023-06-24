@@ -16,3 +16,4 @@ seaborn
 scipy
 pytesseract
 easyocr
+sklearn
