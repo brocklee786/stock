@@ -17,4 +17,4 @@ scipy
 pytesseract
 easyocr
 LinearRegression
-sklearn.linear_model
+sklearn
