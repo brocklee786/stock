@@ -261,8 +261,8 @@ if option:
         model.fit(x,y)
 
         figure, ax = plt.subplots(figsize=(8,4))
-        plt.plot(x,y,'o')
-        plt.plot(x,model.predict(x))
+        #plt.plot(x,y,'o')
+        #plt.plot(x,model.predict(x))
         
         a = model.coef_
         b = model.intercept_
