@@ -166,16 +166,16 @@ if option:
             st.subheader('帯縮小の可能性')
         with col1:
             st.subheader("短期の傾き")
-            st.subheader("1日:" + str(tilt_short))
-            st.subheader("3日:" + str(tilt_short2))
+            st.subheader("1日:" + str(round(tilt_short)))
+            st.subheader("3日:" + str(round(tilt_short2)))
         with col2:
             st.subheader("中期の傾き")
-            st.subheader("1日:" + str(tilt_mid))
-            st.subheader("3日:" + str(tilt_mid2))
+            st.subheader("1日:" + str(round(tilt_mid)))
+            st.subheader("3日:" + str(round(tilt_mid2)))
         with col3:
             st.subheader("長期の傾き")
-            st.subheader("1日:" + str(tilt_long))
-            st.subheader("3日:" + str(tilt_long2))
+            st.subheader("1日:" + str(round(tilt_long)))
+            st.subheader("3日:" + str(round(tilt_long2)))
         
     #ステージ２
     if source['sma02'][last]>source['sma01'][last]>source['sma03'][last]:
@@ -230,16 +230,16 @@ if option:
         col1, col2, col3 = st.columns(3)
         with col1:
             st.subheader("短期の傾き")
-            st.subheader("1日:" + str(tilt_short))
-            st.subheader("3日:" + str(tilt_short2))
+            st.subheader("1日:" + str(round(tilt_short)))
+            st.subheader("3日:" + str(round(tilt_short2)))
         with col2:
             st.subheader("中期の傾き")
-            st.subheader("1日:" + str(tilt_mid))
-            st.subheader("3日:" + str(tilt_mid2))
+            st.subheader("1日:" + str(round(tilt_mid)))
+            st.subheader("3日:" + str(round(tilt_mid2)))
         with col3:
             st.subheader("長期の傾き")
-            st.subheader("1日:" + str(tilt_long))
-            st.subheader("3日:" + str(tilt_long2))
+            st.subheader("1日:" + str(round(tilt_long)))
+            st.subheader("3日:" + str(round(tilt_long2)))
 
 
     #ステージ６
@@ -285,16 +285,16 @@ if option:
         col1, col2, col3 = st.columns(3)
         with col1:
             st.subheader("短期の傾き")
-            st.subheader("1日:" + str(tilt_short))
-            st.subheader("3日:" + str(tilt_short2))
+            st.subheader("1日:" + str(round(tilt_short)))
+            st.subheader("3日:" + str(round(tilt_short2)))
         with col2:
             st.subheader("中期の傾き")
-            st.subheader("1日:" + str(tilt_mid))
-            st.subheader("3日:" + str(tilt_mid2))
+            st.subheader("1日:" + str(round(tilt_mid)))
+            st.subheader("3日:" + str(round(tilt_mid2)))
         with col3:
             st.subheader("長期の傾き")
-            st.subheader("1日:" + str(tilt_long))
-            st.subheader("3日:" + str(tilt_long2))
+            st.subheader("1日:" + str(round(tilt_long)))
+            st.subheader("3日:" + str(round(tilt_long2)))
 
 
 st.subheader('ステージを探す')
