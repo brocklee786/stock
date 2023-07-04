@@ -185,7 +185,7 @@ for code in codes1:
 
 st.write(sum(win_profit))
 st.write(len(win_profit))
-st.write(sum(win_profit/len(win_profit)))
+
                 
             
 
