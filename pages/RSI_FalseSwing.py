@@ -136,7 +136,7 @@ if option:
     source['ATR'] = tr.rolling(20).mean()
     source["stage"] = 1
     
-    for a in range(80,1299):
+    for a in range(80,days-1):
     #ステージの決定
         if source['sma01'][a]>source['sma02'][a]>source['sma03'][a]:
             source["stage"][a] = 1
@@ -286,7 +286,7 @@ if option:
         source['ATR'] = tr.rolling(20).mean()
         source["stage"] = 1
         
-        for a in range(80,1299):
+        for a in range(80,days-1):
         #ステージの決定
             if source['sma01'][a]>source['sma02'][a]>source['sma03'][a]:
                 source["stage"][a] = 1
