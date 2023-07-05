@@ -212,7 +212,7 @@ if option:
 
 
 
-    for d in range(10,20):
+    for d in range(5,30):
         RSI_days = d
         ticker = str(option) + '.T'
         tkr = yf.Ticker(ticker)
