@@ -136,7 +136,7 @@ if option:
     source['ATR'] = tr.rolling(20).mean()
     source["stage"] = 1
     
-    for a in range(80,days-1):
+    for a in range(60,1299):
     #ステージの決定
         if source['sma01'][a]>source['sma02'][a]>source['sma03'][a]:
             source["stage"][a] = 1
@@ -195,8 +195,10 @@ if option:
                     win_profit.append(profit)
                     break
 
-    st.write(sum(win_profit))
-    st.write(len(win_profit))
+
+    st.subheader('RSIの日数が'+ str(RSI_day) + '日の時')
+    st.write('儲けは'+str(int(sum(win_profit))*100)+'円')
+    st.write('発生回数は'+ str(len(win_profit))+ '回')
 
 
 
@@ -212,37 +214,8 @@ if option:
 
 
 
-    for d in range(5,30):
+    for d in range(8,20):
         RSI_days = d
-        ticker = str(option) + '.T'
-        tkr = yf.Ticker(ticker)
-        hist = tkr.history(period=f'{days}d')
-        hist = hist.reset_index()
-        hist = hist.set_index(['Date'])
-        hist = hist.rename_axis('Date').reset_index()
-        hist = hist.T
-        a = hist.to_dict()
-
-        for items in a.values():
-                time = items['Date']
-                items['Date'] = time.strftime("%Y/%m/%d")
-
-        b = [x for x in a.values()]
-
-        source = pd.DataFrame(b)
-        source['time_id'] = source.index + 1
-        price = source['Close']
-
-        source['time_id'] = source.index + 1
-
-        #移動平均
-        span01=5
-        span02=25
-        span03=50
-
-        source['sma01'] = price.rolling(window=span01).mean()
-        source['sma02'] = price.rolling(window=span02).mean()
-        source['sma03'] = price.rolling(window=span03).mean()
 
         #RSI
         # 前日との差分を計算
@@ -259,47 +232,15 @@ if option:
 
 
         # 期間14でそれぞれの平均を算出
-        df_up_sma14 = df_up.rolling(window=RSI_day, center=False).mean()
-        df_down_sma14 = df_down.rolling(window=RSI_day, center=False).mean()
+        df_up_sma14 = df_up.rolling(window=RSI_days, center=False).mean()
+        df_down_sma14 = df_down.rolling(window=RSI_days, center=False).mean()
 
 
 
         # RSIを算出
         source["RSI"] = 100.0 * (df_up_sma14 / (df_up_sma14 + df_down_sma14))
 
-        #DMIの計算
-        high = source['High']
-        low = source['Low']
-        close = source['Close']
-        pDM = (high - high.shift(1))
-        mDM = (low.shift(1) - low)
-        pDM.loc[pDM<0] = 0
-        pDM.loc[pDM-mDM < 0] = 0
-        mDM.loc[mDM<0] = 0
-        mDM.loc[mDM-pDM < 0] = 0
-        # trの計算
-        a = (high - low).abs()
-        b = (high - close.shift(1)).abs()
-        c = (low - close.shift(1)).abs()
-        tr = pd.concat([a, b, c], axis=1).max(axis=1)
-        source['tr'] = tr
-        source['ATR'] = tr.rolling(20).mean()
-        source["stage"] = 1
-        
-        for a in range(80,days-1):
-        #ステージの決定
-            if source['sma01'][a]>source['sma02'][a]>source['sma03'][a]:
-                source["stage"][a] = 1
-            if source['sma02'][a]>source['sma01'][a]>source['sma03'][a]:
-                source["stage"][a] = 2
-            if source['sma02'][a]>source['sma03'][a]>source['sma01'][a]:
-                source["stage"][a] = 3
-            if source['sma03'][a]>source['sma02'][a]>source['sma01'][a]:
-                source["stage"][a] = 4
-            if source['sma03'][a]>source['sma01'][a]>source['sma02'][a]:
-                source["stage"][a] = 5
-            if source['sma01'][a]>source['sma03'][a]>source['sma02'][a]:
-                source["stage"][a] = 6
+    
 
         
         span=20
@@ -338,17 +279,28 @@ if option:
                 #     #     profit = source['Close'][point2+a+14] - source['Close'][point2+a]
                 #     #     win_profit.append(profit)
                 #     #     break
+                    st.write(source['stage'][point2], source['High'][point2+a])
                     if source['High'][point2+a] >= high and source['stage'][point2] == stage_number:
                         after = source['Close'][point2+a+day_until_pay]
                         before = source['Close'][point2+a]
                         profit = after - before
                         win_profit2.append(profit)
+                        st.write(d)
+                        st.write(profit)
                         break
+                    else:
+                        continue
 
-            
-
-        RSI_setday.append(d)
         Profit_RSIday.append(sum(win_profit2))
+        RSI_setday.append(d)
+       
+    fig, ax = plt.subplots()
+    ax.bar(RSI_setday, Profit_RSIday)
+    ax.set_xlabel('Day')
+    ax.set_ylabel('Data')
+    ax.set_title('Bar Graph')
+
+    st.pyplot(fig)
 
                 
 
