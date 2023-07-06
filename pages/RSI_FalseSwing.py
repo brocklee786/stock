@@ -43,7 +43,7 @@ def get_lowpoint(start, end):
 
 st.set_page_config(layout="wide")
 RSI_day = 14
-days = 5000
+days = 1300
 day_until_pay = 14
 stage_number = 4
 
