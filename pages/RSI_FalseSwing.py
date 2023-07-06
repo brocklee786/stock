@@ -136,7 +136,7 @@ if option:
     source['ATR'] = tr.rolling(20).mean()
     source["stage"] = 1
     
-    for a in range(60,1299):
+    for a in range(60,days-1):
     #ステージの決定
         if source['sma01'][a]>source['sma02'][a]>source['sma03'][a]:
             source["stage"][a] = 1
@@ -154,10 +154,10 @@ if option:
     
     span=20
     min_interval=3
-    source = source[:-20]
+    source2 = source[:-40]
     win_profit = []
      # 安値の上昇トレンドラインを生成
-    for i in source.index[::20]:
+    for i in source2.index[::20]:
         lowpoint   = get_lowpoint(i, i + span)
         # ポイントが2箇所未満だとエラーになるので回避する
         if len(lowpoint) < 2:
@@ -194,11 +194,12 @@ if option:
                     profit = after - before
                     win_profit.append(profit)
                     break
-
-
-    st.subheader('RSIの日数が'+ str(RSI_day) + '日の時')
-    st.write('儲けは'+str(int(sum(win_profit))*100)+'円')
-    st.write('発生回数は'+ str(len(win_profit))+ '回')
+    column1, column2 = st.columns(2)
+    with column1:
+        st.subheader(str(source['Date'][0]) + 'から' + str(source['Date'][days-1]))
+        st.subheader('RSIの日数が'+ str(RSI_day) + '日の時')
+        st.subheader('儲けは'+str(int(sum(win_profit))*100)+'円')
+        st.subheader('発生回数は'+ str(len(win_profit))+ '回')
 
 
 
@@ -216,9 +217,8 @@ if option:
 
     for d in range(8,20):
         RSI_days = d
-
         #RSI
-        # 前日との差分を計算
+        #前日との差分を計算
         df_diff = source["Close"].diff(1)
 
         # 計算用のDataFrameを定義
@@ -238,9 +238,9 @@ if option:
 
 
         # RSIを算出
-        source["RSI"] = 100.0 * (df_up_sma14 / (df_up_sma14 + df_down_sma14))
+        source["RSI2"] = 100.0 * (df_up_sma14 / (df_up_sma14 + df_down_sma14))
 
-    
+
 
         
         span=20
@@ -258,7 +258,7 @@ if option:
                 continue
             regression = linregress(
                 x = lowpoint['time_id'],
-                y = lowpoint['RSI'],
+                y = lowpoint['RSI2'],
             )
             #print(regression[0] > 0.0, 'reg_low: ', regression[0], ', ', regression[1], )
             #st.write(lowpoint)
@@ -266,7 +266,7 @@ if option:
             RSI_lowpoint = RSI_lowpoint.reset_index()
             
 
-            if RSI_lowpoint['RSI'][0]<=30 and RSI_lowpoint['RSI'][1]>=30:
+            if RSI_lowpoint['RSI2'][0]<=30 and RSI_lowpoint['RSI2'][1]>=30:
                 high = 0
                 point1 = RSI_lowpoint['index'][0]
                 point2 = RSI_lowpoint['index'][1]
@@ -279,33 +279,39 @@ if option:
                 #     #     profit = source['Close'][point2+a+14] - source['Close'][point2+a]
                 #     #     win_profit.append(profit)
                 #     #     break
-                    st.write(source['stage'][point2], source['High'][point2+a])
                     if source['High'][point2+a] >= high and source['stage'][point2] == stage_number:
                         after = source['Close'][point2+a+day_until_pay]
                         before = source['Close'][point2+a]
                         profit = after - before
                         win_profit2.append(profit)
-                        st.write(d)
-                        st.write(profit)
                         break
                     else:
                         continue
 
-        Profit_RSIday.append(sum(win_profit2))
+        Profit_RSIday.append(sum(win_profit2)*100)
         RSI_setday.append(d)
        
     fig, ax = plt.subplots()
     ax.bar(RSI_setday, Profit_RSIday)
     ax.set_xlabel('Day')
-    ax.set_ylabel('Data')
-    ax.set_title('Bar Graph')
+    ax.set_ylabel('Profit Value')
+    ax.set_title('RSI Profit Value')
 
-    st.pyplot(fig)
-
+    
+    max_index = max(range(len(Profit_RSIday)), key=Profit_RSIday.__getitem__)
+    
                 
+    
+    with column1:
 
+        st.subheader('最適なRSI日数は')
+        st.subheader(str(RSI_setday[max_index])+ '日')
+
+    with column2:
+        st.pyplot(fig)
 
     
 
     st.write(RSI_setday)
     st.write(Profit_RSIday)
+
