@@ -48,7 +48,7 @@ for symbol in codes:
     if source.index[-1] == 999:
       for i in range(300,500):
 
-          if source['Close'][i] < source['SMA_20'][i] and source['Close'][i] < source['SMA_50'][i] and source['sma03'][i]>source['sma02'][i]>source['sma01'][i]:
+          if source['Close'][i] < source['SMA_20'][i] and source['Close'][i] < source['SMA_50'][i] and source['sma03'][i]>source['sma01'][i]>source['sma02'][i]:
 
 
               # 条件2: 今日のレンジが過去10日のレンジの中で最も大きいか、また今日は寄り付きよりも上で引けるか判断
