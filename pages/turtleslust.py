@@ -38,6 +38,27 @@ for symbol in codes:
     source['sma01'] = source['Close'].rolling(window=5).mean()
     source['sma02'] = source['Close'].rolling(window=20).mean()
     source['sma03'] = source['Close'].rolling(window=50).mean()
+    #DMIの計算
+    high = source['High']
+    low = source['Low']
+    close = source['Close']
+    pDM = (high - high.shift(1))
+    mDM = (low.shift(1) - low)
+    pDM.loc[pDM<0] = 0
+    pDM.loc[pDM-mDM < 0] = 0
+    mDM.loc[mDM<0] = 0
+    mDM.loc[mDM-pDM < 0] = 0
+    # trの計算
+    a = (high - low).abs()
+    b = (high - close.shift(1)).abs()
+    c = (low - close.shift(1)).abs()
+    tr = pd.concat([a, b, c], axis=1).max(axis=1)
+    source['pDI'] = pDM.rolling(14).sum()/tr.rolling(14).sum() * 100
+    source['mDI'] = mDM.rolling(14).sum()/tr.rolling(14).sum() * 100
+    # ADXの計算
+    DX = (source['pDI']-source['mDI']).abs()/(source['pDI']+source['mDI']) * 100
+    DX = DX.fillna(0)
+    source['ADX'] = DX.rolling(14).mean()
     source["stage"] = 1
     stage6_list = []
     stage4_list = []
@@ -48,7 +69,7 @@ for symbol in codes:
     if source.index[-1] == 999:
       for i in range(392,632):
 
-          if source['Close'][i] < source['SMA_20'][i] and source['Close'][i] < source['SMA_50'][i] and source['sma01'][i]>source['sma03'][i]>source['sma02'][i]:
+          if source['Close'][i] < source['SMA_20'][i] and source['Close'][i] < source['SMA_50'][i] and source['sma01'][i]>source['sma03'][i]>source['sma02'][i] and source['ADX']>30:
 
 
               # 条件2: 今日のレンジが過去10日のレンジの中で最も大きいか、また今日は寄り付きよりも上で引けるか判断
