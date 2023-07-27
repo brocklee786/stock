@@ -59,6 +59,28 @@ for symbol in codes:
     DX = (source['pDI']-source['mDI']).abs()/(source['pDI']+source['mDI']) * 100
     DX = DX.fillna(0)
     source['ADX'] = DX.rolling(14).mean()
+    # 基準線
+    high26 = source["High"].rolling(window=26).max()
+    low26 = source["Low"].rolling(window=26).min()
+    source["base_line"] = (high26 + low26) / 2
+
+    # 転換線
+    high9 = source["High"].rolling(window=9).max()
+    low9 = source["Low"].rolling(window=9).min()
+    source["conversion_line"] = (high9 + low9) / 2
+
+    # 先行スパン1
+    leading_span1 = (source["base_line"] + source["conversion_line"]) / 2
+    source["leading_span1"] = leading_span1.shift(25)
+
+    # 先行スパン2
+    high52 = source["High"].rolling(window=52).max()
+    low52 = source["Low"].rolling(window=52).min()
+    leading_span2 = (high52 + low52) / 2
+    source["leading_span2"] = leading_span2.shift(25)
+
+    # 遅行スパン
+    source["lagging_span"] = source["Close"].shift(-25)
     source["stage"] = 1
     stage6_list = []
     stage4_list = []
@@ -74,8 +96,21 @@ for symbol in codes:
           band_past = source['sma02'][i-5] - source['sma03'][i-5]
           band_today = source['sma02'][i] - source['sma03'][i]
           band_dif = band_today - band_past
+          base_line = source['base_line'][i]
+          conversion_line = source['conversion_line'][i]
+          conversion_line_5daybefore = source['conversion_line'][i-3]
+          base_line_5daybefore = source['base_line'][i-3]
+          lagging_line = source['lagging_span'][i-25]
+          lagging_line_yesterday = source['lagging_span'][i-26]
+          price1 = source['Close'][i]
+          price_lagging = source['Close'][i-25]
+          price_lagging_yesterday = source['Close'][i-26]
+          conversion_direction = source['conversion_line'][i] - source['conversion_line'][i-3]
+          RSI_today = source['RSI'][i]
+          adx_direction = source['ADX'][i] - source['ADX'][i-1]
+          volume_difference = source['Volume'][i-1] - source['Volume'][i-2]
           
-          if source['sma01'][i]>source['sma02'][i]>source['sma03'][i] and source['sma01'][i-9]>source['sma02'][i-9]>source['sma03'][i-9] and source['sma01'][i-10]>source['sma03'][i-10]>source['sma02'][i-10]:
+          if rice_lagging<=lagging_line and price_lagging_yesterday>lagging_line_yesterday and conversion_line>base_line and conversion_line_5daybefore<base_line_5daybefore and conversion_direction>0 and price1>conversion_line:
 
 
               # 条件2: 今日のレンジが過去10日のレンジの中で最も大きいか、また今日は寄り付きよりも上で引けるか判断
@@ -83,14 +118,14 @@ for symbol in codes:
               today_high_low_range = source['High_Low_Range'][i]
               past_10_days_range = source['High_Low_Range'][i-10:i]
 
-              if band_dif>0 and source['ADX'][i]>50 and source['Close'][i]>source['sma01'][i]:
+              if adx_direction>0 and volume_difference>0:
 
 
                   # 条件3: 翌日または翌々日に、2のスラスト日の高値の価格で買う。2の日の安値より下がった場合は損切りする。
                   buy_price = source['Close'][i]
                   stop_loss_price = buy_price * 0.95
 
-                  if tilt_short>0 and tilt_mid>0 and tilt_long>0:
+                  if RSI_today>60:
                       chance1.append(1)
 
 
