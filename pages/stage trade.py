@@ -68,8 +68,14 @@ for symbol in codes:
     chance1_lose_price = []
     if source.index[-1] == 999:
       for i in range(392,632):
-
-          if source['Close'][i] < source['SMA_20'][i] and source['Close'][i] < source['SMA_50'][i] and source['sma03'][i]>source['sma02'][i]>source['sma01'][i] and source['ADX'][i]>60:
+          tilt_short = source['sma01'][i] -  source['sma01'][i-5]
+          tilt_mid = source['sma02'][i] -  source['sma02'][i-5]
+          tilt_long = source['sma03'][i] -  source['sma03'][i-5]
+          band_past = source['sma02'][i-5] - source['sma03'][i-5]
+          band_today = source['sma02'][i] - source['sma03'][i]
+          band_dif = band_today - band_past
+          
+          if source['sma01'][i]>source['sma02'][i]>source['sma03'][i] and source['sma01'][i-9]>source['sma02'][i-9]>source['sma03'][i-9] and source['sma01'][i-10]>source['sma03'][i-10]>source['sma02'][i-10]:
 
 
               # 条件2: 今日のレンジが過去10日のレンジの中で最も大きいか、また今日は寄り付きよりも上で引けるか判断
@@ -77,28 +83,28 @@ for symbol in codes:
               today_high_low_range = source['High_Low_Range'][i]
               past_10_days_range = source['High_Low_Range'][i-10:i]
 
-              if today_high_low_range >= sorted(past_10_days_range)[-1] and source['Close'][i] > source['Open'][i]:
+              if band_dif>0:
 
 
                   # 条件3: 翌日または翌々日に、2のスラスト日の高値の価格で買う。2の日の安値より下がった場合は損切りする。
-                  buy_price = source['High'][i]
-                  stop_loss_price = source['Low'][i]
+                  buy_price = source['Close'][i]
+                  stop_loss_price = buy_price * 0.95
 
-                  if source['High'][i+1]>=buy_price>=source['Low'][i+1]:
+                  if tilt_short>0 and tilt_mid>0 and tilt_long>0:
                       chance1.append(1)
 
 
 
                       # 条件4: トレーリングストップを使って利益を確定する
-                      trailing_stop = buy_price * 1.05  # 2%の利益確定を目指すと仮定
-                      for a in range(60):
+                      trailing_stop = buy_price * 1.03  # 3%の利益確定を目指すと仮定
+                      for a in range(100):
                           #勝った時
-                          if source['High'][i+1+a]>trailing_stop:
-                              price_win = buy_price * 0.05
+                          if source['High'][i+a]>trailing_stop:
+                              price_win = buy_price * 0.03
                               chance1_win_price.append(price_win)
                               break
                           #負けた時
-                          if source['Low'][i+a+1]<stop_loss_price:
+                          if source['Low'][i+a]<stop_loss_price:
                               sonkiri = stop_loss_price - buy_price
                               chance1_lose_price.append(sonkiri)
                               break
