@@ -83,7 +83,7 @@ for symbol in codes:
               today_high_low_range = source['High_Low_Range'][i]
               past_10_days_range = source['High_Low_Range'][i-10:i]
 
-              if band_dif>0:
+              if band_dif>0 and source['ADX'][i]>30:
 
 
                   # 条件3: 翌日または翌々日に、2のスラスト日の高値の価格で買う。2の日の安値より下がった場合は損切りする。
