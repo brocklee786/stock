@@ -38,6 +38,29 @@ for symbol in codes:
     source['sma01'] = source['Close'].rolling(window=5).mean()
     source['sma02'] = source['Close'].rolling(window=20).mean()
     source['sma03'] = source['Close'].rolling(window=50).mean()
+    #RSI
+    # 前日との差分を計算
+    df_diff = source["Close"].diff(1)
+
+    # 計算用のDataFrameを定義
+    df_up, df_down = df_diff.copy(), df_diff.copy()
+
+    # df_upはマイナス値を0に変換
+    # df_downはプラス値を0に変換して正負反転
+    df_up[df_up < 0] = 0
+    df_down[df_down > 0] = 0
+    df_down = df_down * -1
+
+
+    # 期間14でそれぞれの平均を算出
+    df_up_sma14 = df_up.rolling(window=14, center=False).mean()
+    df_down_sma14 = df_down.rolling(window=14, center=False).mean()
+
+
+
+    # RSIを算出
+    source["RSI"] = 100.0 * (df_up_sma14 / (df_up_sma14 + df_down_sma14))
+
     #DMIの計算
     high = source['High']
     low = source['Low']
