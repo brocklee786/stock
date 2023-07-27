@@ -133,7 +133,7 @@ for symbol in codes:
           adx_direction = source['ADX'][i] - source['ADX'][i-1]
           volume_difference = source['Volume'][i-1] - source['Volume'][i-2]
           
-          if rice_lagging<=lagging_line and price_lagging_yesterday>lagging_line_yesterday and conversion_line>base_line and conversion_line_5daybefore<base_line_5daybefore and conversion_direction>0 and price1>conversion_line:
+          if price_lagging<=lagging_line and price_lagging_yesterday>lagging_line_yesterday and conversion_line>base_line and conversion_line_5daybefore<base_line_5daybefore and conversion_direction>0 and price1>conversion_line:
 
 
               # 条件2: 今日のレンジが過去10日のレンジの中で最も大きいか、また今日は寄り付きよりも上で引けるか判断
