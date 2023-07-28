@@ -11,176 +11,177 @@ win_all = []
 win_all_price = []
 lose_all = []
 lose_all_price = []
-for symbol in codes:
-    # 過去の株価データの取得
-    ticker = str(symbol) + '.T'
-    tkr = yf.Ticker(ticker)
-    hist = tkr.history(period='1000d')
-    hist = hist.reset_index()
-    hist = hist.set_index(['Date'])
-    hist = hist.rename_axis('Date').reset_index()
-    hist = hist.T
-    a = hist.to_dict()
-
-    for items in a.values():
-            time = items['Date']
-            items['Date'] = time.strftime("%Y/%m/%d")
-
-    b = [x for x in a.values()]
-
-    source = pd.DataFrame(b)
-
-
-
-    # 条件1: 株価が20日移動平均線と50日移動平均線の下にあるか判断
-    source['SMA_20'] = source['Close'].rolling(window=20).mean()
-    source['SMA_50'] = source['Close'].rolling(window=50).mean()
-    source['sma01'] = source['Close'].rolling(window=5).mean()
-    source['sma02'] = source['Close'].rolling(window=20).mean()
-    source['sma03'] = source['Close'].rolling(window=50).mean()
-    #RSI
-    # 前日との差分を計算
-    df_diff = source["Close"].diff(1)
-
-    # 計算用のDataFrameを定義
-    df_up, df_down = df_diff.copy(), df_diff.copy()
-
-    # df_upはマイナス値を0に変換
-    # df_downはプラス値を0に変換して正負反転
-    df_up[df_up < 0] = 0
-    df_down[df_down > 0] = 0
-    df_down = df_down * -1
-
-
-    # 期間14でそれぞれの平均を算出
-    df_up_sma14 = df_up.rolling(window=14, center=False).mean()
-    df_down_sma14 = df_down.rolling(window=14, center=False).mean()
-
-
-
-    # RSIを算出
-    source["RSI"] = 100.0 * (df_up_sma14 / (df_up_sma14 + df_down_sma14))
-
-    #DMIの計算
-    high = source['High']
-    low = source['Low']
-    close = source['Close']
-    pDM = (high - high.shift(1))
-    mDM = (low.shift(1) - low)
-    pDM.loc[pDM<0] = 0
-    pDM.loc[pDM-mDM < 0] = 0
-    mDM.loc[mDM<0] = 0
-    mDM.loc[mDM-pDM < 0] = 0
-    # trの計算
-    a = (high - low).abs()
-    b = (high - close.shift(1)).abs()
-    c = (low - close.shift(1)).abs()
-    tr = pd.concat([a, b, c], axis=1).max(axis=1)
-    source['pDI'] = pDM.rolling(14).sum()/tr.rolling(14).sum() * 100
-    source['mDI'] = mDM.rolling(14).sum()/tr.rolling(14).sum() * 100
-    # ADXの計算
-    DX = (source['pDI']-source['mDI']).abs()/(source['pDI']+source['mDI']) * 100
-    DX = DX.fillna(0)
-    source['ADX'] = DX.rolling(14).mean()
-    # 基準線
-    high26 = source["High"].rolling(window=26).max()
-    low26 = source["Low"].rolling(window=26).min()
-    source["base_line"] = (high26 + low26) / 2
-
-    # 転換線
-    high9 = source["High"].rolling(window=9).max()
-    low9 = source["Low"].rolling(window=9).min()
-    source["conversion_line"] = (high9 + low9) / 2
-
-    # 先行スパン1
-    leading_span1 = (source["base_line"] + source["conversion_line"]) / 2
-    source["leading_span1"] = leading_span1.shift(25)
-
-    # 先行スパン2
-    high52 = source["High"].rolling(window=52).max()
-    low52 = source["Low"].rolling(window=52).min()
-    leading_span2 = (high52 + low52) / 2
-    source["leading_span2"] = leading_span2.shift(25)
-
-    # 遅行スパン
-    source["lagging_span"] = source["Close"].shift(-25)
-    source["stage"] = 1
-    stage6_list = []
-    stage4_list = []
-    stage5_list = []
-    chance1 = []
-    chance1_win_price = []
-    chance1_lose_price = []
-    if source.index[-1] == 999:
-      for i in range(392,632):
-          tilt_short = source['sma01'][i] -  source['sma01'][i-5]
-          tilt_mid = source['sma02'][i] -  source['sma02'][i-5]
-          tilt_long = source['sma03'][i] -  source['sma03'][i-5]
-          band_past = source['sma02'][i-5] - source['sma03'][i-5]
-          band_today = source['sma02'][i] - source['sma03'][i]
-          band_dif = band_today - band_past
-          base_line = source['base_line'][i]
-          conversion_line = source['conversion_line'][i]
-          conversion_line_5daybefore = source['conversion_line'][i-3]
-          base_line_5daybefore = source['base_line'][i-3]
-          lagging_line = source['lagging_span'][i-25]
-          lagging_line_yesterday = source['lagging_span'][i-26]
-          price1 = source['Close'][i]
-          price_lagging = source['Close'][i-25]
-          price_lagging_yesterday = source['Close'][i-26]
-          conversion_direction = source['conversion_line'][i] - source['conversion_line'][i-3]
-          RSI_today = source['RSI'][i]
-          adx_direction = source['ADX'][i] - source['ADX'][i-1]
-          volume_difference = source['Volume'][i-1] - source['Volume'][i-2]
-          
-          if price_lagging<=lagging_line and price_lagging_yesterday>lagging_line_yesterday and conversion_line>base_line and conversion_line_5daybefore<base_line_5daybefore and conversion_direction>0 and price1>conversion_line:
-
-
-              # 条件2: 今日のレンジが過去10日のレンジの中で最も大きいか、また今日は寄り付きよりも上で引けるか判断
-              source['High_Low_Range'] = source['High'] - source['Low']
-              today_high_low_range = source['High_Low_Range'][i]
-              past_10_days_range = source['High_Low_Range'][i-10:i]
-
-              if adx_direction>0 and volume_difference>0:
-
-
-                  # 条件3: 翌日または翌々日に、2のスラスト日の高値の価格で買う。2の日の安値より下がった場合は損切りする。
-                  buy_price = source['Close'][i]
-                  stop_loss_price = buy_price * 0.95
-
-                  if RSI_today>60:
-                      chance1.append(1)
-
-
-
-                      # 条件4: トレーリングストップを使って利益を確定する
-                      trailing_stop = buy_price * 1.03  # 3%の利益確定を目指すと仮定
-                      for a in range(100):
-                          #勝った時
-                          if source['High'][i+a]>trailing_stop:
-                              price_win = buy_price * 0.03
-                              chance1_win_price.append(price_win)
-                              break
-                          #負けた時
-                          if source['Low'][i+a]<stop_loss_price:
-                              sonkiri = stop_loss_price - buy_price
-                              chance1_lose_price.append(sonkiri)
-                              break
-
-
-      st.write(symbol)
-      st.write('回数',len(chance1))
-      time_all.append(len(chance1))
-      st.write('勝ち', len(chance1_win_price), sum(chance1_win_price))
-      win_all.append(len(chance1_win_price))
-      win_all_price.append(sum(chance1_win_price))
-      st.write('負け', len(chance1_lose_price), sum(chance1_lose_price))
-      lose_all.append(len(chance1_lose_price))
-      lose_all_price.append(sum(chance1_lose_price))
-    else:
-      continue
-
-st.write('回数', sum(time_all))
-st.write('勝率', sum(win_all)/sum(time_all))
-st.write('勝ち額', (sum(win_all_price) + sum(lose_all_price))*100)
-st.write('期待値', ((sum(win_all_price) + sum(lose_all_price))/ sum(time_all))*100)
+if st.button('計算を行う'):
+    for symbol in codes:
+        # 過去の株価データの取得
+        ticker = str(symbol) + '.T'
+        tkr = yf.Ticker(ticker)
+        hist = tkr.history(period='1000d')
+        hist = hist.reset_index()
+        hist = hist.set_index(['Date'])
+        hist = hist.rename_axis('Date').reset_index()
+        hist = hist.T
+        a = hist.to_dict()
+    
+        for items in a.values():
+                time = items['Date']
+                items['Date'] = time.strftime("%Y/%m/%d")
+    
+        b = [x for x in a.values()]
+    
+        source = pd.DataFrame(b)
+    
+    
+    
+        # 条件1: 株価が20日移動平均線と50日移動平均線の下にあるか判断
+        source['SMA_20'] = source['Close'].rolling(window=20).mean()
+        source['SMA_50'] = source['Close'].rolling(window=50).mean()
+        source['sma01'] = source['Close'].rolling(window=5).mean()
+        source['sma02'] = source['Close'].rolling(window=20).mean()
+        source['sma03'] = source['Close'].rolling(window=50).mean()
+        #RSI
+        # 前日との差分を計算
+        df_diff = source["Close"].diff(1)
+    
+        # 計算用のDataFrameを定義
+        df_up, df_down = df_diff.copy(), df_diff.copy()
+    
+        # df_upはマイナス値を0に変換
+        # df_downはプラス値を0に変換して正負反転
+        df_up[df_up < 0] = 0
+        df_down[df_down > 0] = 0
+        df_down = df_down * -1
+    
+    
+        # 期間14でそれぞれの平均を算出
+        df_up_sma14 = df_up.rolling(window=14, center=False).mean()
+        df_down_sma14 = df_down.rolling(window=14, center=False).mean()
+    
+    
+    
+        # RSIを算出
+        source["RSI"] = 100.0 * (df_up_sma14 / (df_up_sma14 + df_down_sma14))
+    
+        #DMIの計算
+        high = source['High']
+        low = source['Low']
+        close = source['Close']
+        pDM = (high - high.shift(1))
+        mDM = (low.shift(1) - low)
+        pDM.loc[pDM<0] = 0
+        pDM.loc[pDM-mDM < 0] = 0
+        mDM.loc[mDM<0] = 0
+        mDM.loc[mDM-pDM < 0] = 0
+        # trの計算
+        a = (high - low).abs()
+        b = (high - close.shift(1)).abs()
+        c = (low - close.shift(1)).abs()
+        tr = pd.concat([a, b, c], axis=1).max(axis=1)
+        source['pDI'] = pDM.rolling(14).sum()/tr.rolling(14).sum() * 100
+        source['mDI'] = mDM.rolling(14).sum()/tr.rolling(14).sum() * 100
+        # ADXの計算
+        DX = (source['pDI']-source['mDI']).abs()/(source['pDI']+source['mDI']) * 100
+        DX = DX.fillna(0)
+        source['ADX'] = DX.rolling(14).mean()
+        # 基準線
+        high26 = source["High"].rolling(window=26).max()
+        low26 = source["Low"].rolling(window=26).min()
+        source["base_line"] = (high26 + low26) / 2
+    
+        # 転換線
+        high9 = source["High"].rolling(window=9).max()
+        low9 = source["Low"].rolling(window=9).min()
+        source["conversion_line"] = (high9 + low9) / 2
+    
+        # 先行スパン1
+        leading_span1 = (source["base_line"] + source["conversion_line"]) / 2
+        source["leading_span1"] = leading_span1.shift(25)
+    
+        # 先行スパン2
+        high52 = source["High"].rolling(window=52).max()
+        low52 = source["Low"].rolling(window=52).min()
+        leading_span2 = (high52 + low52) / 2
+        source["leading_span2"] = leading_span2.shift(25)
+    
+        # 遅行スパン
+        source["lagging_span"] = source["Close"].shift(-25)
+        source["stage"] = 1
+        stage6_list = []
+        stage4_list = []
+        stage5_list = []
+        chance1 = []
+        chance1_win_price = []
+        chance1_lose_price = []
+        if source.index[-1] == 999:
+          for i in range(392,632):
+              tilt_short = source['sma01'][i] -  source['sma01'][i-5]
+              tilt_mid = source['sma02'][i] -  source['sma02'][i-5]
+              tilt_long = source['sma03'][i] -  source['sma03'][i-5]
+              band_past = source['sma02'][i-5] - source['sma03'][i-5]
+              band_today = source['sma02'][i] - source['sma03'][i]
+              band_dif = band_today - band_past
+              base_line = source['base_line'][i]
+              conversion_line = source['conversion_line'][i]
+              conversion_line_5daybefore = source['conversion_line'][i-3]
+              base_line_5daybefore = source['base_line'][i-3]
+              lagging_line = source['lagging_span'][i-25]
+              lagging_line_yesterday = source['lagging_span'][i-26]
+              price1 = source['Close'][i]
+              price_lagging = source['Close'][i-25]
+              price_lagging_yesterday = source['Close'][i-26]
+              conversion_direction = source['conversion_line'][i] - source['conversion_line'][i-3]
+              RSI_today = source['RSI'][i]
+              adx_direction = source['ADX'][i] - source['ADX'][i-1]
+              volume_difference = source['Volume'][i-1] - source['Volume'][i-2]
+              
+              if price_lagging<=lagging_line and price_lagging_yesterday>lagging_line_yesterday and conversion_line>base_line and conversion_line_5daybefore<base_line_5daybefore and conversion_direction>0 and price1>conversion_line:
+    
+    
+                  # 条件2: 今日のレンジが過去10日のレンジの中で最も大きいか、また今日は寄り付きよりも上で引けるか判断
+                  source['High_Low_Range'] = source['High'] - source['Low']
+                  today_high_low_range = source['High_Low_Range'][i]
+                  past_10_days_range = source['High_Low_Range'][i-10:i]
+    
+                  if adx_direction>0 and volume_difference>0:
+    
+    
+                      # 条件3: 翌日または翌々日に、2のスラスト日の高値の価格で買う。2の日の安値より下がった場合は損切りする。
+                      buy_price = source['Close'][i]
+                      stop_loss_price = buy_price * 0.95
+    
+                      if RSI_today>60:
+                          chance1.append(1)
+    
+    
+    
+                          # 条件4: トレーリングストップを使って利益を確定する
+                          trailing_stop = buy_price * 1.03  # 3%の利益確定を目指すと仮定
+                          for a in range(100):
+                              #勝った時
+                              if source['High'][i+a]>trailing_stop:
+                                  price_win = buy_price * 0.03
+                                  chance1_win_price.append(price_win)
+                                  break
+                              #負けた時
+                              if source['Low'][i+a]<stop_loss_price:
+                                  sonkiri = stop_loss_price - buy_price
+                                  chance1_lose_price.append(sonkiri)
+                                  break
+    
+    
+          st.write(symbol)
+          st.write('回数',len(chance1))
+          time_all.append(len(chance1))
+          st.write('勝ち', len(chance1_win_price), sum(chance1_win_price))
+          win_all.append(len(chance1_win_price))
+          win_all_price.append(sum(chance1_win_price))
+          st.write('負け', len(chance1_lose_price), sum(chance1_lose_price))
+          lose_all.append(len(chance1_lose_price))
+          lose_all_price.append(sum(chance1_lose_price))
+        else:
+          continue
+    
+    st.write('回数', sum(time_all))
+    st.write('勝率', sum(win_all)/sum(time_all))
+    st.write('勝ち額', (sum(win_all_price) + sum(lose_all_price))*100)
+    st.write('期待値', ((sum(win_all_price) + sum(lose_all_price))/ sum(time_all))*100)
