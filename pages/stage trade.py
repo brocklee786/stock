@@ -179,3 +179,8 @@ for symbol in codes:
       lose_all_price.append(sum(chance1_lose_price))
     else:
       continue
+
+st.write('回数', sum(time_all))
+st.write('勝率', sum(win_all)/sum(time_all))
+st.write('勝ち額', (sum(win_all_price) + sum(lose_all_price))*100)
+st.write('期待値', ((sum(win_all_price) + sum(lose_all_price))/ sum(time_all))*100)
