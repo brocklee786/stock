@@ -164,7 +164,7 @@ if st.button('計算を行う'):
                           for a in range(21):
                               atr15 = source['ATR'][i+a-1] *1.5
                               stop_loss_price = source['Close'][i+a-1] - atr15
-                              #勝った時
+                              #20日経過した時
                               if source['Low'][i+a]>stop_loss_price:
                                   if a ==20 and source['Close'][i+a]>buy_price:
                                       price_win = source['Close'][i+a] - buy_price
@@ -175,11 +175,16 @@ if st.button('計算を行う'):
                                       chance1_lose_price.append(sonkiri)
                                   else:
                                       continue
-                              #負けた時
+                              #20日経過しなかった時
                               if source['Low'][i+a]<stop_loss_price:
-                                  sonkiri = stop_loss_price - buy_price
-                                  chance1_lose_price.append(sonkiri)
-                                  break
+                                  if source['Low'][i+a]<buy_price:
+                                      sonkiri = stop_loss_price - buy_price
+                                      chance1_lose_price.append(sonkiri)
+                                      break
+                                  if source['Low'][i+a]>buy_price:
+                                      price_win = source['Low'][i+a] - buy_price
+                                      chance1_win_price.append(price_win)
+                                      break
     
     
           st.write(symbol)
