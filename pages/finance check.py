@@ -116,7 +116,7 @@ if st.button('計算を行う'):
 
 
         if new_df2['営業利益'][0]>new_df2['営業利益'][1]>new_df2['営業利益'][2]:
-            code.append(good_codes)
+            good_codes.append(code)
 
 st.write(good_codes)
           
