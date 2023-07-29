@@ -165,7 +165,7 @@ if st.button('計算を行う'):
                               #勝った時
                               if source['Low'][i+a]>stop_loss_price:
                                   if a ==20 and source['Close'][i+a]>buy_price:
-                                      price_win = source['Close'][i+a] - buyprice
+                                      price_win = source['Close'][i+a] - buy_price
                                       chance1_win_price.append(price_win)
                                       break
                                   if a ==20 and source['Close'][i+a]<buy_price:
