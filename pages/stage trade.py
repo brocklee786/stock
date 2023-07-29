@@ -177,12 +177,12 @@ if st.button('計算を行う'):
                                       continue
                               #20日経過しなかった時
                               if source['Low'][i+a]<stop_loss_price:
-                                  if source['Low'][i+a]<buy_price:
+                                  if stop_loss_price<buy_price:
                                       sonkiri = stop_loss_price - buy_price
                                       chance1_lose_price.append(sonkiri)
                                       break
-                                  if source['Low'][i+a]>buy_price:
-                                      price_win = source['Low'][i+a] - buy_price
+                                  if stop_loss_price>buy_price:
+                                      price_win =  stop_loss_price - buy_price
                                       chance1_win_price.append(price_win)
                                       break
     
