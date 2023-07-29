@@ -84,6 +84,7 @@ def trim_camma_kessan(x):
     return x
  
 codes = [1332, 1376, 1379, 1380]
+good_codes = []
 if st.button('計算を行う'):
     for code in codes:
         option = code
@@ -112,4 +113,10 @@ if st.button('計算を行う'):
         new_df2 = df2.copy()
         for col in df2.columns:
             new_df2[col] = df2[col].map(lambda v : trim_camma_kessan(v))
+
+
+        if new_df2['営業利益'][0]>new_df2['営業利益'][1]>new_df2['営業利益'][2]:
+            code.append(good_codes)
+
+st.write(good_codes)
           
