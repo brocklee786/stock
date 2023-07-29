@@ -120,7 +120,6 @@ for symbol in good_codes:
 
 
           st.write(symbol)
-          symbol_all.append(symbol)
           st.write('回数',len(chance1))
           time_all.append(len(chance1))
           st.write('勝ち', len(chance1_win_price), sum(chance1_win_price))
