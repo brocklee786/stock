@@ -155,11 +155,11 @@ if st.button('計算を行う'):
     
     
                           # 条件4: トレーリングストップを使って利益を確定する
-                          trailing_stop = buy_price * 1.03  # 3%の利益確定を目指すと仮定
+                          trailing_stop = buy_price * 1.05  # 3%の利益確定を目指すと仮定
                           for a in range(100):
                               #勝った時
                               if source['High'][i+a]>trailing_stop:
-                                  price_win = buy_price * 0.03
+                                  price_win = buy_price * 0.05
                                   chance1_win_price.append(price_win)
                                   break
                               #負けた時
