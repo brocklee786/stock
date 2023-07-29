@@ -1,7 +1,7 @@
 import yfinance as yf
 import pandas as pd
 import streamlit as st
-
+import altair as alt
 
 # 銘柄コードの指定
 #symbol = "7203.T"  # 例としてApple Inc. (AAPL)を使用
