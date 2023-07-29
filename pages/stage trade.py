@@ -14,7 +14,7 @@ win_all_price = []
 lose_all = []
 lose_all_price = []
 if st.button('計算を行う'):
-    for symbol in codes1:
+    for symbol in codes:
         # 過去の株価データの取得
         ticker = str(symbol) + '.T'
         tkr = yf.Ticker(ticker)
