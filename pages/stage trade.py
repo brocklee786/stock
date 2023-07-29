@@ -151,7 +151,7 @@ if st.button('計算を行う'):
     
     
                       # 条件3: 翌日または翌々日に、2のスラスト日の高値の価格で買う。2の日の安値より下がった場合は損切りする。
-                      buy_price = source['Close'][i]
+                      buy_price = source['Open'][i]
                       stop_loss_price = source['Close'][i-1] - atr15
     
                       if RSI_today>60:
