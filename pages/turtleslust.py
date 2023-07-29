@@ -55,6 +55,8 @@ for symbol in good_codes:
     b = (high - close.shift(1)).abs()
     c = (low - close.shift(1)).abs()
     tr = pd.concat([a, b, c], axis=1).max(axis=1)
+    source['tr'] = tr
+    source['ATR'] = tr.rolling(20).mean()
     source['pDI'] = pDM.rolling(14).sum()/tr.rolling(14).sum() * 100
     source['mDI'] = mDM.rolling(14).sum()/tr.rolling(14).sum() * 100
     # ADXの計算
