@@ -91,34 +91,34 @@ for symbol in good_codes:
 
 
 
-                          # 条件4: トレーリングストップを使って利益を確定する
-                          #trailing_stop = buy_price * 1.05  # 3%の利益確定を目指すと仮定
-                          for a in range(21):
-                              atr15 = source['ATR'][i+1+a-1] *0.5
-                              stop_loss_price = source['Close'][i+1+a-1] - atr15
-                              #20日経過した時
-                              if source['Low'][i+a+1]>stop_loss_price:
-                                  if a ==20 and source['Close'][i+a+1]>buy_price:
-                                      price_win = source['Close'][i+a+1] - buy_price
-                                      chance1_win_price.append(price_win)
-                                      break
-                                  if a ==20 and source['Close'][i+a+1]<buy_price:
-                                      sonkiri = source['Close'][i+a+1] - buy_price
-                                      chance1_lose_price.append(sonkiri)
-                                  else:
-                                      continue
-                              #20日経過しなかった時
-                              if source['Low'][i+a+1]<stop_loss_price:
-                                  if stop_loss_price<buy_price:
-                                      sonkiri = stop_loss_price - buy_price
-                                      chance1_lose_price.append(sonkiri)
-                                      break
-                                  if stop_loss_price>buy_price:
-                                      price_win =  stop_loss_price - buy_price
-                                      chance1_win_price.append(price_win)
-                                      break
-    
-    
+                      # 条件4: トレーリングストップを使って利益を確定する
+                      #trailing_stop = buy_price * 1.05  # 3%の利益確定を目指すと仮定
+                      for a in range(21):
+                          atr15 = source['ATR'][i+1+a-1] *0.5
+                          stop_loss_price = source['Close'][i+1+a-1] - atr15
+                          #20日経過した時
+                          if source['Low'][i+a+1]>stop_loss_price:
+                              if a ==20 and source['Close'][i+a+1]>buy_price:
+                                  price_win = source['Close'][i+a+1] - buy_price
+                                  chance1_win_price.append(price_win)
+                                  break
+                              if a ==20 and source['Close'][i+a+1]<buy_price:
+                                  sonkiri = source['Close'][i+a+1] - buy_price
+                                  chance1_lose_price.append(sonkiri)
+                              else:
+                                  continue
+                          #20日経過しなかった時
+                          if source['Low'][i+a+1]<stop_loss_price:
+                              if stop_loss_price<buy_price:
+                                  sonkiri = stop_loss_price - buy_price
+                                  chance1_lose_price.append(sonkiri)
+                                  break
+                              if stop_loss_price>buy_price:
+                                  price_win =  stop_loss_price - buy_price
+                                  chance1_win_price.append(price_win)
+                                  break
+
+
           st.write(symbol)
           symbol_all.append(symbol)
           st.write('回数',len(chance1))
