@@ -85,7 +85,7 @@ def trim_camma_kessan(x):
  
 codes = [1332, 1376, 1379, 1380]
 if st.button('計算を行う'):
-    for code in codes1_3:
+    for code in codes:
         option = code
         ticker = str(option) + '.T'
         tkr = yf.Ticker(ticker)
