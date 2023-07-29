@@ -162,8 +162,8 @@ if st.button('計算を行う'):
                           # 条件4: トレーリングストップを使って利益を確定する
                           #trailing_stop = buy_price * 1.05  # 3%の利益確定を目指すと仮定
                           for a in range(21):
-                              atr15 = source['ATR'][i-1] *1.5
-                              stop_loss_price = source['Close'][i-1] - atr15
+                              atr15 = source['ATR'][i+a-1] *1.5
+                              stop_loss_price = source['Close'][i+a-1] - atr15
                               #勝った時
                               if source['Low'][i+a]>stop_loss_price:
                                   if a ==20 and source['Close'][i+a]>buy_price:
