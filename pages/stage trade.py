@@ -12,7 +12,7 @@ good_codes = [1430, 1431, 1434, 1436, 1438, 1451, 1491, 1739, 1780, 1789, 1802, 
 
 
 
-
+symbol_all = []
 time_all = []
 win_all = []
 win_all_price = []
@@ -162,7 +162,7 @@ if st.button('計算を行う'):
                           # 条件4: トレーリングストップを使って利益を確定する
                           #trailing_stop = buy_price * 1.05  # 3%の利益確定を目指すと仮定
                           for a in range(21):
-                              atr15 = source['ATR'][i+a-1] *1.5
+                              atr15 = source['ATR'][i+a-1] *1.05
                               stop_loss_price = source['Close'][i+a-1] - atr15
                               #20日経過した時
                               if source['Low'][i+a]>stop_loss_price:
@@ -188,6 +188,7 @@ if st.button('計算を行う'):
     
     
           st.write(symbol)
+          symbol_all.append(symbol)
           st.write('回数',len(chance1))
           time_all.append(len(chance1))
           st.write('勝ち', len(chance1_win_price), sum(chance1_win_price))
@@ -203,3 +204,28 @@ if st.button('計算を行う'):
     st.write('勝率', sum(win_all)/sum(time_all))
     st.write('勝ち額', (sum(win_all_price) + sum(lose_all_price))*100)
     st.write('期待値', ((sum(win_all_price) + sum(lose_all_price))/ sum(time_all))*100)
+
+
+    data = {
+    'Code': symbol_all,
+    'time': time_all
+    }
+    
+    # データをDataFrameに変換
+    df = pd.DataFrame(data)
+    
+    # Altairで折れ線グラフを作成
+    chart = alt.Chart(df).mark_line().encode(
+        x='Code',
+        y='Profit',
+        tooltip=['Code', 'Profit']
+    ).properties(
+        title='営業利益の推移'
+    )
+    
+    # Streamlitアプリケーションを作成
+    st.title('営業利益の推移')
+    
+    # グラフをStreamlitで表示
+    st.altair_chart(chart, use_container_width=True)
+
