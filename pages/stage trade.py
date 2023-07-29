@@ -79,6 +79,8 @@ if st.button('計算を行う'):
         b = (high - close.shift(1)).abs()
         c = (low - close.shift(1)).abs()
         tr = pd.concat([a, b, c], axis=1).max(axis=1)
+        source['tr'] = tr
+        source['ATR'] = tr.rolling(20).mean()
         source['pDI'] = pDM.rolling(14).sum()/tr.rolling(14).sum() * 100
         source['mDI'] = mDM.rolling(14).sum()/tr.rolling(14).sum() * 100
         # ADXの計算
@@ -135,6 +137,7 @@ if st.button('計算を行う'):
               RSI_today = source['RSI'][i]
               adx_direction = source['ADX'][i] - source['ADX'][i-1]
               volume_difference = source['Volume'][i-1] - source['Volume'][i-2]
+              atr15 = source['ATR'][i-1] *1.5
               
               if price_lagging<=lagging_line and price_lagging_yesterday>lagging_line_yesterday and conversion_line>base_line and conversion_line_5daybefore<base_line_5daybefore and conversion_direction>0 and price1>conversion_line:
     
@@ -149,7 +152,7 @@ if st.button('計算を行う'):
     
                       # 条件3: 翌日または翌々日に、2のスラスト日の高値の価格で買う。2の日の安値より下がった場合は損切りする。
                       buy_price = source['Close'][i]
-                      stop_loss_price = buy_price * 0.95
+                      stop_loss_price = source['Close'][i-1] - atr15
     
                       if RSI_today>60:
                           chance1.append(1)
@@ -157,13 +160,19 @@ if st.button('計算を行う'):
     
     
                           # 条件4: トレーリングストップを使って利益を確定する
-                          trailing_stop = buy_price * 1.05  # 3%の利益確定を目指すと仮定
-                          for a in range(100):
+                          #trailing_stop = buy_price * 1.05  # 3%の利益確定を目指すと仮定
+                          for a in range(21):
                               #勝った時
-                              if source['High'][i+a]>trailing_stop:
-                                  price_win = buy_price * 0.05
-                                  chance1_win_price.append(price_win)
-                                  break
+                              if source['Low'][i+a]>stop_loss_price:
+                                  if a ==21 and source['Close'][i+a]>buy_price:
+                                      price_win = source['Close'][i+a] - buyprice
+                                      chance1_win_price.append(price_win)
+                                      break
+                                  if a ==21 and source['Close'][i+a]<buy_price:
+                                      sonkiri = source['Close'][i+a] - buy_price
+                                      chance1_lose_price.append(sonkiri)
+                                  else:
+                                      continue
                               #負けた時
                               if source['Low'][i+a]<stop_loss_price:
                                   sonkiri = stop_loss_price - buy_price
