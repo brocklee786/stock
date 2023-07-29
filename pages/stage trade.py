@@ -164,11 +164,11 @@ if st.button('計算を行う'):
                           for a in range(21):
                               #勝った時
                               if source['Low'][i+a]>stop_loss_price:
-                                  if a ==21 and source['Close'][i+a]>buy_price:
+                                  if a ==20 and source['Close'][i+a]>buy_price:
                                       price_win = source['Close'][i+a] - buyprice
                                       chance1_win_price.append(price_win)
                                       break
-                                  if a ==21 and source['Close'][i+a]<buy_price:
+                                  if a ==20 and source['Close'][i+a]<buy_price:
                                       sonkiri = source['Close'][i+a] - buy_price
                                       chance1_lose_price.append(sonkiri)
                                   else:
