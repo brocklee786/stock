@@ -160,7 +160,7 @@ if st.button('計算を行う'):
                       buy_price = source['Open'][i]
                       
     
-                      if volume_difference>0::
+                      if volume_difference>0:
                           chance1.append(1)
     
     
