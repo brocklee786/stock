@@ -126,6 +126,29 @@ if st.button('計算を行う'):
     
         # 遅行スパン
         source["lagging_span"] = source["Close"].shift(-25)
+
+        KDAY = 26  # K算定用期間
+        MDAY = 3  # D算定用期間
+
+        # stochasticks K
+        source["sct_k_price"] = (
+            100*
+            (source["Close"] - source["Low"].rolling(window=KDAY, min_periods=KDAY).min())/
+            (source["High"].rolling(window=KDAY, min_periods=KDAY).max() - source["Low"].rolling(window=KDAY, min_periods=KDAY).min())
+        )
+
+        # stochasticks D
+        source["sct_d_price"] = (
+            100*
+            (source["Close"] - source["Low"].rolling(window=KDAY, min_periods=KDAY).min())
+            .rolling(window=MDAY, min_periods=MDAY).sum()/
+            (source["High"].rolling(window=KDAY, min_periods=KDAY).max() - source["Low"].rolling(window=KDAY, min_periods=KDAY).min())
+            .rolling(window=MDAY, min_periods=MDAY).sum()
+        )
+
+        # slow stochasticks
+        source["slow_sct_d_price"] = source["sct_d_price"].rolling(window=MDAY, min_periods=MDAY).mean()
+
         source["stage"] = 1
         stage6_list = []
         stage4_list = []
