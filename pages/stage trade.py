@@ -155,7 +155,7 @@ if st.button('計算を行う'):
                       buy_price = source['Open'][i]
                       
     
-                      if RSI_today>60 and adx>40:
+                      if RSI_today>60:
                           chance1.append(1)
     
     
