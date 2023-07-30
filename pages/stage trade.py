@@ -141,6 +141,7 @@ if st.button('計算を行う'):
               conversion_direction = source['conversion_line'][i] - source['conversion_line'][i-3]
               RSI_today = source['RSI'][i]
               adx_direction = source['ADX'][i] - source['ADX'][i-1]
+              adx = source['ADX'][i]
               volume_difference = source['Volume'][i-1] - source['Volume'][i-2]
               
               
@@ -154,7 +155,7 @@ if st.button('計算を行う'):
                       buy_price = source['Open'][i]
                       
     
-                      if RSI_today>60:
+                      if RSI_today>60 and adx>40:
                           chance1.append(1)
     
     
