@@ -148,6 +148,10 @@ if st.button('計算を行う'):
 
         # slow stochasticks
         source["slow_sct_d_price"] = source["sct_d_price"].rolling(window=MDAY, min_periods=MDAY).mean()
+        # 移動平均線
+        source["SMA20"] = source["Close"].rolling(window=20,min_periods=20).mean()
+        # 標準偏差
+        source["std"] = source["Close"].rolling(window=20,min_periods=20).std()
         # ボリンジャーバンド
         source["2upper"] = source["SMA20"] + (2 * source["std"])
         source["2lower"] = source["SMA20"] - (2 * source["std"])
