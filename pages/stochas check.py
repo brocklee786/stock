@@ -157,7 +157,7 @@ if st.button('計算を行う'):
         chance1_win_price = []
         chance1_lose_price = []
         if source.index[-1] == 999:
-          for i in range(392,632):
+          for i in range(532,900):
               #大循環MACD
               percentk = source['sct_k_price'][i]
               percentk_direction = source['sct_k_price'][i] - source['sct_k_price'][i-1]
