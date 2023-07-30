@@ -23,7 +23,7 @@ if st.button('計算を行う'):
         # 過去の株価データの取得
         ticker = str(symbol) + '.T'
         tkr = yf.Ticker(ticker)
-        hist = tkr.history(period='1000d')
+        hist = tkr.history(period='1700d')
         hist = hist.reset_index()
         hist = hist.set_index(['Date'])
         hist = hist.rename_axis('Date').reset_index()
@@ -121,8 +121,8 @@ if st.button('計算を行う'):
         chance1 = []
         chance1_win_price = []
         chance1_lose_price = []
-        if source.index[-1] == 999:
-          for i in range(392,632):
+        if source.index[-1] == 1699:
+          for i in range(326,1558):
               tilt_short = source['sma01'][i] -  source['sma01'][i-5]
               tilt_mid = source['sma02'][i] -  source['sma02'][i-5]
               tilt_long = source['sma03'][i] -  source['sma03'][i-5]
@@ -163,7 +163,7 @@ if st.button('計算を行う'):
                           # 条件4: トレーリングストップを使って利益を確定する
                           #trailing_stop = buy_price * 1.05  # 3%の利益確定を目指すと仮定
                           for a in range(6):
-                              atr15 = source['ATR'][i+a-1] *1
+                              atr15 = source['ATR'][i+a-1] *0.8
                               stop_loss_price = source['Close'][i+a-1] - atr15
                               #20日経過した時
                               if source['Low'][i+a]>stop_loss_price:
