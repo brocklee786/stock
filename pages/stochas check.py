@@ -164,7 +164,7 @@ if st.button('計算を行う'):
               slow_percentd = source['slow_sct_d_price'][i]
               slow_percentd_yesterday = source['slow_sct_d_price'][i-1]
               slow_percentd_10day = source['slow_sct_d_price'][i-10]
-              volume_difference = source['Volume'][last] - source['Volume'][i-1]*1.1
+              volume_difference = source['Volume'][i] - source['Volume'][i-1]*1.1
               
               
               if slow_percentd_yesterday<20 and slow_percentd>20 and percentk>70:
