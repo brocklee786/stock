@@ -162,16 +162,16 @@ if st.button('計算を行う'):
     
                           # 条件4: トレーリングストップを使って利益を確定する
                           #trailing_stop = buy_price * 1.05  # 3%の利益確定を目指すと仮定
-                          for a in range(11):
-                              atr15 = source['ATR'][i+a-1] *2
+                          for a in range(21):
+                              atr15 = source['ATR'][i+a-1] *0.8
                               stop_loss_price = source['Close'][i+a-1] - atr15
                               #20日経過した時
                               if source['Low'][i+a]>stop_loss_price:
-                                  if a ==10 and source['Close'][i+a]>buy_price:
+                                  if a ==20 and source['Close'][i+a]>buy_price:
                                       price_win = source['Close'][i+a] - buy_price
                                       chance1_win_price.append(price_win)
                                       break
-                                  if a ==10 and source['Close'][i+a]<buy_price:
+                                  if a ==20 and source['Close'][i+a]<buy_price:
                                       sonkiri = source['Close'][i+a] - buy_price
                                       chance1_lose_price.append(sonkiri)
                                   else:
