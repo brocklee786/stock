@@ -80,12 +80,17 @@ if option:
         tr = pd.concat([a, b, c], axis=1).max(axis=1)
         source['tr'] = tr
         source['ATR'] = tr.rolling(20).mean()
-
+ 
+        atr08= 0.8*source['ATR'][99]
+        atr1= 1*source['ATR'][99]
         atr15= 1.5*source['ATR'][99]
         atr20=2*source['ATR'][99]
         atr25=2.5*source['ATR'][99]
         atr30=3*source['ATR'][99]
-
+        
+        
+        st.subheader('0.8ATR:'+str(atr08))
+        st.subheader('1.0ATR:'+str(atr1))
         st.subheader('1.5ATR:'+str(atr15))
         st.subheader('2.0ATR:'+str(atr20))
         st.subheader('2.5ATR:'+str(atr25))
