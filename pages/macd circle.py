@@ -23,7 +23,7 @@ if st.button('計算を行う'):
         # 過去の株価データの取得
         ticker = str(symbol) + '.T'
         tkr = yf.Ticker(ticker)
-        hist = tkr.history(period='1000d')
+        hist = tkr.history(period='1700d')
         hist = hist.reset_index()
         hist = hist.set_index(['Date'])
         hist = hist.rename_axis('Date').reset_index()
@@ -133,8 +133,8 @@ if st.button('計算を行う'):
         chance1 = []
         chance1_win_price = []
         chance1_lose_price = []
-        if source.index[-1] == 999:
-          for i in range(392,632):
+        if source.index[-1] == 1699:
+          for i in range(326,1558):
               #大循環MACD
       
               macd1 = source['MACD1'][i]
