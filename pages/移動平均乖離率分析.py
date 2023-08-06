@@ -245,16 +245,16 @@ if st.button('計算を行う'):
         hist = hist.rename_axis('Date').reset_index()
         hist = hist.T
         a = hist.to_dict()
+        for items in a.values():
+            time = items['Date']
+            items['Date'] = time.strftime("%Y/%m/%d")
+
+        b = [x for x in a.values()]
+
+        source = pd.DataFrame(b)
+
+        price = source['Close']
         if source.index[-1] == 999:
-            for items in a.values():
-                    time = items['Date']
-                    items['Date'] = time.strftime("%Y/%m/%d")
-    
-            b = [x for x in a.values()]
-    
-            source = pd.DataFrame(b)
-    
-            price = source['Close']
             
             #移動平均
             span01=5
