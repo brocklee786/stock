@@ -295,9 +295,10 @@ if st.button('計算を行う'):
         RSI_today = source['RSI'][last]
         adx_direction = source['ADX'][last] - source['ADX'][last-1]
         volume_difference = source['Volume'][last-1] - source['Volume'][last-2]
+        volume = source['Volume'][last-1]
         #出来高を1.5倍にすると100%になる。10回。
         #遅行スパンの好転
-        if price_lagging<=lagging_line and price_lagging_yesterday>lagging_line_yesterday and conversion_line>base_line and conversion_line_5daybefore<base_line_5daybefore and conversion_direction>0 and price1>conversion_line and RSI_today>60 and adx_direction>0 and volume_difference>0:
+        if price_lagging<=lagging_line and price_lagging_yesterday>lagging_line_yesterday and conversion_line>base_line and conversion_line_5daybefore<base_line_5daybefore and conversion_direction>0 and price1>conversion_line and RSI_today>60 and adx_direction>0 and volume_difference>0 and volume>10000:
             if code==any(['6941', '8905', '2792', '6807', '6997', '1812', '7730', '7864', '4272', '8795', '7613', '2395', '8570', '5802', '6754', '1518', '8595', '2389', '7254', '7453', '6287', '7984', '7240', '2160', '1808', '4043', '3604', '7414', '2212', '9007', '8012', '2001', '2432', '4045', '6062', '8129', '7483', '2730', '8282', '7867', '5901', '7981', '3103', '3405', '5727', '6013', '4080', '6937', '1944', '6753', '6513', '6412', '9625', '9832', '6995', '6070', '3360', '6269', '7421', '6770']):
                 continue
             else:
