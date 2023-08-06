@@ -20,7 +20,7 @@ lose_all = []
 lose_all_price = []
 pay_off_ratio = []
 if st.button('計算を行う'):
-    for symbol in test_code:
+    for symbol in good_codes:
         # 過去の株価データの取得
         ticker = str(symbol) + '.T'
         tkr = yf.Ticker(ticker)
@@ -144,12 +144,13 @@ if st.button('計算を行う'):
               adx_direction = source['ADX'][i] - source['ADX'][i-1]
               adx = source['ADX'][i]
               volume_difference = source['Volume'][i-1] - source['Volume'][i-2]
+              volume = source['Volume'][i-1]
               
               
               if price_lagging<=lagging_line and price_lagging_yesterday>lagging_line_yesterday and conversion_line>base_line and conversion_line_5daybefore<base_line_5daybefore and conversion_direction>0 and price1>conversion_line:
     
     
-                  if adx_direction>0 and volume_difference>0:
+                  if adx_direction>0 and volume_difference>0 and volume>100000:
     
     
                       # 条件3: 翌日または翌々日に、2のスラスト日の高値の価格で買う。2の日の安値より下がった場合は損切りする。
@@ -190,7 +191,7 @@ if st.button('計算を行う'):
     
     
           st.write(symbol)
-          symbol_all.append(symbol)
+          #symbol_all.append(symbol)
           st.write('回数',len(chance1))
           time_all.append(len(chance1))
           st.write('勝ち', len(chance1_win_price), sum(chance1_win_price))
@@ -199,38 +200,38 @@ if st.button('計算を行う'):
           st.write('負け', len(chance1_lose_price), sum(chance1_lose_price))
           lose_all.append(len(chance1_lose_price))
           lose_all_price.append(sum(chance1_lose_price))
-          pay_off_ratio.append(sum(chance1_win_price)/sum(chance1_lose_price))
+          #pay_off_ratio.append(sum(chance1_win_price)/sum(chance1_lose_price))
         else:
           continue
     
-    st.write('回数', sum(time_all))
-    st.write('勝率', sum(win_all)/sum(time_all))
-    st.write('勝ち額', (sum(win_all_price) + sum(lose_all_price))*100)
-    st.write('期待値', ((sum(win_all_price) + sum(lose_all_price))/ sum(time_all))*100)
+    # st.write('回数', sum(time_all))
+    # st.write('勝率', sum(win_all)/sum(time_all))
+    # st.write('勝ち額', (sum(win_all_price) + sum(lose_all_price))*100)
+    # st.write('期待値', ((sum(win_all_price) + sum(lose_all_price))/ sum(time_all))*100)
 
-    data = pd.DataFrame({
-        'code': symbol_all,
-        'PayOffRatio': pay_off_ratio
-    })
+    # data = pd.DataFrame({
+    #     'code': symbol_all,
+    #     'PayOffRatio': pay_off_ratio
+    # })
     
-    # Altairで散布図を作成
-    scatter_chart = alt.Chart(data).mark_circle().encode(
-        x='code',
-        y='PayOffRatio'
-    ).properties(
-        width=400,
-        height=400
-    )
+    # # Altairで散布図を作成
+    # scatter_chart = alt.Chart(data).mark_circle().encode(
+    #     x='code',
+    #     y='PayOffRatio'
+    # ).properties(
+    #     width=400,
+    #     height=400
+    # )
     
-    # Streamlitアプリケーションの作成
-    st.title('銘柄コードとペイオフレシオ')
+    # # Streamlitアプリケーションの作成
+    # st.title('銘柄コードとペイオフレシオ')
     
-    # Altair散布図をStreamlitで表示
-    st.altair_chart(scatter_chart)
+    # # Altair散布図をStreamlitで表示
+    # st.altair_chart(scatter_chart)
     
-    # データの表示
-    st.write('コード:', symbol_all)
-    st.write('ペイオフレシオ', pay_off_ratio)
+    # # データの表示
+    # st.write('コード:', symbol_all)
+    # st.write('ペイオフレシオ', pay_off_ratio)
 
 
 
