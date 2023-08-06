@@ -122,6 +122,8 @@ if st.button('計算を行う'):
         source['MACD2'] = exp5 - exp40
 
         source['MACD3'] = exp20 - exp40
+        maximum30 = source["Close"].rolling(window=120).max()
+        source["maximum"] = maximum30
 
     
         # 遅行スパン
