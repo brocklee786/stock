@@ -148,9 +148,10 @@ if st.button('計算を行う'):
               difference2 = source['MACD2'][i-1] - source['MACD1'][i-1]
       
               volume_difference = source['Volume'][i-1] - source['Volume'][i-2]*1.1
+              volume = source['Volume'][i-1]
               
               
-              if macd1>0 and macd2>0 and macd3>0 and macd3_yesterday<0 and macd1_direction>0 and macd2_direction>0:
+              if macd1>0 and macd2>0 and macd3>0 and macd3_yesterday<0 and macd1_direction>0 and macd2_direction>0 and volume>10000:
             
     
                   if difference1>difference2+5:
