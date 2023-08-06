@@ -150,7 +150,7 @@ if st.button('計算を行う'):
               if price_lagging<=lagging_line and price_lagging_yesterday>lagging_line_yesterday and conversion_line>base_line and conversion_line_5daybefore<base_line_5daybefore and conversion_direction>0 and price1>conversion_line:
     
     
-                  if adx_direction>0 and volume_difference>0 and volume>100000:
+                  if adx_direction>0 and volume_difference>0 and volume>10000:
     
     
                       # 条件3: 翌日または翌々日に、2のスラスト日の高値の価格で買う。2の日の安値より下がった場合は損切りする。
