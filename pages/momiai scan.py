@@ -147,7 +147,6 @@ if st.button('計算を行う'):
               
               
               if -15<base_line-base_line_yesterday<15 and -15<base_line-base_line_yesterday2<15:
-           :
             
     
                   if -5<price1-minimum<5 and 45<RSI_today<55:
