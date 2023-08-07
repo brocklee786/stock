@@ -123,7 +123,7 @@ if st.button('計算を行う'):
         chance1_win_price = []
         chance1_lose_price = []
         if source.index[-1] == 1699:
-          for i in range(326,1558):
+          for i in range(1309,1552):
               tilt_short = source['sma01'][i] -  source['sma01'][i-5]
               tilt_mid = source['sma02'][i] -  source['sma02'][i-5]
               tilt_long = source['sma03'][i] -  source['sma03'][i-5]
