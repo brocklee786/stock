@@ -173,6 +173,7 @@ if st.button('計算を行う'):
         exp12 = source['Close'].ewm(span=12, adjust=False).mean()
         exp15 = source['Close'].ewm(span=15, adjust=False).mean()
         exp20 = source['Close'].ewm(span=20, adjust=False).mean()
+        exp50 = source['Close'].ewm(span=50, adjust=False).mean()
         source['EMA3'] = exp3
         source['EMA5'] = exp5
         source['EMA8'] = exp8
@@ -180,6 +181,7 @@ if st.button('計算を行う'):
         source['EMA12'] = exp12
         source['EMA15'] = exp15
         source['EMA20'] = exp20
+        ource['EMA50'] = exp50
 
         source["stage"] = 1
         stage6_list = []
