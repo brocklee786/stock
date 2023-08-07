@@ -191,7 +191,7 @@ if st.button('計算を行う'):
         chance1_win_price = []
         chance1_lose_price = []
         if source.index[-1] == 1699:
-          for i in range(326,1558):
+          for i in range(1309,1552):
               bandwidth = source['bandwidth'][i]
               bandwidth_yesterday = source['bandwidth'][i-1]
               percent_b = source['percent_b'][i]
