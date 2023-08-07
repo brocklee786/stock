@@ -181,7 +181,7 @@ if st.button('計算を行う'):
         source['EMA12'] = exp12
         source['EMA15'] = exp15
         source['EMA20'] = exp20
-        ource['EMA50'] = exp50
+        source['EMA50'] = exp50
 
         source["stage"] = 1
         stage6_list = []
