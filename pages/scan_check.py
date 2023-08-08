@@ -497,7 +497,7 @@ if st.button('計算を行う'):
     else:
         st.subheader('該当なし')
     expander1 = st.expander('確率計算1')
-    expander1.write('日数:20日,損切り:1.5ATR,,勝率:56%,期待値:3,194円')
+    expander1.write('日数:10日,損切り:0.8ATR,,勝率:64%,期待値:2,080円')
 
 
     st.title('大循環MACD×ADX')
@@ -506,7 +506,7 @@ if st.button('計算を行う'):
     else:
         st.subheader('該当なし')
     expander2 = st.expander('確率計算2')
-    expander2.write('日数:10日,損切り:1.5ATR,,勝率:50%,期待値:2,225円')
+    expander2.write('日数:5日,損切り:0.8ATR,,勝率:54%,期待値:2,145円')
 
     st.title('ストキャスティクス')
     if len(chance3_all):
@@ -514,7 +514,7 @@ if st.button('計算を行う'):
     else:
         st.subheader('該当なし')
     expander3 = st.expander('確率計算3')
-    expander3.write('日数:5日,損切り:2.5ATR,,勝率:55%,期待値:2,959円')
+    expander3.write('日数:5日,損切り:0.8ATR,,勝率:70%,期待値:5,447円')
 
 
     st.title('もみ合い相場(底取り)')
