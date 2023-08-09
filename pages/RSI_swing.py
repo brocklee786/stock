@@ -234,8 +234,7 @@ for code in good_codes:
         st.write('負け', len(chance1_lose_price), sum(chance1_lose_price))
         lose_all.append(len(chance1_lose_price))
         lose_all_price.append(sum(chance1_lose_price))
-    else:
-        continue
+
     
 st.write('回数', sum(time_all))
 st.write('勝率', sum(win_all)/sum(time_all))
