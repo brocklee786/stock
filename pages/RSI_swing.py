@@ -224,16 +224,16 @@ for code in good_codes:
                                     break
                                 
                             
-        st.write(code)
-        symbol_all.append(code)
-        st.write('回数',len(chance1))
-        time_all.append(len(chance1))
-        st.write('勝ち', len(chance1_win_price), sum(chance1_win_price))
-        win_all.append(len(chance1_win_price))
-        win_all_price.append(sum(chance1_win_price))
-        st.write('負け', len(chance1_lose_price), sum(chance1_lose_price))
-        lose_all.append(len(chance1_lose_price))
-        lose_all_price.append(sum(chance1_lose_price))
+    st.write(code)
+    symbol_all.append(code)
+    st.write('回数',len(chance1))
+    time_all.append(len(chance1))
+    st.write('勝ち', len(chance1_win_price), sum(chance1_win_price))
+    win_all.append(len(chance1_win_price))
+    win_all_price.append(sum(chance1_win_price))
+    st.write('負け', len(chance1_lose_price), sum(chance1_lose_price))
+    lose_all.append(len(chance1_lose_price))
+    lose_all_price.append(sum(chance1_lose_price))
 
         
 st.write('回数', sum(time_all))
