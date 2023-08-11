@@ -140,8 +140,8 @@ if option:
         days_until6 = -b/a - last
         if a > 0:
             st.subheader('上昇トレンド継続中')
-        else:
-            st.subheader('予想では第2ステージまで'+ str(int(days_until6)) + '日間')
+        #else:
+            #st.subheader('予想では第2ステージまで'+ str(int(days_until6)) + '日間')
             
         #短期の傾き
         tilt_short = source['sma01'][last] - source['sma01'][last-1]
