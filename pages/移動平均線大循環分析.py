@@ -272,7 +272,7 @@ if option:
         #st.pyplot(figure)
         days_until6 = -b/a - last
         if a < 0:
-            st.subheader('第1ステージまで',int(days_until6))
+            st.subheader('第1ステージまで' + str(int(days_until6)) + '日間')
         else:
             st.subheader('逆行の可能性')
         #短期の傾き
