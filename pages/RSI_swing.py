@@ -143,86 +143,86 @@ for code in good_codes:
     chance1 = []
     chance1_win_price = []
     chance1_lose_price = []
-    
-    for a in range(80,1699):
-    #ステージの決定
-        if source['sma01'][a]>source['sma02'][a]>source['sma03'][a]:
-            source["stage"][a] = 1
-        if source['sma02'][a]>source['sma01'][a]>source['sma03'][a]:
-            source["stage"][a] = 2
-        if source['sma02'][a]>source['sma03'][a]>source['sma01'][a]:
-            source["stage"][a] = 3
-        if source['sma03'][a]>source['sma02'][a]>source['sma01'][a]:
-            source["stage"][a] = 4
-        if source['sma03'][a]>source['sma01'][a]>source['sma02'][a]:
-            source["stage"][a] = 5
-        if source['sma01'][a]>source['sma03'][a]>source['sma02'][a]:
-            source["stage"][a] = 6
+    if source.index[-1] == 1699:
+        for a in range(80,1699):
+        #ステージの決定
+            if source['sma01'][a]>source['sma02'][a]>source['sma03'][a]:
+                source["stage"][a] = 1
+            if source['sma02'][a]>source['sma01'][a]>source['sma03'][a]:
+                source["stage"][a] = 2
+            if source['sma02'][a]>source['sma03'][a]>source['sma01'][a]:
+                source["stage"][a] = 3
+            if source['sma03'][a]>source['sma02'][a]>source['sma01'][a]:
+                source["stage"][a] = 4
+            if source['sma03'][a]>source['sma01'][a]>source['sma02'][a]:
+                source["stage"][a] = 5
+            if source['sma01'][a]>source['sma03'][a]>source['sma02'][a]:
+                source["stage"][a] = 6
 
-    
-    span=20
-    min_interval=3
-    source = source[:-40]
-    
-     # 安値の上昇トレンドラインを生成
-    for i in source.index[::20]:
-        lowpoint   = get_lowpoint(i, i + span)
-        # ポイントが2箇所未満だとエラーになるので回避する
-        if len(lowpoint) < 2:
-            continue
-        # 始点と支点が近過ぎたらトレンドラインとして引かない
-        if abs(lowpoint.index[0] - lowpoint.index[1]) < min_interval:
-            continue
-        regression = linregress(
-            x = lowpoint['time_id'],
-            y = lowpoint['RSI'],
-        )
-        #print(regression[0] > 0.0, 'reg_low: ', regression[0], ', ', regression[1], )
-        #st.write(lowpoint)
-        RSI_lowpoint = pd.DataFrame(lowpoint)
-        RSI_lowpoint = RSI_lowpoint.reset_index()
-        #st.write(RSI_lowpoint)
-        if RSI_lowpoint['RSI'][0]<=30 and RSI_lowpoint['RSI'][1]>=30:
-            st.write(RSI_lowpoint)
-            high = 0
-            point1 = RSI_lowpoint['index'][0]
-            point2 = RSI_lowpoint['index'][1]
-            for num in range(point1,point2):
-                if source['High'][num] > high:
-                    high = source['High'][num]
-            st.write(code)
-            for day in range(14):
-                # if source['High'][point2+a] >= high and source['stage'][point2] == 5:
-                #     profit = source['Close'][point2+a+14] - source['Close'][point2+a]
-                #     win_profit.append(profit)
-                #     break
-                if source['High'][point2+day] >= high and source['stage'][point2] == 4:
-                    for a in range(11):
-                        atr15 = source['ATR'][i+a-1] *0.8
-                        stop_loss_price = source['Close'][i+a-1] - atr15
-                        buy_price = high
-                        #20日経過した時
-                        if source['Low'][i+a]>stop_loss_price:
-                            if a ==10 and source['Close'][i+a]>buy_price:
-                                price_win = source['Close'][i+a] - buy_price
-                                chance1_win_price.append(price_win)
-                                break
-                            if a ==10 and source['Close'][i+a]<buy_price:
-                                sonkiri = source['Close'][i+a] - buy_price
-                                chance1_lose_price.append(sonkiri)
-                            else:
-                                continue
-                        #20日経過しなかった時
-                        if source['Low'][i+a]<stop_loss_price:
-                            if stop_loss_price<buy_price:
-                                sonkiri = stop_loss_price - buy_price
-                                chance1_lose_price.append(sonkiri)
-                                break
-                            if stop_loss_price>buy_price:
-                                price_win =  stop_loss_price - buy_price
-                                chance1_win_price.append(price_win)
-                                break
-                            
+        
+        span=20
+        min_interval=3
+        source = source[:-40]
+        
+        # 安値の上昇トレンドラインを生成
+        for i in source.index[::20]:
+            lowpoint   = get_lowpoint(i, i + span)
+            # ポイントが2箇所未満だとエラーになるので回避する
+            if len(lowpoint) < 2:
+                continue
+            # 始点と支点が近過ぎたらトレンドラインとして引かない
+            if abs(lowpoint.index[0] - lowpoint.index[1]) < min_interval:
+                continue
+            regression = linregress(
+                x = lowpoint['time_id'],
+                y = lowpoint['RSI'],
+            )
+            #print(regression[0] > 0.0, 'reg_low: ', regression[0], ', ', regression[1], )
+            #st.write(lowpoint)
+            RSI_lowpoint = pd.DataFrame(lowpoint)
+            RSI_lowpoint = RSI_lowpoint.reset_index()
+            #st.write(RSI_lowpoint)
+            if RSI_lowpoint['RSI'][0]<=30 and RSI_lowpoint['RSI'][1]>=30:
+                st.write(RSI_lowpoint)
+                high = 0
+                point1 = RSI_lowpoint['index'][0]
+                point2 = RSI_lowpoint['index'][1]
+                for num in range(point1,point2):
+                    if source['High'][num] > high:
+                        high = source['High'][num]
+                st.write(code)
+                for day in range(14):
+                    # if source['High'][point2+a] >= high and source['stage'][point2] == 5:
+                    #     profit = source['Close'][point2+a+14] - source['Close'][point2+a]
+                    #     win_profit.append(profit)
+                    #     break
+                    if source['High'][point2+day] >= high and source['stage'][point2] == 4:
+                        for a in range(11):
+                            atr15 = source['ATR'][i+a-1] *0.8
+                            stop_loss_price = source['Close'][i+a-1] - atr15
+                            buy_price = high
+                            #20日経過した時
+                            if source['Low'][i+a]>stop_loss_price:
+                                if a ==10 and source['Close'][i+a]>buy_price:
+                                    price_win = source['Close'][i+a] - buy_price
+                                    chance1_win_price.append(price_win)
+                                    break
+                                if a ==10 and source['Close'][i+a]<buy_price:
+                                    sonkiri = source['Close'][i+a] - buy_price
+                                    chance1_lose_price.append(sonkiri)
+                                else:
+                                    continue
+                            #20日経過しなかった時
+                            if source['Low'][i+a]<stop_loss_price:
+                                if stop_loss_price<buy_price:
+                                    sonkiri = stop_loss_price - buy_price
+                                    chance1_lose_price.append(sonkiri)
+                                    break
+                                if stop_loss_price>buy_price:
+                                    price_win =  stop_loss_price - buy_price
+                                    chance1_win_price.append(price_win)
+                                    break
+                                
                             
         st.write(code)
         symbol_all.append(code)
@@ -235,10 +235,8 @@ for code in good_codes:
         lose_all.append(len(chance1_lose_price))
         lose_all_price.append(sum(chance1_lose_price))
 
-    
+        
 st.write('回数', sum(time_all))
 st.write('勝率', sum(win_all)/sum(time_all))
 st.write('勝ち額', (sum(win_all_price) + sum(lose_all_price))*100)
 st.write('期待値', ((sum(win_all_price) + sum(lose_all_price))/ sum(time_all))*100)
-
-    
