@@ -210,8 +210,8 @@ if option:
         
         a = model.coef_
         b = model.intercept_
-        #st.write('a = ', model.coef_) 
-        #st.write('b = ', model.intercept_)
+        st.write('a = ', model.coef_) 
+        st.write('b = ', model.intercept_)
         #st.pyplot(figure)
         days_until6 = -b/a - last
         if a < 0:
