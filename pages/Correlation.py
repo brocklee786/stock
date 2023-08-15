@@ -29,8 +29,8 @@ if option1 and option2:
     Date1 = source1['Date']
     stock_data1 = source1['Close']
     stock_data1["PriceDifference"] = (stock_data1.pct_change()) * 100
-    price_change1 = stock_data1["PriceDifference"]
-    price_change1 = price_change1.dropna()
+    price_change1_1 = stock_data1["PriceDifference"]
+    price_change1 = price_change1_1.dropna()
     #二つ目のデータ
     ticker = str(option2) + '.T'
     tkr = yf.Ticker(ticker)
@@ -51,8 +51,8 @@ if option1 and option2:
     Date2 = source2['Date']
     stock_data2 = source2['Close']
     stock_data2["PriceDifference"] = (stock_data2.pct_change()) * 100
-    price_change2 = stock_data2["PriceDifference"]
-    price_change2 = price_change2.dropna()
+    price_change2_2 = stock_data2["PriceDifference"]
+    price_change2 = price_change2_2.dropna()
 
     code1 = option1
     code2 = option2
@@ -60,8 +60,8 @@ if option1 and option2:
     correlation = np.corrcoef(price_change1, price_change2)[1, 0]
 
     fig, ax = plt.subplots(figsize=(10, 6))
-    ax.plot(Date1.values, price_change1.values, label=f" {code1}")
-    ax.plot(Date2.values, price_change2.values, label=f" {code2}")
+    ax.plot(Date1.values, price_change1_1.values, label=f" {code1}")
+    ax.plot(Date2.values, price_change2_2.values, label=f" {code2}")
     ax.xaxis.set_major_locator(mdates.MonthLocator(interval=5))
     plt.xlabel("Date")
     plt.ylabel("Stock Price")
