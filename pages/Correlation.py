@@ -53,8 +53,8 @@ if option1 and option2:
     correlation = np.corrcoef(stock_data1, stock_data2)[1, 0]
 
     fig, ax = plt.subplots(figsize=(10, 6))
-    ax.plot(Date1, stock_data1, label=f" {code1}")
-    ax.plot(Date2, stock_data2, label=f" {code2}")
+    ax.plot(Date1.values, stock_data1.values, label=f" {code1}")
+    ax.plot(Date2.values, stock_data2.values, label=f" {code2}")
     ax.xaxis.set_major_locator(mdates.MonthLocator(interval=5))
     ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m'))
     plt.xlabel("Date")
