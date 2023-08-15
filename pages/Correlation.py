@@ -63,6 +63,7 @@ if option1 and option2:
     ax.plot(Date1.values, price_change1_1.values, label=f" {code1}")
     ax.plot(Date2.values, price_change2_2.values, label=f" {code2}")
     ax.xaxis.set_major_locator(mdates.MonthLocator(interval=5))
+    plt.xticks(rotation=30)
     plt.xlabel("Date")
     plt.ylabel("Stock Price")
     plt.title("Correlation")
