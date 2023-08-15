@@ -8,7 +8,7 @@ st.title('類似銘柄戦略')
 
 def backtest(data):
     for code in used_codes:
-        stock_data = yf.download(str(code), start="2023-01-01", end="2023-08-01")
+        stock_data = yf.download(str(code), start="2017-01-01", end="2023-08-01")
         stock_data["PrevClose"] = stock_data["Close"].shift(1)  # 前日の終値
         stock_data["PriceChange"] = (stock_data["Close"] - stock_data["PrevClose"]) / stock_data["PrevClose"]
         
