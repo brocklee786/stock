@@ -124,8 +124,8 @@ if option3:
             price_change2 = price_change2_2.dropna()
     
             correlation = np.corrcoef(price_change1, price_change2)[1, 0]
-            if correlation > 0.7:
-                st.write(code)
+            if correlation > 0.5:
+                st.write(code, correlation)
         
         
 
