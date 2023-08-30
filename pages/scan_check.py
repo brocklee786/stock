@@ -104,9 +104,9 @@ if st.button('計算を行う'):
                 items['Date'] = time.strftime("%Y/%m/%d")
 
         b = [x for x in a.values()]
-        price = b['Close']
+        
         source = pd.DataFrame(b)
-      
+        
         price = source['Close']
 
         if source.index[-1] == 999:
