@@ -88,7 +88,6 @@ good_codes = [1430, 1431, 1434, 1436, 1438, 1451, 1491, 1739, 1780, 1789, 1802, 
 
 if st.button('計算を行う'):
     for code in good_codes:
-        st.write(code)
         option = code
         ticker = str(option) + '.T'
         tkr = yf.Ticker(ticker)
