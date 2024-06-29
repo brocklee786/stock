@@ -2,12 +2,12 @@ streamlit
 pandas
 numpy
 requests==2.27.1
-matplotlib==3.5.1
+matplotlib
 pillow==9.0.1
 beautifulsoup4==4.11.1
 lxml
 altair==4.2.0
-yfinance==0.1.72
+yfinance
 prophet
 pandas_datareader
 plotly
